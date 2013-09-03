@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../models/configurations.xsd" 
+               level="1" >
+    
+    <group id="tools">
+        <boolean id="dev">false</boolean>
+    </group>
+    
+    <group id="errors">
+        <integer id="display.length.messages">96</integer>
+        <integer id="display.length.causes">96</integer>
+        <integer id="display.length.params">64</integer>
+        <boolean id="display.minor">false</boolean>
+        <boolean id="display.major">true</boolean>
+    </group>
+    
+    <group id="logs">
+        <integer id="display.length.prefix">24</integer>
+        <integer id="display.length.message">96</integer>
+        <integer id="display.length.directout">96</integer>
+        <boolean id="display">false</boolean>
+    </group>
+    
+    <group id="components">
+        <string id="css.prefix.to">to</string>
+        <string id="css.prefix.from">from</string>
+        <string id="css.prefix.at">at</string>
+        <string id="css.class.in">inState</string>
+        <string id="css.class.out">outState</string>
+        <string id="css.class.removal">removeAfterDelay</string>
+        <boolean id="allow.invalid.start">false</boolean>
+        <boolean id="allow.inactive.selectors">false</boolean>
+    </group>
+    
+    <group id="infos">
+        <string id="version">PRE-ALPHA</string>
+        <date id="realease">2013-07-10</date>
+    </group>
+    
+</configuration>
