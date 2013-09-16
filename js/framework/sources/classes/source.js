@@ -1,7 +1,6 @@
 /* Framework component datasource.
  * Manages loading, update and exploitation of an XML data source.
  * PARAMETERS :
- *  > owner             Owning component.
  *  > name              Data source name.
  *  > service           Service URL.     
  *  > backup            Backup state.                                       
@@ -86,18 +85,23 @@ Source.prototype.select = function(selector) {
  * result, and execute callbacks.
  * PARAMETERS :
  *  > params            Service parameters.
+ *  > mode              Call mode (default : POST).
  * RETURNS : N/A                                                            */
-Source.prototype.load = function(params) {
+Source.prototype.load = function(params, mode) {
     var error;
     var errorlength;
     var buff;
     var method;
     var ctx = this;
+    
+    if (Toolkit.isNull(mode)) {
+        mode = "POST";
+    }
 
     this.getOwner().log("Accessing data at URL " + ctx.getService());
     jQuery.ajax({
         context: ctx,
-        type: "POST",
+        type: mode,
         url: ctx.getService(),
         data: params,
         dataType: "xml",
@@ -162,3 +166,12 @@ Source.prototype.load = function(params) {
         }
     });
 };
+/* Data getter.
+ * Execute data loading on the data source with forced GET mode.
+ * PARAMETERS :
+ *  > params        Call parameters.
+ * RETURNS : N/A                                                                */
+Source.prototype.get = function(params) {
+    this.load(params, "GET");
+};
+    

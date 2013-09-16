@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >    
+    <model alias="link">
+        <column alias="link">value</column>
+        <column alias="position">value</column>
+        <column alias="title">value</column>
+        <column alias="description">value</column>
+        <column alias="image">value</column>
+        <column alias="color">value</column>
+        <column alias="altcolor">value</column>
+    </model>
+    <s> 
+        <i>home</i>
+        <i>left</i>
+        <i>Accueil</i>
+        <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ligula vel ante tincidunt bibendum. Morbi ut felis ut mauris aliquet tempor. Proin id posuere lacus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus ut dictum mauris.</i>
+        <i>visuals/home.png</i>
+        <i>#6ba71c</i>
+        <i>#4F810D</i>
+    </s>
+    <s>
+        <i>home</i>
+        <i>left</i>
+        <i>Services</i>
+        <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ligula vel ante tincidunt bibendum. Morbi ut felis ut mauris aliquet tempor. Proin id posuere lacus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus ut dictum mauris.</i>
+        <i>visuals/products.png</i>
+        <i>#3a73ad</i>
+        <i>#285786</i>
+    </s>
+    <s>
+        <i>home</i>
+        <i>left</i>
+        <i>Garanties</i>
+        <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ligula vel ante tincidunt bibendum. Morbi ut felis ut mauris aliquet tempor. Proin id posuere lacus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus ut dictum mauris.</i>
+        <i>visuals/warrants.png</i>
+        <i>#d32600</i>
+        <i>#9A1C00</i>
+    </s>
+    <s>
+        <i>home</i>
+        <i>left</i>
+        <i>Techniques</i>
+        <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ligula vel ante tincidunt bibendum. Morbi ut felis ut mauris aliquet tempor. Proin id posuere lacus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus ut dictum mauris.</i>
+        <i>visuals/tech.png</i>
+        <i>#f59600</i>
+        <i>#CC6600</i>
+    </s>
+    <s>
+        <i>home</i>
+        <i>right</i>
+        <i>Nous contacter</i>
+        <i>TBD.</i>
+        <i>visuals/voip.png</i>
+        <i>#444</i>
+        <i>#222</i>
+    </s>
+    <s>
+        <i>home</i>
+        <i>right</i>
+        <i>A propos</i>
+        <i>TBD.</i>
+        <i>visuals/search.png</i>
+        <i>#666</i>
+        <i>#222</i>
+    </s>
+</data>

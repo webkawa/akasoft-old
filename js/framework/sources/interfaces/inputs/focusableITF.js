@@ -17,7 +17,7 @@ function FocusableITF(cpn, setup) {
         Toolkit.checkTypeOf(setup.callbackBlur, "string") :
         Toolkit.checkTypeOf(setup.stateBlur, "string");
 
-    cpn.registerMethod(this.prototype.check, "check", false);
+    cpn.registerMethod(FocusableITF.prototype.check, "check", false);
 }
 /* Name. */
 FocusableITF.prototype.name = "Focusable";

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         name="RightLink" 
+         type="classic" >
+    <selectors>
+        <selector id="icon">img</selector>
+        <selector id="wrapper">div</selector>
+        <selector id="title">div > h1</selector>
+        <selector id="hover">img, div</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="Deploy">
+            <speed>750</speed>
+            <easing>easeInOutQuad</easing>
+            <move>
+                <property>right</property>
+                <from>640px</from>
+                <goal call="css">
+                    <parameter>$SELF</parameter>
+                    <parameter>margin-right</parameter>
+                </goal>
+                <to>0</to>
+            </move>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="Open">
+            <speed>320</speed>
+            <easing>easeOutQuint</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+            <move>
+                <property>width</property>
+                <from>32</from>
+                <to>512</to>
+            </move>
+        </trajectory>
+        <trajectory name="Close">
+            <speed>320</speed>
+            <easing>easeOutQuint</easing>
+            <move>
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+            <move>
+                <property>width</property>
+                <from>512</from>
+                <to>32</to>
+            </move>
+        </trajectory>
+        <trajectory name="Select">
+            <speed>240</speed>
+            <easing>easeOutCubic</easing>
+            <move>
+                <property>background-color</property>
+                <goal call="get">
+                    <parameter>altcolor</parameter>
+                </goal>
+                <to>black</to>
+            </move>
+        </trajectory>
+        <trajectory name="Deselect">
+            <speed>240</speed>
+            <easing>easeOutCubic</easing>
+            <move>
+                <property>background-color</property>
+                <goal call="get">
+                    <parameter>color</parameter>
+                </goal>
+                <to>white</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeIn">
+            <speed>240</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeOut">
+            <speed>160</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div>
+                    <h1 />
+                </div>
+                <img />
+            ]]>
+        </dom>
+        <action call="class">
+            <parameter>$SELF</parameter>
+            <parameter>positionAbsolute width64px height64px marginB8px</parameter>
+        </action>
+        <action call="class">
+            <parameter>icon</parameter>
+            <parameter>positionAbsolute height64px width64px radius8px border1pxWhite</parameter>
+        </action>
+        <action call="class">
+            <parameter>wrapper</parameter>
+            <parameter>displayNone positionAbsolute top4px rightM16px bottom4px radius8px border1pxWhite overflowHidden colorWhite</parameter>
+        </action>
+        <action call="class">
+            <parameter>title</parameter>
+            <parameter>width360px rightNo marginL64px marginV8px textRight fontBold</parameter>
+        </action>
+        <action call="css">
+            <parameter>title</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="center">
+            <parameter>icon</parameter>
+        </action>
+        <to>Close</to>
+    </loader>
+    <state id="Close">
+        <trigger bind="mousemove">
+            <target>icon</target>
+            <action call="go">
+                <parameter>Open</parameter>
+            </action>
+        </trigger>
+        <in from="@None">
+            <target>$SELF</target>
+            <animation base="Deploy" />
+        </in>
+    </state>
+    <state id="Open">
+        <in from="Close">
+            <target>wrapper</target>
+            <pre call="start" on="Hoverable" />
+            <pre call="class">
+                <parameter>wrapper</parameter>
+                <parameter>displayNone</parameter>
+            </pre>
+            <animation base="Open" />
+        </in>
+        <in>
+            <target>icon</target>
+            <animation base="Select" />
+            <queue>
+                <target>title</target>
+                <animation base="FadeIn" />
+            </queue>
+        </in>
+        <begin call="check" on="Hoverable" />
+        <out>
+            <target>title</target>
+            <animation base="FadeOut" />
+            <queue to="Close">
+                <target>wrapper</target>
+                <animation base="Close" />
+                <post call="class">
+                    <parameter>wrapper</parameter>
+                    <parameter>displayNone</parameter>
+                </post>
+            </queue>
+            <queue>
+                <target>icon</target>
+                <animation base="Deselect" />
+            </queue>
+        </out>
+        
+    </state>
+</component>

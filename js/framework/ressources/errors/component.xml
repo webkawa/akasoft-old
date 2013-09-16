@@ -18,7 +18,7 @@
         <message>Call to undefined method</message>
         <param required="true" id="component">Component ID</param>
         <param required="true" id="name">Method name</param>
-        <param id="interface">Method name</param>
+        <param id="interface">Interface name</param>
     </error>
    <error code="3">
         <message>Try to rewrite an already defined source</message>

@@ -1,0 +1,356 @@
+.width1024px {
+    width: 1024px;
+}
+.width360px {
+    width: 360px;
+}
+.width196px {
+    width: 196px;
+}
+.width64px {
+    width: 64px;
+}
+.width32px {
+    width: 32px;
+}
+.width24px {
+    width: 24px;
+}
+.width100per {
+    width: 100%;
+}
+.width80per {
+    width: 80%;
+}
+.width50per {
+    width: 50%;
+}
+.width20per {
+    width: 20%;
+}
+.widthNo {
+    width: 0;
+}
+
+.height768px {
+    height: 768px;
+}
+.height64px {
+    height: 64px;
+}
+.height32px {
+    height: 32px;
+}
+.height16px {
+    height: 16px;
+}
+.height100per {
+    height: 100%;
+}
+.heightNo {
+    height: 0;
+}
+
+.positionRelative {
+    position: relative;
+}
+.positionAbsolute {
+    position: absolute;
+}
+.positionFixed {
+    position: fixed;
+}
+
+.topNo {
+    top: 0px;
+}
+.top4px {
+    top: 4px;
+}
+.top8px {
+    top: 8px;
+}
+.top16px {
+    top: 16px;
+}
+.topM4px {
+    top: -4px;
+}
+.topM8px {
+    top: -8px;
+}
+.topM16px {
+    top: -16px;
+}
+.rightNo {
+    right: 0px;
+}
+.right4px {
+    right: 4px;
+}
+.right8px {
+    right: 8px;
+}
+.right16px {
+    right: 16px;
+}
+.rightM4px {
+    right: -4px;
+}
+.rightM8px {
+    right: -8px;
+}
+.rightM16px {
+    right: -16px;
+}
+.bottomNo {
+    bottom: 0px;
+}
+.bottom4px {
+    bottom: 4px;
+}
+.bottom8px {
+    bottom: 8px;
+}
+.bottom16px {
+    bottom: 16px;
+}
+.bottomM4px {
+    bottom: -4px;
+}
+.bottomM8px {
+    bottom: -8px;
+}
+.bottomM16px {
+    bottom: -16px;
+}
+.leftNo {
+    left: 0px;
+}
+.left4px {
+    left: 4px;
+}
+.left8px {
+    left: 8px;
+}
+.left16px {
+    left: 16px;
+}
+.leftM4px {
+    left: -4px;
+}
+.leftM8px {
+    left: -8px;
+}
+.leftM16px {
+    left: -16px;
+}
+.allNo {
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.margin4px {
+    margin: 4px;
+}
+.margin8px {
+    margin: 8px;
+}
+.margin16px {
+    margin: 16px;
+}
+.marginH4px {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.marginH8px {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.marginH16px {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.marginH32px {
+    margin-left: 32px;
+    margin-right: 32px;
+}
+.marginV4px {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.marginV8px {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.marginV16px {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.marginV32px {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+.marginL8px {
+    margin-left: 8px;
+}
+.marginL16px {
+    margin-left: 16px;
+}
+.marginL32px {
+    margin-left: 32px;
+}
+.marginL64px {
+    margin-left: 64px;
+}
+.marginL96px {
+    margin-left: 96px;
+}
+.marginL128px {
+    margin-left: 128px;
+}
+.marginLAuto {
+    margin-left: auto;
+}
+.marginT4px {
+    margin-top: 4px;
+}
+.marginT8px {
+    margin-top: 8px;
+}
+.marginTAuto {
+    margin-top: auto;
+}
+.marginB4px {
+    margin-bottom: 4px;
+}
+.marginB8px {
+    margin-bottom: 8px;
+}
+.marginBAuto {
+    margin-bottom: auto;
+}
+.marginR32px {
+    margin-right: 32px;
+}
+.marginR64px {
+    margin-right: 64px;
+}
+.marginR96px {
+    margin-right: 96px;
+}
+.marginRAuto {
+    margin-right: auto;
+}
+.marginNo {
+    margin: 0;
+}
+
+.padding8px {
+    padding: 8px;
+}
+.padding16px {
+    padding: 16px;
+}
+.paddingNo {
+    padding: 0;
+}
+
+.overflowHidden {
+    overflow: hidden;
+}
+
+.displayNone {
+    display: none;
+}
+.displayBlock {
+    display: block;
+}
+.displayInlineBlock {
+    display: inline-block;
+}
+
+.colorBlack {
+    color: black;
+}
+.colorWhite {
+    color: white;
+}
+
+.backgroundBlack {
+    background-color: black;
+}
+.backgroundWhite {
+    background-color: white;
+}
+.backgroundPink {
+    background-color:#991a1a;
+}
+
+.textLeft {
+    text-align: left;
+}
+.textRight {
+    text-align: right;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+.fontBolder {
+    font-weight: bolder;
+}
+.familyArial {
+    font-family: Arial;
+}
+
+.border1pxWhite {
+    border: 1px solid white;
+}
+.border2pxWhite {
+    border: 2px solid white;
+}
+
+.radius4px {
+    border-radius: 4px;
+}
+.radius8px {
+    border-radius: 8px;
+}
+.radius16px {
+    border-radius: 8px;
+}
+
+.opacity00 {
+    opacity: 0;
+}
+.opacity01 {
+    opacity: 0.1;
+}
+.opacity02 {
+    opacity: 0.2;
+}
+.opacity05 {
+    opacity: 0.5;
+}
+.opacity08 {
+    opacity: 0.8;
+}
+.opacity09 {
+    opacity: 0.9;
+}
+.opacity10 {
+    opacity: 1;
+}
+
+.zi1 {
+    z-index: 1;
+}
+.zi10 {
+    z-index: 10;
+}
+.zi12 {
+    z-index: 12;
+}

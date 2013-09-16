@@ -7,8 +7,61 @@ and open the template in the editor.
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/framework/externals/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="js/framework/externals/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/framework/externals/stacktrace-min-0.4.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/cfg.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/cfgitem.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/component.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/error.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/errormanager.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/log.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/logwriter.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/method.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/register.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/selector.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/source.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/toolkit.js"></script>
+        <script type="text/javascript" src="js/framework/sources/classes/validator.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/builders/descriptionBuildableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/builders/inputBuildableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/builders/listBuildableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/display/enhanceableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/inputs/cleanableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/inputs/disableableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/inputs/focusableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/inputs/hoverableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/inputs/lockableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/loaders/loadableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/tools/sortableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/validators/clientValidableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/validators/doubleValidableITF.js"></script>
+        <script type="text/javascript" src="js/framework/sources/interfaces/validators/serverValidableITF.js"></script>
+        <script type="text/javascript" src="js/components/layout.js"></script>
+        <script type="text/javascript" src="js/components/body.js"></script>
+        <script type="text/javascript" src="js/components/leftlink.js"></script>
+        <script type="text/javascript" src="js/components/rightlink.js"></script>
+        <link rel="stylesheet" type="text/css" href="js/framework/ressources/styles.css" />
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body class="marginNo positionAbsolute width100per height100per backgroundBlack">
+        <div class="positionAbsolute width100per height100per"></div>
+        <script>
+            $(document).ready(function() {
+                try {
+                    ErrorManager.addCatalog("js/framework/ressources/errors/core.xml");
+                    ErrorManager.addCatalog("js/framework/ressources/errors/configuration.xml");
+                    ErrorManager.addCatalog("js/framework/ressources/errors/component.xml");
+                    ErrorManager.addCatalog("js/framework/ressources/errors/log.xml");
+                    ErrorManager.addCatalog("js/framework/ressources/errors/workflow.xml");
+                    
+                    CFG.load("js/framework/ressources/configurations/production.xml");
+                    CFG.load("js/framework/ressources/configurations/development.xml");
+                    
+                    new LayoutCPN().start();
+                } catch (e) {
+                    ErrorManager.process(e); 
+                }
+            });
+        </script>
     </body>
 </html>

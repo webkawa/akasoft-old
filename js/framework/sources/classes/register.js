@@ -16,15 +16,16 @@ var Register = {
         
         var id = Register.idx.length;
         Register.idx[id] = cpn;
+        cpn.getContainer().attr("id", id);
         return id;
     },
             
-    /* Return a component by his ID.
-     * PARAMETERS :
-     *  id                  Component ID.
-     * RETURNS :
-     *  Searched component.                                                     */
-     get: function(id) {
+   /* Return a component by his ID.
+    * PARAMETERS :
+    *  id                  Component ID.
+    * RETURNS :
+    *  Searched component.                                                     */
+    get: function(id) {
          if (id >= Register.idx.length) {
              var p = {
                 id: id,
@@ -39,6 +40,14 @@ var Register = {
              }
          }
          return Register.idx[id];
+     },
+    /* Return a component by his container.
+     * PARAMETERS :
+     *  container           Component container.
+     * RETURNS :
+     *  Searched component.                                                     */
+     getFrom: function(container) {
+        return Register.get($(container).attr("id"));
      },
 
      /* Removes a component by his ID.

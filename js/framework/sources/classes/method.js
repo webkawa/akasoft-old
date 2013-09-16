@@ -80,6 +80,6 @@ Method.prototype.call = function(params) {
             context: this.context,
             params: params
         };
-        throw new Error("cpn", 1, p, e);
+        ErrorManager.process(new Error("cpn", 1, p, e));
     }
 };

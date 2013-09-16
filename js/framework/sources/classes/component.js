@@ -68,21 +68,22 @@ function Component(container, descriptor) {
         }
     });
     
-    this.log("Saving initial methods");
-    this.saveMethod(new Method(this.go, "go", false));
-    this.saveMethod(new Method(this.log, "log", true));
-    this.saveMethod(new Method(this.retrigger, "retrigger", false));
-    this.saveMethod(new Method(this.shortcutReselect, "reselect", false));
-    this.saveMethod(new Method(this.shortcutTrigger, "trigger", false));
-    this.saveMethod(new Method(this.shortcutOuterHeight, "outerHeight", false));
-    this.saveMethod(new Method(this.shortcutOuterWidth, "outerWidth", false));
-    this.saveMethod(new Method(this.shortcutRealHeight, "realHeight", false));
-    this.saveMethod(new Method(this.shortcutRealWidth, "realWidth", false));
-    this.saveMethod(new Method(this.shortcutCenter, "center", false));
-    this.saveMethod(new Method(this.shortcutClean, "clean", false));
-    this.saveMethod(new Method(this.shortcutClass, "class", false));
-    this.saveMethod(new Method(this.shortcutAttribute, "attribute", false));
-    this.saveMethod(new Method(this.shortcutCss, "css", false));
+    this.log("Saving initial methods"); 
+    this.registerMethod(this.go, "go", false);
+    this.registerMethod(this.log, "log", true);
+    this.registerMethod(this.retrigger, "retrigger", false);
+    this.registerMethod(this.shortcutGet, "get", false);
+    this.registerMethod(this.shortcutReselect, "reselect", false);
+    this.registerMethod(this.shortcutTrigger, "trigger", false);
+    this.registerMethod(this.shortcutOuterHeight, "outerHeight", false);
+    this.registerMethod(this.shortcutOuterWidth, "outerWidth", false);
+    this.registerMethod(this.shortcutRealHeight, "realHeight", false);
+    this.registerMethod(this.shortcutRealWidth, "realWidth", false);
+    this.registerMethod(this.shortcutCenter, "center", false);
+    this.registerMethod(this.shortcutClean, "clean", false);
+    this.registerMethod(this.shortcutClass, "class", false);
+    this.registerMethod(this.shortcutAttribute, "attribute", false);
+    this.registerMethod(this.shortcutCss, "css", false);
 };
 /* Container */
 Component.prototype.getContainer = function() {
@@ -205,12 +206,30 @@ Component.prototype.getSelector = function(name, refresh) {
     };
     throw new Error("cpn", 6, p);
 };
+Component.prototype.activeSelect = function() {
+    var c = $(this.container);
+    for (var i = 0; i < this.selectors.length; i++) {
+        if (this.selectors[i].getStatus()) {
+            c = c.add(this.selectors[i].getNodes());
+        }
+    }
+    return c;
+};
 Component.prototype.quickSelect = function(name, refresh) {
     if (Toolkit.isNull(refresh)) {
         refresh = false;
     }
     
-    if (!Toolkit.isNull(this.ltn) && name === "LTN") {
+    if (name === "$BODY") {
+        return $("body");
+    }
+    if (name === "$WINDOW") {
+        return $(window);
+    }
+    if (name === "$SELF") {
+        return this.container;
+    }
+    if (!Toolkit.isNull(this.ltn) && name === "$TRIGGERED") {
         return this.ltn;
     }
 
@@ -220,7 +239,7 @@ Component.prototype.qs = function(name, select) {
     if (Toolkit.isNull(select)) {
         return this.quickSelect(name);
     }
-    return this.quickSelect(name).find(select);
+    return this.quickSelect(name).children(select);
 };
 /* Data sources */
 Component.prototype.isSource = function(name) {
@@ -260,7 +279,9 @@ Component.prototype.saveSource = function(source) {
     this.sources[this.sources.length] = source;
 };
 Component.prototype.registerSource = function(name, service, backup, callbacks) {
-    this.saveSource(new Source(name, service, backup, callbacks));
+    var s = new Source(name, service, backup, callbacks);
+    this.saveSource(s);
+    return s;
 };
 /* Current state */
 Component.prototype.getState = function() {
@@ -376,7 +397,7 @@ Component.prototype.rewrite = function(data) {
     $(this.container).append(data);
 };
 /* Triggers refresher.
- * Unbind, then re-bind all triggers for the selected state.
+ * Re-bind all triggers for the selected state.
  * PARAMETERS : N/A
  * RETURNS : N/A                                                                */
 Component.prototype.retrigger = function() {
@@ -384,8 +405,6 @@ Component.prototype.retrigger = function() {
     var targets;
     var bind;
     var ctx = this;
-
-    $(this.container).find("*").unbind();
 
     nodes = $(nodes).add($(this.model).find('component > trigger'));
     nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > trigger'));
@@ -407,6 +426,11 @@ Component.prototype.retrigger = function() {
             // Preventing
             if ($(item).attr("prevent") === "true") {
                 event.preventDefault();
+            }
+            
+            // Transfering
+            if ($(item).attr("stop") === "true") {
+                event.stopPropagation();
             }
 
             // Executing
@@ -719,7 +743,7 @@ Component.prototype.go = function(to, complement) {
         }
 
         // Unloading triggers
-        $(this.container).find("*").unbind();
+        this.activeSelect().unbind();
 
         // Executing exit sequence
         this.status = 1;
@@ -728,7 +752,7 @@ Component.prototype.go = function(to, complement) {
                 ctx.execute(this);
             });
         }
-        $(this.container).find("*").promise().done(function() {
+        this.activeSelect().promise().done(function() {
             // Executes delayed removal
             $(ctx.getContainer()).find("." + drt).remove();
 
@@ -748,7 +772,7 @@ Component.prototype.go = function(to, complement) {
                     ctx.execute(this);
                 });
             }
-            $(ctx.container).find("*").promise().done(function() {
+            ctx.activeSelect().promise().done(function() {
                 ctx.setStatus(0);
                 if (Toolkit.isNull(to)) {
                     // Closing component
@@ -814,18 +838,18 @@ Component.prototype.start = function() {
         // Loading global selectors
         this.reselect();
 
+        // Launching start actions
+        var ctx = this;
+        $(this.model).find("component > loader > action").each(function() {
+            ctx.call.apply(this, [ctx]);
+        });
+
         // Launching init actions
         for (var i = 0; i < this.methods.length; i++) {
             if (this.methods[i].getName().indexOf("init") === 0) {
                 this.methods[i].call([]);
             }
         }
-
-        // Launching start actions
-        var ctx = this;
-        $(this.model).find("component > loader > action").each(function() {
-            ctx.call.apply(this, [ctx]);
-        });
 
         // Migrating to initial state
         this.setStatus(0);
@@ -945,7 +969,7 @@ Component.prototype.shortcutClean = function(target, property) {
  *  action          Action (add/remove).
  * RETURNS : N/A                                                                */
 Component.prototype.shortcutClass = function(target, name, action) {
-    if (Toolkit.isNull(name)) {
+    if (Toolkit.isNull(action)) {
         this.qs(target).toggleClass(name);
     } else {
         if (action === "add") {
@@ -959,7 +983,7 @@ Component.prototype.shortcutClass = function(target, name, action) {
  * PARAMETERS :
  *  target          Target element.
  *  attribute       Attribute name.
- *  value           Value (if null, delete attribute.
+ *  value           Value (if null, deletes attribute).
  * RETURNS : N/A                                                                */
 Component.prototype.shortcutAttribute = function(target, attribute, value) {
     if (Toolkit.isNull(value)) {
@@ -972,7 +996,7 @@ Component.prototype.shortcutAttribute = function(target, attribute, value) {
  * PARAMETERS :
  *  target          Target element.
  *  attribute       Attribute name.
- *  value           Value (if null, delete attribute.
+ *  value           Value (if null, deletes attribute).
  * RETURNS : N/A                                                                */
 Component.prototype.shortcutCss = function(target, attribute, value) {
     if (Toolkit.isNull(value)) {

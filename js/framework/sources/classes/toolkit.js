@@ -183,7 +183,7 @@ var Toolkit = {
         $(target).height(height - padding);
     },
              
-    /* Executes a vertical resizing on a element.
+    /* Executes a horizontal resizing on a element.
      * PARAMETERS :
      *  > target        Target element.
      *  > difference    Target difference width (add/remove).
@@ -205,9 +205,12 @@ var Toolkit = {
      * RETURNS : N/A                                                            */
     center: function(target) {
         $(target).css({
-            "margin-top": "auto",
-            "margin-bottom": "auto"
+            "margin-top": "",
+            "margin-right": "",
+            "margin-bottom": "",
+            "margin-left": ""
         });
         $(target).css("margin-top", (($(target).parent().height() - $(target).outerHeight(false)) / 2) + "px");
+        $(target).css("margin-left", (($(target).parent().width() - $(target).outerWidth(false)) / 2) + "px");
     }
 };

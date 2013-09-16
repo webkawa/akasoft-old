@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         name="Layout" 
+         type="classic" >
+    <selectors>
+        <selector id="image">img</selector>
+        <selector id="inner">div</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>800</speed>
+            <easing>easeInQuint</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <trigger bind="resize">
+        <target>$WINDOW</target>
+        <action call="refresh" />
+    </trigger>
+    <loader>
+        <dom>
+            <![CDATA[
+                <img src="data/img/background2.png" alt="Background" />
+                <div />
+            ]]>
+        </dom>
+        <action call="class">
+            <parameter>$SELF</parameter>
+            <parameter>familyArial</parameter>
+        </action>
+        <action call="class">
+            <parameter>inner</parameter>
+            <parameter>positionAbsolute width1024px height768px</parameter>
+            <parameter>add</parameter>
+        </action>
+        <to>Loading</to>
+    </loader>
+    <state id="Loading">
+        <begin call="load" on="Loadable" />
+    </state>
+    <state id="Home">
+        <in from="Loading">
+            <target>image</target>
+            <pre call="init" on="Enhanceable" />
+            <pre call="refresh" />
+            <animation base="FadeIn" />
+            <post call="start" />
+        </in>
+    </state>
+</component>
