@@ -4,6 +4,7 @@
          name="Body" 
          type="classic" >
     <selectors>
+        <selector id="logo">div.logo</selector>
         <selector id="left">div.left</selector>
         <selector id="center">div.center</selector>
         <selector id="centerBackground">div.center > div.background</selector>
@@ -29,6 +30,7 @@
     <loader>
         <dom>
             <![CDATA[
+                <div class="logo" />
                 <div class="center">
                     <div class="background" />
                     <div class="frame" />
@@ -37,6 +39,10 @@
                 <div class="right" />
             ]]>
         </dom>
+        <action call="class">
+            <parameter>logo</parameter>
+            <parameter>positionAbsolute right48px top48px size48px</parameter>
+        </action>
         <action call="class">
             <parameter>left</parameter>
             <parameter>positionAbsolute width64px leftNo</parameter>
@@ -47,7 +53,7 @@
         </action>
         <action call="class">
             <parameter>centerBackground</parameter>
-            <parameter>positionAbsolute height100per width100per radius8px opacity02 backgroundWhite border1px border444</parameter>
+            <parameter>positionAbsolute height100per width100per radius8px opacity06 backgroundWhite border1px border444</parameter>
         </action>
         <action call="class">
             <parameter>centerFrame</parameter>

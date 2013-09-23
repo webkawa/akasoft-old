@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         name="Logo" 
+         type="classic" >
+    <selectors>
+        <selector id="both">span</selector>
+        <selector id="left">span:first()</selector>
+        <selector id="right">span:last()</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>320</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeOut">
+            <speed>320</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <span>Aka</span><span>soft</span>
+            ]]>
+        </dom>
+        <action call="class">
+            <parameter>both</parameter>
+            <parameter>spacing2px</parameter>
+        </action>
+        <action call="class">
+            <parameter>left</parameter>
+            <parameter>weightBold color444</parameter>
+        </action>
+        <action call="class">
+            <parameter>right</parameter>
+            <parameter>radius4px background444 colorWhite</parameter>
+        </action>
+        <action call="css">
+            <parameter>both</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <to>Hidden</to>
+    </loader>
+    <state id="Hidden">
+        <in from="Visible">
+            <target>left</target>
+            <animation base="FadeOut" />
+            <queue>
+                <target>right</target>
+                <animation base="FadeOut" />
+            </queue>
+        </in>
+    </state>
+    <state id="Visible">
+        <in from="Hidden">
+            <target>left</target>
+            <animation base="FadeIn" />
+            <queue>
+                <target>right</target>
+                <animation base="FadeIn" />
+            </queue>
+        </in>
+    </state>
+</component>

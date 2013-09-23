@@ -15,7 +15,9 @@ function HomeCPN(ctn) {
     cpn.saveInterface(SlidableITF, s);
     
     var s = {
-        container: "foot"
+        container: "foot",
+        columns: "footChilds",
+        classFirstExcept: "borderLeft1px border444"
     };
     cpn.saveInterface(ColumnableITF, s);
     

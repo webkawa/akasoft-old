@@ -1,3 +1,8 @@
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
 .width1024px {
     width: 1024px;
 }
@@ -59,6 +64,12 @@
 .height420px {
     height: 420px;
 }
+.height128px {
+    height: 128px;
+}
+.height96px {
+    height: 96px;
+}
 .height64px {
     height: 64px;
 }
@@ -97,6 +108,15 @@
 .top16px {
     top: 16px;
 }
+.top32px {
+    top: 32px;
+}
+.top48px {
+    top: 48px;
+}
+.top64px {
+    top: 64px;
+}
 .topM4px {
     top: -4px;
 }
@@ -117,6 +137,15 @@
 }
 .right16px {
     right: 16px;
+}
+.right32px {
+    right: 32px;
+}
+.right48px {
+    right: 48px;
+}
+.right64px {
+    right: 64px;
 }
 .rightM4px {
     right: -4px;
@@ -250,6 +279,9 @@
 .marginT8px {
     margin-top: 8px;
 }
+.marginT16px {
+    margin-top: 16px;
+}
 .marginTAuto {
     margin-top: auto;
 }
@@ -264,6 +296,9 @@
 }
 .marginB16px {
     margin-bottom: 16px;
+}
+.marginB32px {
+    margin-bottom: 32px;
 }
 .marginBAuto {
     margin-bottom: auto;
@@ -296,13 +331,30 @@
 .padding16px {
     padding: 16px;
 }
+.paddingH8px {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.paddingH16px {
+    padding-left: 16px;
+    padding-right: 16px;
+}
 .paddingV8px {
     padding-top: 8px;
     padding-bottom: 8px;
 }
 .paddingV16px {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.paddingT32px {
+    padding-top: 32px;
+}
+.paddingT64px {
+    padding-top: 64px;
+}
+.paddingR16px {
+    padding-right: 16px;
 }
 .paddingNo {
     padding: 0;
@@ -476,8 +528,14 @@
 .borderTop1px {
     border-top: 1px solid;
 }
+.borderRight1px {
+    border-right: 1px solid;
+}
 .borderBottom1px {
     border-bottom: 1px solid;
+}
+.borderLeft1px {
+    border-left: 1px solid;
 }
 .borderWhite {
     border-color: white;
@@ -490,6 +548,15 @@
 }
 .border888 {
     border-color: #888;
+}
+.border000 {
+    border-color: #000;
+}
+.borderBBB {
+    border-color: #BBB;
+}
+.borderDDD {
+    border-color: #DDD;
 }
 
 .radius4px {

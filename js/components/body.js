@@ -16,6 +16,7 @@ function BodyCPN(ctn) {
     };
     cpn.saveInterface(NavigableITF, setup);
     
+    cpn.registerMethod(this.init, "init", false);
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
     cpn.registerMethod(this.buildNavigation, "buildNavigation", false);
     cpn.registerMethod(this.addNavigation, "addNavigation", false);
@@ -23,6 +24,12 @@ function BodyCPN(ctn) {
     
     return cpn;
 }
+/* Initialization. */
+BodyCPN.prototype.init = function() {
+    var cpn = new LogoCPN(this.qs("logo"));
+    cpn.start();
+    this.register("logo", cpn, false);
+};
 /* Navigation load. */
 BodyCPN.prototype.loadNavigation = function() {
     this.getSource("navmap").get();
@@ -88,5 +95,5 @@ BodyCPN.prototype.navigate = function(to) {
         this.body.stop();
     }
     cpn.start();
-    this.register("body", cpn, true);
+    this.register("body", cpn, false);
 };

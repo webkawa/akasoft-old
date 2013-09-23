@@ -103,7 +103,7 @@
         </action>
         <action call="class">
             <parameter>wrapper</parameter>
-            <parameter>displayNone positionAbsolute leftM4px topM4px radius8px overflowHidden colorWhite</parameter>
+            <parameter>displayNone positionAbsolute leftM4px topM4px paddingV16px paddingR16px radius8px overflowHidden colorWhite</parameter>
         </action>
         <action call="class">
             <parameter>title</parameter>

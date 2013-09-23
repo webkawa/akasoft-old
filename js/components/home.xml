@@ -39,20 +39,18 @@
             </move>
         </trajectory>
         <trajectory name="QuickFadeIn">
-            <speed>250</speed>
+            <speed>200</speed>
             <easing>swing</easing>
             <move clean="false">
                 <property>opacity</property>
-                <from>0</from>
                 <to>1</to>
             </move>
         </trajectory>
         <trajectory name="QuickFadeOut">
-            <speed>250</speed>
+            <speed>200</speed>
             <easing>swing</easing>
             <move clean="false">
                 <property>opacity</property>
-                <from>1</from>
                 <to>0</to>
             </move>
         </trajectory>
@@ -114,8 +112,8 @@
         <dom>
             <![CDATA[
                 <div class="head">
-                        <h1><span>Aka</span><span>soft</span></h1>
-                        <h2>Lorem ipsum dolor sit amet</h2>
+                    <h1><span>Aka</span><span>soft</span></h1>
+                    <h2>Lorem ipsum dolor sit amet</h2>
                 </div>
                 <div class="slider" />
                 <div class="foot">
@@ -131,7 +129,7 @@
         </action>
         <action call="class">
             <parameter>head</parameter>
-            <parameter>width640px left64px textCenter</parameter>
+            <parameter>width640px paddingT32px left64px textCenter</parameter>
         </action>
         <action call="class">
             <parameter>headChilds</parameter>
@@ -159,23 +157,30 @@
         </action>
         <action call="class">
             <parameter>foot</parameter>
-            <parameter>height128px width100per marginB16px bottomNo</parameter>
+            <parameter>height128px marginB8px paddingH16px bottomNo</parameter>
         </action>
         <action call="class">
             <parameter>footChilds</parameter>
-            <parameter>backgroundWhite</parameter>
-        </action>
-        <action call="class">
-            <parameter>footChilds</parameter>
-            <parameter>floatLeft</parameter>
+            <parameter>paddingH16px</parameter>
         </action>
         <action call="css">
             <parameter>headChilds</parameter>
             <parameter>opacity</parameter>
             <parameter>0</parameter>
         </action>
+        <action call="css">
+            <parameter>footChilds</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
         <action call="center">
             <parameter>slider</parameter>
+        </action>
+        <action call="realWidth">
+            <parameter>foot</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>footChilds</parameter>
         </action>
         <to>Ready</to>
     </loader>
