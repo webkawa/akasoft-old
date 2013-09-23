@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Framework native errors -->
+<catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../models/errors.xsd" 
+         name="cfg" >
+    
+    <error code="0">
+        <message>Unknow configuration error</message>
+    </error>
+    
+    <error code="1">
+        <message>Variable not found</message>
+        <param required="true" id="group">Group</param>
+        <param required="true" id="key">Key</param>
+    </error>
+      
+    <error code="2">
+        <message>Unable to load configuration file</message>
+        <param required="true" id="url">URL</param>
+        <param required="true" id="info">Error</param>
+    </error>
+      
+    <error code="3">
+        <message>Invalid variable name</message>
+        <param id="url">URL</param>
+        <param id="group">Group</param>
+        <param id="key">Key</param>
+        <param required="true" id="node">Node</param>
+    </error>
+    
+    <error code="4">
+        <message>Variable cast error</message>
+        <param required="true" id="group">Group</param>
+        <param required="true" id="key">Key</param>
+        <param required="true" id="value">Value</param>
+        <param required="true" id="type">Detected type</param>
+    </error>
+        
+</catalog>

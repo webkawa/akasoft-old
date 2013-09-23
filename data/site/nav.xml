@@ -2,13 +2,13 @@
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >    
     <model alias="link">
-        <column alias="link">value</column>
-        <column alias="position">value</column>
-        <column alias="title">value</column>
-        <column alias="description">value</column>
-        <column alias="image">value</column>
-        <column alias="color">value</column>
-        <column alias="altcolor">value</column>
+        <column>link</column>
+        <column>position</column>
+        <column>title</column>
+        <column>description</column>
+        <column>image</column>
+        <column>color</column>
+        <column>altcolor</column>
     </model>
     <s> 
         <i>home</i>

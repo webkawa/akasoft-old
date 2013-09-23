@@ -106,12 +106,18 @@
             <xs:element name="from"
                         type="string"
                         minOccurs="0" />
+            <xs:element name="origin"
+                        type="call"
+                        minOccurs="0" />
             <xs:element name="to"
                         type="string" />
             <xs:element name="goal"
                         type="call"
                         minOccurs="0" />
         </xs:all>
+        <xs:attribute name="clean"
+                      type="xs:boolean"
+                      use="optional" />
     </xs:complexType>
     <xs:complexType name="animation">
         <xs:sequence>

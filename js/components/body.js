@@ -11,9 +11,15 @@ function BodyCPN(ctn) {
     ];
     cpn.registerSource("navmap", "data/site/nav.xml", "Ready", cb);
     
+    setup = {
+        driver: "navigate"
+    };
+    cpn.saveInterface(NavigableITF, setup);
+    
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
     cpn.registerMethod(this.buildNavigation, "buildNavigation", false);
     cpn.registerMethod(this.addNavigation, "addNavigation", false);
+    cpn.registerMethod(this.navigate, "navigate", false);
     
     return cpn;
 }
@@ -69,4 +75,18 @@ BodyCPN.prototype.addNavigation = function(index) {
             ctx.getMethod("addNavigation").call([parseInt(index) + 1]);
         }, 250);
     }
+};
+/* Page change. */
+BodyCPN.prototype.navigate = function(to) {
+    var cpn;
+    switch(to) {
+        case "home":
+            cpn = new HomeCPN(this.qs("centerFrame"));
+            break;
+    }
+    if (!Toolkit.isNull(this.body)) {
+        this.body.stop();
+    }
+    cpn.start();
+    this.register("body", cpn, true);
 };

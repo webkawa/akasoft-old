@@ -1,8 +1,17 @@
 .width1024px {
     width: 1024px;
 }
+.width480px {
+    width: 480px;
+}
+.width420px {
+    width: 420px;
+}
 .width360px {
     width: 360px;
+}
+.width320px {
+    width: 320px;
 }
 .width196px {
     width: 196px;
@@ -25,6 +34,9 @@
 .width50per {
     width: 50%;
 }
+.width33per {
+    width: 33%;
+}
 .width20per {
     width: 20%;
 }
@@ -34,6 +46,18 @@
 
 .height768px {
     height: 768px;
+}
+.height720px {
+    height: 720px;
+}
+.height512px {
+    height: 512px;
+}
+.height480px {
+    height: 480px;
+}
+.height420px {
+    height: 420px;
 }
 .height64px {
     height: 64px;
@@ -136,6 +160,9 @@
 .left16px {
     left: 16px;
 }
+.left64px {
+    left: 64px;
+}
 .leftM4px {
     left: -4px;
 }
@@ -214,6 +241,9 @@
 .marginLAuto {
     margin-left: auto;
 }
+.marginLNone {
+    margin-left: 0;
+}
 .marginT4px {
     margin-top: 4px;
 }
@@ -223,14 +253,23 @@
 .marginTAuto {
     margin-top: auto;
 }
+.marginTNone {
+    margin-top: 0;
+}
 .marginB4px {
     margin-bottom: 4px;
 }
 .marginB8px {
     margin-bottom: 8px;
 }
+.marginB16px {
+    margin-bottom: 16px;
+}
 .marginBAuto {
     margin-bottom: auto;
+}
+.marginBNone {
+    margin-bottom: 0;
 }
 .marginR32px {
     margin-right: 32px;
@@ -244,6 +283,9 @@
 .marginRAuto {
     margin-right: auto;
 }
+.marginRNone {
+    margin-right: 0;
+}
 .marginNo {
     margin: 0;
 }
@@ -254,12 +296,27 @@
 .padding16px {
     padding: 16px;
 }
+.paddingV8px {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.paddingV16px {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
 .paddingNo {
     padding: 0;
 }
 
 .overflowHidden {
     overflow: hidden;
+}
+
+.floatLeft {
+    float: left;
+}
+.floatRight {
+    float: right;
 }
 
 .displayNone {
@@ -275,12 +332,54 @@
 .colorBlack {
     color: black;
 }
+.color222 {
+    color: #222;
+}
+.color444 {
+    color: #444;
+}
+.color666 {
+    color: #666;
+}
+.color888 {
+    color: #888;
+}
+.color000 {
+    color: #000;
+}
+.colorBBB {
+    color: #BBB;
+}
+.colorDDD {
+    color: #DDD;
+}
 .colorWhite {
     color: white;
 }
 
 .backgroundBlack {
     background-color: black;
+}
+.background222 {
+    background-color: #222;
+}
+.background444 {
+    background-color: #444;
+}
+.background666 {
+    background-color: #666;
+}
+.background888 {
+    background-color: #888;
+}
+.background000 {
+    background-color: #000;
+}
+.backgroundBBB {
+    background-color: #BBB;
+}
+.backgroundDDD {
+    background-color: #DDD;
 }
 .backgroundWhite {
     background-color: white;
@@ -295,22 +394,102 @@
 .textRight {
     text-align: right;
 }
+.textCenter {
+    text-align: center;
+}
 
-.fontBold {
+.weightNormal {
+    font-weight: normal;
+}
+.weightBold {
     font-weight: bold;
 }
-.fontBolder {
+.weightBolder {
     font-weight: bolder;
 }
+
 .familyArial {
     font-family: Arial;
 }
 
+.italic {
+    font-style: italic;
+}
+
+.size10px {
+    font-size: 10px;
+}
+.size12px {
+    font-size: 12px;
+}
+.size14px {
+    font-size: 14px;
+}
+.size16px {
+    font-size: 16px;
+}
+.size18px {
+    font-size: 18px;
+}
+.size20px {
+    font-size: 20px;
+}
+.size48px {
+    font-size: 48px;
+}
+.size64px {
+    font-size: 64px;
+}
+
+.line24px {
+    line-height: 24px;
+}
+
+.spacing1px {
+    letter-spacing: 1px;
+}
+.spacing2px {
+    letter-spacing: 2px;
+}
+.spacing4px {
+    letter-spacing: 4px;
+}
+
+.border1px {
+    border: 1px solid;
+}
+.border2px {
+    border: 2px solid;
+}
+.border6px {
+    border: 6px solid;
+}
+.border12px {
+    border: 12px solid;
+}
 .border1pxWhite {
     border: 1px solid white;
 }
 .border2pxWhite {
     border: 2px solid white;
+}
+.borderTop1px {
+    border-top: 1px solid;
+}
+.borderBottom1px {
+    border-bottom: 1px solid;
+}
+.borderWhite {
+    border-color: white;
+}
+.border444 {
+    border-color: #444;
+}
+.border666 {
+    border-color: #666;
+}
+.border888 {
+    border-color: #888;
 }
 
 .radius4px {
@@ -332,8 +511,20 @@
 .opacity02 {
     opacity: 0.2;
 }
+.opacity03 {
+    opacity: 0.3;
+}
+.opacity04 {
+    opacity: 0.4;
+}
 .opacity05 {
     opacity: 0.5;
+}
+.opacity06 {
+    opacity: 0.6;
+}
+.opacity07 {
+    opacity: 0.7;
 }
 .opacity08 {
     opacity: 0.8;

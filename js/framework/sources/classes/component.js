@@ -22,6 +22,7 @@ function Component(container, descriptor) {
     this.status = 3;
     this.id = Register.add(this);
     this.dt = [];
+    this.defstart = new jQuery.Deferred();
         
     /* Initialize */
     this.log("Initializing new component");
@@ -33,7 +34,7 @@ function Component(container, descriptor) {
         data: null,
         dataType: "xml",
         cache: false,
-        async: false,
+        async: true,
         timeout: 500
     }).error(function(jqXHR, status, info) {
         var p = {
@@ -43,29 +44,31 @@ function Component(container, descriptor) {
         throw new Error("cpn", 4, p);
     }).success(function(data) {
         this.model = data;
-    });
     
-    this.log("Tagging container");
-    $(this.container).addClass("cpn" + this.getModelName());
-    
-    this.log("Loading selectors");
-    var ctx = this;
-    $(this.model).find("selector").each(function() {
-        var buff;
-        if (ctx.isSelector($(this).attr("id"))) {
-            var p = {
-                name: $(this).attr("id")
-            };
-            throw new Error("cpn", 8, p);
-        } else {
-            buff = new Selector(
-                ctx, 
-                $(this).attr("id"),
-                $(this).text(),
-                $(this).parents("state").attr("id")
-            );
-            ctx.selectors[ctx.selectors.length] = buff;
-        }
+        this.log("Tagging container");
+        $(this.container).addClass("cpn" + this.getModelName());
+
+        this.log("Loading selectors");
+        var ctx = this;
+        $(this.model).find("selector").each(function() {
+            var buff;
+            if (ctx.isSelector($(this).attr("id"))) {
+                var p = {
+                    name: $(this).attr("id")
+                };
+                throw new Error("cpn", 8, p);
+            } else {
+                buff = new Selector(
+                    ctx, 
+                    $(this).attr("id"),
+                    $(this).text(),
+                    $(this).parents("state").attr("id")
+                );
+                ctx.selectors[ctx.selectors.length] = buff;
+            }
+        });
+            
+        this.defstart.resolve();
     });
     
     this.log("Saving initial methods"); 
@@ -75,6 +78,10 @@ function Component(container, descriptor) {
     this.registerMethod(this.shortcutGet, "get", false);
     this.registerMethod(this.shortcutReselect, "reselect", false);
     this.registerMethod(this.shortcutTrigger, "trigger", false);
+    this.registerMethod(this.shortcutSourcePost, "sourcePost", false);
+    this.registerMethod(this.shortcutSourcePostForce, "sourcePostForce", false);
+    this.registerMethod(this.shortcutSourceGet, "sourceGet", false);
+    this.registerMethod(this.shortcutSourceGetForce, "sourceGetForce", false);
     this.registerMethod(this.shortcutOuterHeight, "outerHeight", false);
     this.registerMethod(this.shortcutOuterWidth, "outerWidth", false);
     this.registerMethod(this.shortcutRealHeight, "realHeight", false);
@@ -137,7 +144,7 @@ Component.prototype.saveMethod = function(method) {
         if (this.methods[i].equals(method)) {
             if (this.methods[i].isRewritable()) {
                 this.methods[i] = method;
-                return;
+                return; 
             } else {
                 var p = {
                     component: this.getID(),
@@ -550,6 +557,7 @@ Component.prototype.animate = function(animation, targets, postback) {
     var trajectory = $();
     var from = {};
     var to = {};
+    var clean = {};
     var b1, b2;
     var ctx = this;
 
@@ -570,12 +578,19 @@ Component.prototype.animate = function(animation, targets, postback) {
         b2 = $(this).children("from");
         if ($(b2).length > 0) {
             from[b1] = $(b2).text();
+            $(this).children("origin").each(function() {
+                from[b1] = ctx.call.apply(this, [ctx]);
+            });
         }
 
         var b3;
         $(this).children("goal").each(function() {
             b3 = ctx.call.apply(this, [ctx]);
         });
+
+        if ($(this).attr("clean") !== "false") {
+            clean[b1] = "";
+        }
 
         Toolkit.isNull(b3) ?
                 to[b1] = $(this).children("to").text() :
@@ -594,6 +609,10 @@ Component.prototype.animate = function(animation, targets, postback) {
             b3 = ctx.call.apply(this, [ctx]);
         });
 
+        if ($(this).attr("clean") !== "false") {
+            clean[b1] = "";
+        }
+        
         Toolkit.isNull(b3) ?
                 to[b1] = $(this).children("to").text() :
                 to[b1] = b3;
@@ -615,6 +634,7 @@ Component.prototype.animate = function(animation, targets, postback) {
         fail: function() {
             throw new Error("cpn", 13);
         }, done: function() {
+            $(targets).css(clean);
             ctx.postback(postback);
         }
     };
@@ -821,40 +841,42 @@ Component.prototype.go = function(to, complement) {
  * RETURNS :
  *  True if starting was successfull, false else.                               */
 Component.prototype.start = function() {
-    this.log("Starting component");
-    if (this.state !== "@None") {
-        if (CFG.get("components", "allow.invalid.start")) {
-            return false;
-        } else {
-            var p = {
-                component: this.getID()
-            };
-            throw new Error("cpn", 10, p);
-        }
-    } else {
-        // Writing initial DOM
-        this.rewrite($(this.model).find("component > loader > dom").text());
-
-        // Loading global selectors
-        this.reselect();
-
-        // Launching start actions
-        var ctx = this;
-        $(this.model).find("component > loader > action").each(function() {
-            ctx.call.apply(this, [ctx]);
-        });
-
-        // Launching init actions
-        for (var i = 0; i < this.methods.length; i++) {
-            if (this.methods[i].getName().indexOf("init") === 0) {
-                this.methods[i].call([]);
+    var ctx = this;
+    this.defstart.promise().done(function() {
+        ctx.log("Starting component");
+        if (ctx.state !== "@None") {
+            if (CFG.get("components", "allow.invalid.start")) {
+                return false;
+            } else {
+                var p = {
+                    component: ctx.getID()
+                };
+                throw new Error("cpn", 10, p);
             }
-        }
+        } else {
+            // Writing initial DOM
+            ctx.rewrite($(ctx.model).find("component > loader > dom").text());
 
-        // Migrating to initial state
-        this.setStatus(0);
-        this.go($(this.model).find("component > loader > to").text());
-    }
+            // Loading global selectors
+            ctx.reselect();
+
+            // Launching start actions
+            $(ctx.model).find("component > loader > action").each(function() {
+                ctx.call.apply(this, [ctx]);
+            });
+
+            // Launching init actions
+            for (var i = 0; i < ctx.methods.length; i++) {
+                if (ctx.methods[i].getName().indexOf("init") === 0) {
+                    ctx.methods[i].call([]);
+                }
+            }
+
+            // Migrating to initial state
+            ctx.setStatus(0);
+            ctx.go($(ctx.model).find("component > loader > to").text());
+        }
+    });
 };
 /* Component deallocation.
  * PARAMETERS : N/A
@@ -906,6 +928,22 @@ Component.prototype.shortcutGet = function(variable, base) {
 Component.prototype.shortcutTrigger = function(target, trigger) {
     this.qs(target).trigger(trigger);
 };
+/* Source loader.
+ * PARAMETERS :
+ *  > source        Source name.
+ * RETURNS : N/A                                                                */
+Component.prototype.shortcutSourcePost = function(source) {
+    this.getSource(source).post({});
+};
+Component.prototype.shortcutSourcePostForce = function(source) {
+    this.getSource(source).postForce({});
+};
+Component.prototype.shortcutSourceGet = function(source) {
+    this.getSource(source).get({});
+};
+Component.prototype.shortcutSourceGetForce = function(source) {
+    this.getSource(source).getForce({});
+}
 /* Outer height getter.
  * PARAMETERS :
  *  > target        Target selector or item.
@@ -996,12 +1034,13 @@ Component.prototype.shortcutAttribute = function(target, attribute, value) {
  * PARAMETERS :
  *  target          Target element.
  *  attribute       Attribute name.
- *  value           Value (if null, deletes attribute).
- * RETURNS : N/A                                                                */
+ *  value           Value.
+ * RETURNS :
+ *  Initial CSS value.                                                          */
 Component.prototype.shortcutCss = function(target, attribute, value) {
-    if (Toolkit.isNull(value)) {
-        this.qs(target).css(attribute, "");
-    } else {
+    var res = this.qs(target).css(attribute);
+    if (!Toolkit.isNull(value)) {
         this.qs(target).css(attribute, value);
     }
+    return res;
 };

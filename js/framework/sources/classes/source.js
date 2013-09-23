@@ -61,6 +61,35 @@ Source.prototype.getData = function(selector) {
         return $(this.data).find(selector);
     }
 };
+Source.prototype.getDataByKey = function(model, key, value) {
+    var base = this.getData('s[class="' + model + '"]');
+    var result = $([]);
+    $(base).each(function() {
+        if ($(this).children('i[class="' + key + '"]') === value) {
+            result = $(result).add(this);
+        }
+    });
+    return result;
+};
+Source.prototype.getDataByKeys = function(model, couples) {
+    var base = this.getData('s[class="' + model + '"]');
+    var result = $([]);
+    $(base).each(function() {
+        var b = true;
+        for (var i = 0; i < couples.length; i++) {
+            if ($(this).children('i[class="' + couples[i].key + '"]') === couples[i].value) {
+                b = false;
+            }
+        }
+        if (b) {
+            result = $(result).add(this);
+        }
+    });
+    return result;
+};
+Source.prototype.hasData = function() {
+    return !Toolkit.isNull(this.data);
+};
 /* Callbacks. */
 Source.prototype.getCallbacks = function() {
     return this.callbacks;
@@ -88,6 +117,11 @@ Source.prototype.select = function(selector) {
  *  > mode              Call mode (default : POST).
  * RETURNS : N/A                                                            */
 Source.prototype.load = function(params, mode) {
+    if (Toolkit.isNull(this.data)) {
+        this.loadForce(params, mode);
+    }
+};
+Source.prototype.loadForce = function(params, mode) {
     var error;
     var errorlength;
     var buff;
@@ -149,7 +183,7 @@ Source.prototype.load = function(params, mode) {
 
                 // Linking items
                 $(this).children("column").each(function(position) {
-                    $(buff).find("s > i:eq(" + position + ")").attr("class", $(this).attr("alias").toLowerCase());
+                    $(buff).find("s > i:eq(" + position + ")").attr("class", $(this).text().toLowerCase());
                 });
             });
 
@@ -167,11 +201,19 @@ Source.prototype.load = function(params, mode) {
     });
 };
 /* Data getter.
- * Execute data loading on the data source with forced GET mode.
+ * Execute data loading on the data source with forced POST or GET mode.
  * PARAMETERS :
  *  > params        Call parameters.
  * RETURNS : N/A                                                                */
 Source.prototype.get = function(params) {
     this.load(params, "GET");
 };
-    
+Source.prototype.getForce = function(params) {
+    this.loadForce(params, "GET");
+};
+Source.prototype.post = function(params) {
+    this.load(params, "POST");
+};
+Source.prototype.postForce = function(params) {
+    this.loadForce(params, "POST");
+};

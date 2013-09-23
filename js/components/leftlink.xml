@@ -40,7 +40,11 @@
             <move>
                 <property>width</property>
                 <from>32</from>
-                <to>512</to>
+                <goal call="css">
+                    <parameter>wrapper</parameter>
+                    <parameter>width</parameter>
+                </goal>
+                <to>32</to>
             </move>
         </trajectory>
         <trajectory name="Close">
@@ -53,14 +57,13 @@
             </move>
             <move>
                 <property>width</property>
-                <from>512</from>
                 <to>32</to>
             </move>
         </trajectory>
         <trajectory name="Select">
             <speed>320</speed>
             <easing>easeOutCubic</easing>
-            <move>
+            <move clean="false">
                 <property>background-color</property>
                 <goal call="get">
                     <parameter>altcolor</parameter>
@@ -71,7 +74,7 @@
         <trajectory name="Deselect">
             <speed>320</speed>
             <easing>easeOutCubic</easing>
-            <move>
+            <move clean="false">
                 <property>background-color</property>
                 <goal call="get">
                     <parameter>color</parameter>

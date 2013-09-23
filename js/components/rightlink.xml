@@ -39,7 +39,11 @@
             <move>
                 <property>width</property>
                 <from>32</from>
-                <to>512</to>
+                <goal call="css">
+                    <parameter>wrapper</parameter>
+                    <parameter>width</parameter>
+                </goal>
+                <to>32</to>
             </move>
         </trajectory>
         <trajectory name="Close">
@@ -52,14 +56,13 @@
             </move>
             <move>
                 <property>width</property>
-                <from>512</from>
                 <to>32</to>
             </move>
         </trajectory>
         <trajectory name="Select">
             <speed>240</speed>
             <easing>easeOutCubic</easing>
-            <move>
+            <move clean="false">
                 <property>background-color</property>
                 <goal call="get">
                     <parameter>altcolor</parameter>
@@ -70,7 +73,7 @@
         <trajectory name="Deselect">
             <speed>240</speed>
             <easing>easeOutCubic</easing>
-            <move>
+            <move clean="false">
                 <property>background-color</property>
                 <goal call="get">
                     <parameter>color</parameter>
@@ -81,7 +84,7 @@
         <trajectory name="FadeIn">
             <speed>240</speed>
             <easing>swing</easing>
-            <move>
+            <move clean="false">
                 <property>opacity</property>
                 <from>0</from>
                 <to>1</to>
@@ -90,7 +93,7 @@
         <trajectory name="FadeOut">
             <speed>160</speed>
             <easing>swing</easing>
-            <move>
+            <move clean="false">
                 <property>opacity</property>
                 <from>1</from>
                 <to>0</to>
@@ -116,11 +119,11 @@
         </action>
         <action call="class">
             <parameter>wrapper</parameter>
-            <parameter>displayNone positionAbsolute top4px rightM16px bottom4px radius8px border1pxWhite overflowHidden colorWhite</parameter>
+            <parameter>displayNone overflowHidden positionAbsolute top4px rightM16px bottom4px width480px radius8px border1pxWhite colorWhite</parameter>
         </action>
         <action call="class">
             <parameter>title</parameter>
-            <parameter>width360px rightNo marginL64px marginV8px textRight fontBold</parameter>
+            <parameter>width360px rightNo marginL32px marginV8px textRight fontBold</parameter>
         </action>
         <action call="css">
             <parameter>title</parameter>

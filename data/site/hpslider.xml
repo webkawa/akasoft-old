@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >    
+    <model alias="slide">
+        <column>id</column>
+        <column>center</column>
+        <column>footleft</column>
+        <column>footcenter</column>
+        <column>footright</column>
+    </model>
+    <s> 
+        <i>1</i>
+        <i>
+            <![CDATA[
+                <h1>Test 1</h1>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 1</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 1</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 1</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+    </s>
+    <s>
+        <i>2</i>
+        <i>
+            <![CDATA[
+                <h1>Test 2</h1>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 2</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 2</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 2</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+    </s>
+    <s>
+        <i>3</i>
+        <i>
+            <![CDATA[
+                <h1>Test 3</h1>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 3</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 3</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 3</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+    </s>
+    <s>
+        <i>4</i>
+        <i>
+            <![CDATA[
+                <h1>Test 4</h1>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 4</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 4</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Test 4</h1>
+                <p>Lorem ipsum</p>
+            ]]>
+        </i>
+    </s>
+</data>

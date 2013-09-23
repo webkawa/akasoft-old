@@ -6,7 +6,8 @@
     <selectors>
         <selector id="left">div.left</selector>
         <selector id="center">div.center</selector>
-        <selector id="frame">div.center > div</selector>
+        <selector id="centerBackground">div.center > div.background</selector>
+        <selector id="centerFrame">div.center > div.frame</selector>
         <selector id="right">div.right</selector>
     </selectors>
     <trajectories>
@@ -23,18 +24,14 @@
                 <from>0%</from>
                 <to>100%</to>
             </move>
-            <move>
-                <property>opacity</property>
-                <from>0</from>
-                <to>0.5</to>
-            </move>
         </trajectory>
     </trajectories>
     <loader>
         <dom>
             <![CDATA[
                 <div class="center">
-                    <div />
+                    <div class="background" />
+                    <div class="frame" />
                 </div>
                 <div class="left" />
                 <div class="right" />
@@ -49,8 +46,12 @@
             <parameter>positionAbsolute marginH32px marginV32px</parameter>
         </action>
         <action call="class">
-            <parameter>frame</parameter>
-            <parameter>radius8px opacity05 backgroundWhite</parameter>
+            <parameter>centerBackground</parameter>
+            <parameter>positionAbsolute height100per width100per radius8px opacity02 backgroundWhite border1px border444</parameter>
+        </action>
+        <action call="class">
+            <parameter>centerFrame</parameter>
+            <parameter>positionAbsolute height100per width100per</parameter>
         </action>
         <action call="class">
             <parameter>right</parameter>
@@ -78,13 +79,25 @@
             <selector id="openLN">div.left > div.cpnLeftLink.atOpen</selector>
         </selectors>
         <in from="@None">
-            <target>frame</target>
+            <target>centerBackground</target>
             <pre call="loadNavigation" />
             <animation base="Open">
                 <progress call="center">
-                    <parameter>frame</parameter>
+                    <parameter>centerBackground</parameter>
                 </progress>
+                <move>
+                    <property>opacity</property>
+                    <from>0</from>
+                    <goal call="css">
+                        <parameter>centerBackground</parameter>
+                        <parameter>opacity</parameter>
+                    </goal>
+                    <to>1</to>
+                </move>
             </animation>
+            <post call="go" on="Navigable">
+                <parameter>home</parameter>
+            </post>
         </in>
     </state>
 </component>

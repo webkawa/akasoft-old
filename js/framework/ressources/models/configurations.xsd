@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!-- JS Framework : Global configuration -->
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    
+    <!-- General tools -->
+    <!-- ************* -->
+    
+    <xs:simpleType name="string">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Complex components -->
+    <!-- ****************** -->
+    
+    <!-- Variable types -->
+    <xs:complexType name="type_string">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="id" 
+                              type="string"
+                              use="required" />
+                <xs:attribute name="level"
+                              type="xs:integer" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="type_integer">
+        <xs:simpleContent>
+            <xs:extension base="xs:integer">
+                <xs:attribute name="id" 
+                              type="string"
+                              use="required" />
+                <xs:attribute name="level"
+                              type="xs:integer" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="type_float">
+        <xs:simpleContent>
+            <xs:extension base="xs:float">
+                <xs:attribute name="id" 
+                              type="string"
+                              use="required" />
+                <xs:attribute name="level"
+                              type="xs:integer" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="type_date">
+        <xs:simpleContent>
+            <xs:extension base="xs:date">
+                <xs:attribute name="id" 
+                              type="string"
+                              use="required" />
+                <xs:attribute name="level"
+                              type="xs:integer" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="type_boolean">
+        <xs:simpleContent>
+            <xs:extension base="xs:boolean">
+                <xs:attribute name="id" 
+                              type="string"
+                              use="required" />
+                <xs:attribute name="level"
+                              type="xs:integer" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- Variables group -->
+    <xs:complexType name="group">
+        <xs:sequence>
+            <xs:element name="string"
+                        type="type_string"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="integer"
+                        type="type_integer"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="float"
+                        type="type_float"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="date"
+                        type="type_date"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
+            <xs:element name="boolean"
+                        type="type_boolean"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="id"
+                      type="string"
+                      use="required" />
+    </xs:complexType>
+    
+    <!-- Main component -->
+    <!-- ************** -->
+    
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="group"
+                            type="group"
+                            maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="level"
+                          type="xs:integer" 
+                          use="required" />
+        </xs:complexType>
+    </xs:element>
+    
+
+</xs:schema>

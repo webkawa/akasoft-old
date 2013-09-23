@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../models/configurations.xsd" 
+               level="2" >
+    
+    <group id="tools">
+        <boolean id="dev">true</boolean>
+    </group>
+    
+    <group id="logs">
+        <boolean id="display">true</boolean>
+    </group>
+    
+    <group id="errors">
+        <boolean id="display.minor">true</boolean>
+        <boolean id="display.major">true</boolean>
+    </group>
+    
+</configuration>
