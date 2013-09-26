@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         name="Home" 
+         type="classic" >
+    <selectors>
+        <selector id="all">div</selector>
+        <selector id="head">div.head</selector>
+        <selector id="headChilds">div.head > h1 > span, div.head > h2</selector>
+        <selector id="headTitle">div.head > h1</selector>
+        <selector id="headTitleLeft">div.head > h1 > span:first()</selector>
+        <selector id="headTitleRight">div.head > h1 > span:last()</selector>
+        <selector id="headSubtitle">div.head > h2</selector>
+        <selector id="slider">div.slider</selector>
+        <selector id="slide">div.slider > div</selector>
+        <selector id="foot">div.foot</selector>
+        <selector id="footChilds">div.foot > div</selector>
+        <selector id="footLeft">div.foot > div.left</selector>
+        <selector id="footCenter">div.foot > div.center</selector>
+        <selector id="footRight">div.foot > div.right</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="Open">
+            <speed>1200</speed>
+            <easing>easeOutQuint</easing>
+            <move>
+                <property>width</property>
+                <from>0</from>
+                <to>100%</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeIn">
+            <speed>1000</speed>
+            <easing>easeOutCubic</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="QuickFadeIn">
+            <speed>200</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="QuickFadeOut">
+            <speed>200</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <to>0</to>
+            </move>
+        </trajectory>
+        <trajectory name="SliderFadeIn">
+            <speed>2000</speed>
+            <easing>easeInOutExpo</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from> 
+                <goal call="css">
+                    <parameter>sliderBackground</parameter>
+                    <parameter>opacity</parameter>
+                </goal>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="SlideNextOut">
+            <speed>750</speed>
+            <easing>easeInExpo</easing>
+            <move>
+                <property>margin-left</property>
+                <from>0px</from>
+                <to>0px</to>
+                <goal call="nextGoal" />
+            </move>
+        </trajectory>
+        <trajectory name="SlideNextIn">
+            <speed>750</speed>
+            <easing>easeOutExpo</easing>
+            <move>
+                <property>margin-left</property>
+                <from>0px</from>
+                <origin call="nextOrigin" />
+                <to>0px</to>
+            </move>
+        </trajectory>
+        <trajectory name="SlideBackOut">
+            <speed>750</speed>
+            <easing>easeInExpo</easing>
+            <move>
+                <property>margin-left</property>
+                <from>0px</from>
+                <to>0px</to>
+                <goal call="backGoal" />
+            </move>
+        </trajectory>
+        <trajectory name="SlideBackIn">
+            <speed>750</speed>
+            <easing>easeOutExpo</easing>
+            <move>
+                <property>margin-left</property>
+                <from>0px</from>
+                <origin call="backOrigin" />
+                <to>0px</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div class="head">
+                    <h1><span>Aka</span><span>soft</span></h1>
+                    <h2>Lorem ipsum dolor sit amet</h2>
+                </div>
+                <div class="slider" />
+                <div class="foot">
+                    <div class="left" />
+                    <div class="center" />
+                    <div class="right" />
+                </div>
+            ]]>
+        </dom>
+        <action call="class">
+            <parameter>all</parameter>
+            <parameter>positionAbsolute</parameter>
+        </action>
+        <action call="class">
+            <parameter>head</parameter>
+            <parameter>width640px paddingT32px left64px textCenter</parameter>
+        </action>
+        <action call="class">
+            <parameter>headChilds</parameter>
+            <parameter>spacing4px</parameter>
+        </action>
+        <action call="class">
+            <parameter>headTitle</parameter>
+            <parameter>displayInlineBlock size64px weightNormal</parameter>
+        </action>
+        <action call="class">
+            <parameter>headTitleLeft</parameter>
+            <parameter>weightBold color444</parameter>
+        </action>
+        <action call="class">
+            <parameter>headTitleRight</parameter>
+            <parameter>weightNormal radius8px background444 colorDDD</parameter>
+        </action>
+        <action call="class">
+            <parameter>headSubtitle</parameter>
+            <parameter>displayInlineBlock width320px textLeft italic line24px marginL4px color444</parameter>
+        </action>
+        <action call="class">
+            <parameter>slider</parameter>
+            <parameter>positionRelative height420px width100per borderTop1px borderBottom1px border666</parameter>
+        </action>
+        <action call="class">
+            <parameter>foot</parameter>
+            <parameter>height128px marginB8px paddingH16px bottomNo</parameter>
+        </action>
+        <action call="class">
+            <parameter>footChilds</parameter>
+            <parameter>paddingH16px</parameter>
+        </action>
+        <action call="css">
+            <parameter>headChilds</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="css">
+            <parameter>footChilds</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="center">
+            <parameter>slider</parameter>
+        </action>
+        <action call="realWidth">
+            <parameter>foot</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>footChilds</parameter>
+        </action>
+        <to>Ready</to>
+    </loader>
+    <state id="Ready">
+        <in from="@None">
+            <target>headTitleRight</target>
+            <animation base="FadeIn">
+                <easing>easeInCubic</easing>
+            </animation>
+            <queue>
+                <target>headTitleLeft</target>
+                <animation base="FadeIn" />
+            </queue>
+            <queue>
+                <target>headSubtitle</target>
+                <animation base="FadeIn" />
+            </queue>
+        </in>
+        <in from="@None">
+            <target>slider</target>
+            <animation base="Open" />
+        </in>
+        <begin call="sourceGet">
+            <parameter>slider</parameter>
+        </begin>
+        <begin call="next" on="Slidable" delay="3000" />
+        <in from="LoadNext LoadBack">
+            <target>footLeft</target>
+            <pre call="class">
+                <parameter>slide</parameter>
+                <parameter>in</parameter>
+                <parameter>remove</parameter>
+            </pre>
+            <animation base="QuickFadeIn" />
+            <queue>
+                <target>footCenter</target>
+                <animation base="QuickFadeIn" />
+                <queue>
+                    <target>footRight</target>
+                    <animation base="QuickFadeIn" />
+                </queue>
+            </queue>
+        </in>
+        <out to="LoadNext LoadBack">
+            <target>footLeft</target>
+            <pre call="class">
+                <parameter>slide</parameter>
+                <parameter>out</parameter>
+                <parameter>add</parameter>
+            </pre>
+            <animation base="QuickFadeOut" />
+            <queue>
+                <target>footCenter</target>
+                <animation base="QuickFadeOut" />
+                <queue>
+                    <target>footRight</target>
+                    <animation base="QuickFadeOut" />
+                </queue>
+            </queue>
+        </out>
+    </state>
+    <state id="LoadNext">
+        <in from="Ready">
+            <target>slide</target>
+            <animation base="SlideNextOut" />
+        </in>
+        <begin call="build" on="Slidable" />
+        <out to="Ready">
+            <target refresh="true">slide</target>
+            <animation base="SlideNextIn" />
+        </out>
+    </state>
+    <state id="LoadBack">
+        <in from="Ready">
+            <target>slide</target>
+            <animation base="SlideBackOut" />
+        </in>
+        <begin call="build" on="Slidable" />
+        <out to="Ready">
+            <target refresh="true">slide</target>
+            <animation base="SlideBackIn" />
+        </out>
+    </state>
+</component>

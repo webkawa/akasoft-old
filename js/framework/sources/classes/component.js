@@ -3,26 +3,30 @@
  * PARAMETERS :
  *  > container             Containing node.
  *  > descriptor            URL of description file.                            */
-
 function Component(container, descriptor) {
     Toolkit.checkTypeOf(container, "object");
     Toolkit.checkClassOf(container, jQuery);
     Toolkit.checkTypeOf(descriptor, "string");
     
-    this.container = container;
-    this.descriptor = descriptor;
-    this.model = null;
-    this.methods = [];
-    this.interface = "";
-    this.datas = [];
-    this.selectors = [];
-    this.ltn;
-    this.sources = [];
-    this.state = "@None";
-    this.status = 3;
-    this.id = Register.add(this);
-    this.dt = [];
-    this.defstart = new jQuery.Deferred();
+    this.container = container;                         // Component container
+    this.descriptor = descriptor;                       // Component descriptor
+    this.model = null;                                  // XML model
+    this.methods = [];                                  // Methods list
+    this.parents = [];                                  // Parents list
+    this.interface = "";                                // Interface buffer
+    this.datas = [];                                    // Interface datas
+    this.selectors = [];                                // Selectors
+    this.as;                                            // Active selectors
+    this.ltn;                                           // Last triggered node
+    this.sources = [];                                  // Data sources
+    this.state = "@None";                               // Current state
+    this.status = 3;                                    // Current status
+    this.id = Register.add(this);                       // Component ID
+    this.dt = [];                                       // Delayed threads
+    this.defstart = new jQuery.Deferred();              // Deffered starter
+    this.defevolve;                                     // Deffered evolver
+    this.qstate;                                        // Queue state
+    this.qobj;                                          // Queue objective
         
     /* Initialize */
     this.log("Initializing new component");
@@ -96,11 +100,21 @@ function Component(container, descriptor) {
 Component.prototype.getContainer = function() {
     return this.container;
 };
+/* Parent */
+Component.prototype.getParent = function(at) {
+    if (Toolkit.isNull(at)) {
+        at = 1;
+    }
+    return this.parents[at];
+};
 /* Descriptor */
 Component.prototype.getDescriptor = function() {
     return this.descriptor;
 };
 /* Model */
+Component.prototype.getModel = function() {
+    return this.model;
+};
 Component.prototype.getModelName = function() {
     return $(this.model).find("component").attr("name");
 };
@@ -212,15 +226,6 @@ Component.prototype.getSelector = function(name, refresh) {
         name: name
     };
     throw new Error("cpn", 6, p);
-};
-Component.prototype.activeSelect = function() {
-    var c = $(this.container);
-    for (var i = 0; i < this.selectors.length; i++) {
-        if (this.selectors[i].getStatus()) {
-            c = c.add(this.selectors[i].getNodes());
-        }
-    }
-    return c;
 };
 Component.prototype.quickSelect = function(name, refresh) {
     if (Toolkit.isNull(refresh)) {
@@ -407,15 +412,29 @@ Component.prototype.rewrite = function(data) {
  * Re-bind all triggers for the selected state.
  * PARAMETERS : N/A
  * RETURNS : N/A                                                                */
-Component.prototype.retrigger = function() {
+Component.prototype.retrigger = function(distant) {
+    if (Toolkit.isNull(distant)) {
+        distant = false;
+    }
+    
     var nodes = $([]);
     var targets;
     var bind;
     var ctx = this;
 
-    nodes = $(nodes).add($(this.model).find('component > trigger'));
-    nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > trigger'));
-
+    if (!distant) {
+        nodes = $(nodes).add($(this.model).find('component > trigger'));
+        nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > trigger'));   
+    } else {
+        this.as.unbind();
+    }
+    nodes = $(nodes).add($(this.model).find('component > master'));
+    nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > master'));
+    
+    if (this.parents.length > 1) {
+        this.parents[1].retrigger(true);
+    }
+    
     var i = 0;
     $(nodes).each(function(i, item) {
         // Parsing
@@ -453,11 +472,14 @@ Component.prototype.retrigger = function() {
  * RETURNS : N/A                                                                */
 Component.prototype.reselect = function() {
     var buff;
+    
+    this.as = $([]);
     for (var i = 0; i < this.selectors.length; i++) {
         buff = this.selectors[i];
         if (buff.getState() === this.state || Toolkit.isNull(buff.getState())) {
             buff.on();
             buff.refresh();
+            this.as = $(this.as).add(buff.getNodes());
         } else {
             buff.off();
         }
@@ -484,6 +506,11 @@ Component.prototype.call = function(context) {
         interface = $(this).attr("on");
     }
     
+    var caller = context;
+    if ($(this).is('[parent]')) {
+        caller = context.parents[$(this).attr("parent")];
+    }
+    
     var params = [];
     $(this).children("parameter").each(function() {
         if ($(this).attr("variable") === "true") {
@@ -507,21 +534,21 @@ Component.prototype.call = function(context) {
 
     try {
         if (delay === 0) {
-            return context.getMethod(name, interface).call(params, interface);
+            return caller.getMethod(name, interface).call(params, interface);
         } else {
             var t = setTimeout(function() {
                 try {
-                    context.getMethod(name, interface).call(params, interface);
+                    caller.getMethod(name, interface).call(params, interface);
                 } catch (e) {
                     var p = {
-                        component: context.getID(),
+                        component: caller.getID(),
                         method: name
                     };
                     ErrorManager.process(new Error("cpn", 23, p, e));
-                    context.stop();
+                    caller.stop();
                 }
             }, delay);
-            context.addDelayedTask(t);
+            caller.addDelayedTask(t);
 
             return 0;
         }
@@ -530,7 +557,7 @@ Component.prototype.call = function(context) {
             name: name
         };
         ErrorManager.process(new Error("cpn", 12, p, e));
-        context.stop();
+        caller.stop();
     }
 };
 /* Executes pre-formated animation postback.
@@ -644,7 +671,12 @@ Component.prototype.animate = function(animation, targets, postback) {
         };
     }
     ;
-    $(targets).animate(to, params);
+    $(targets).animate(to, params).promise().always(function() {
+            ctx.qstate++;
+            if (ctx.qstate === ctx.qobj) {
+                ctx.defevolve.resolve();
+            }
+        });
 };
 /* Executes a pre-saved sequence.
  * PARAMETERS :
@@ -652,12 +684,13 @@ Component.prototype.animate = function(animation, targets, postback) {
  * RETURNS : N/A                                                                */
 Component.prototype.execute = function(sequence) {
     var lt;
-    if ($(sequence).is("in"))
+    if ($(sequence).is("in")) {
         lt = "in";
-    else if ($(sequence).is("out"))
+    } else if ($(sequence).is("out")) {
         lt = "out";
-    else
+    } else {
         lt = "queue";
+    }
     this.log("Executes sequence [" + lt + "]/[" + this.getState() + "]");
 
     // Use vars
@@ -763,16 +796,12 @@ Component.prototype.go = function(to, complement) {
         }
 
         // Unloading triggers
-        this.activeSelect().unbind();
+        this.as.unbind();
 
         // Executing exit sequence
         this.status = 1;
-        if (!Toolkit.isNull(seq_exit)) {
-            $(seq_exit).each(function() {
-                ctx.execute(this);
-            });
-        }
-        this.activeSelect().promise().done(function() {
+        this.prepare(seq_exit);
+        this.defevolve.promise().done(function() {
             // Executes delayed removal
             $(ctx.getContainer()).find("." + drt).remove();
 
@@ -787,12 +816,9 @@ Component.prototype.go = function(to, complement) {
 
             // Executing entry sequence
             ctx.setStatus(2);
-            if (!Toolkit.isNull(seq_entry)) {
-                $(seq_entry).each(function() {
-                    ctx.execute(this);
-                });
-            }
-            ctx.activeSelect().promise().done(function() {
+            ctx.prepare(seq_entry);
+            
+            ctx.defevolve.promise().done(function() {
                 ctx.setStatus(0);
                 if (Toolkit.isNull(to)) {
                     // Closing component
@@ -828,13 +854,32 @@ Component.prototype.go = function(to, complement) {
                     }
                 }
             });
+            if ($(seq_entry).length > 0) {
+                $(seq_entry).each(function() {
+                    ctx.execute(this);
+                });
+            } else {
+                ctx.defevolve.resolve();
+            }
         });
+        if ($(seq_exit).length > 0) {
+            $(seq_exit).each(function() {
+                ctx.execute(this);
+            });
+        } else {
+            this.defevolve.resolve();
+        }
     } catch (e) {
         var p = {
             component: this.getID()
         };
-        throw new Error("cpn", 14, p, e);
+        ErrorManager.process(new Error("cpn", 14, p, e));
     }
+};
+Component.prototype.prepare = function(node) {
+    this.defevolve = new jQuery.Deferred();
+    this.qstate = 0;
+    this.qobj = $(node).add($(node).find("queue")).length;
 };
 /* Starts component to initial state.
  * PARAMETERS : N/A
@@ -859,6 +904,17 @@ Component.prototype.start = function() {
 
             // Loading global selectors
             ctx.reselect();
+            
+            // Selecting parents
+            ctx.parents[0] = ctx;
+            $(ctx.container).parents("[id]").each(function() {
+                ctx.parents[ctx.parents.length] = Register.get($(this).attr("id"));
+            });
+            
+            // Applying styles
+            $(ctx.model).find("component > loader > style").each(function() {
+                ctx.qs($(this).attr("target")).addClass($(this).text());
+            });
 
             // Launching start actions
             $(ctx.model).find("component > loader > action").each(function() {
