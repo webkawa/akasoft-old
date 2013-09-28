@@ -34,18 +34,9 @@
                 <span>Aka</span><span>soft</span>
             ]]>
         </dom>
-        <action call="class">
-            <parameter>both</parameter>
-            <parameter>spacing2px</parameter>
-        </action>
-        <action call="class">
-            <parameter>left</parameter>
-            <parameter>weightBold color444</parameter>
-        </action>
-        <action call="class">
-            <parameter>right</parameter>
-            <parameter>radius4px background444 colorWhite</parameter>
-        </action>
+        <style target="both">spacing2px</style>
+        <style target="left">weightBold color444</style>
+        <style target="right">radius4px background444 colorWhite</style>
         <action call="css">
             <parameter>both</parameter>
             <parameter>opacity</parameter>

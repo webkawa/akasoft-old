@@ -3,6 +3,20 @@
  * error-based parameters check.                                                */
 
 var Log = {
+    cfg_display: null,
+    cfg_plength: null,
+    cfg_mlength: null,
+    cfg_clength: null,
+    count: 1,
+    
+    /* Starter */
+    start: function() {
+        Log.cfg_display = CFG.get("logs", "display");
+        Log.cfg_plength = CFG.get("logs", "display.length.prefix");
+        Log.cfg_mlength = CFG.get("logs", "display.length.message");
+        Log.cfg_clength = CFG.get("logs", "display.length.directout");
+    },
+    
     /* Writers */
     writers: [],
     getWriter: function(id) {
@@ -43,15 +57,16 @@ var Log = {
      *  > directout             Complementary direct output.
      * RETURNS : N/A                                                            */
     print: function(author, say, directout) {
+        if (!Log.cfg_display) {
+            return;
+        }
+        
         var writer = null;
         var prefix = "";
         var message = "";
         var messagepre = "";
         var complement = "";
         var buff = "";
-        var cfg_plength = CFG.get("logs", "display.length.prefix");
-        var cfg_mlength = CFG.get("logs", "display.length.message");
-        var cfg_clength = CFG.get("logs", "display.length.directout");
         
         // Writer verification
         try {
@@ -60,33 +75,39 @@ var Log = {
             writer = Log.addWriter(new LogWriter(author));
         }
         
+        // Clear
+        Log.count++;
+        if (Log.count % 1000 === 0) {
+            console.clear();
+        }
+        
         // Prefix
         prefix = "\n";
         if (writer === Log.getLastWriter()) {
-            buff  = Toolkit.followingChars(writer.getCount(), 4, ".");
+            buff  = Toolkit.followingChars(writer.getCount(), 6, ".");
                 
-            prefix += Toolkit.leadingChars(buff, cfg_plength, " ");
+            prefix += Toolkit.leadingChars(buff, Log.cfg_plength, " ");
         } else {
             buff  = Toolkit.formatDate(new Date(), "exacthour");
             buff += " ";
-            buff += Toolkit.followingChars(writer.getCount(), 4, ".");
+            buff += Toolkit.followingChars(writer.getCount(), 6, ".");
             
-            prefix += Toolkit.leadingChars(buff, cfg_plength, " ");
+            prefix += Toolkit.leadingChars(buff, Log.cfg_plength, " ");
         }
         
         // Message
-        messagepre = Toolkit.repeatedString(cfg_plength, " ");
+        messagepre = Toolkit.repeatedString(Log.cfg_plength, " ");
         message  = "From : ";
         message += writer.getLogID();
         message += "\n";
         message += messagepre;
-        message += Toolkit.cut(say, cfg_mlength).join("\n" + messagepre);
+        message += Toolkit.cut(say, Log.cfg_mlength).join("\n" + messagepre);
         
         // Complement
         if (!Toolkit.isNull(directout)) {
             complement  = "\n";
-            complement += Toolkit.leadingChars("Direct output ", cfg_plength, " ");
-            complement += Toolkit.cut(directout, cfg_clength).join("\n" + messagepre);
+            complement += Toolkit.leadingChars("Direct output ", Log.cfg_plength, " ");
+            complement += Toolkit.cut(directout, Log.cfg_clength).join("\n" + messagepre);
         }
         
         // Fill last writer
@@ -96,8 +117,6 @@ var Log = {
         writer.increaseCount();
         
         // Print
-        if (CFG.get("logs", "display")) {
-            console.log(prefix + message + complement);
-        }
+        console.log(prefix + message + complement);
     }
 };

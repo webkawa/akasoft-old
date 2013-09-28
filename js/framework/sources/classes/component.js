@@ -68,6 +68,9 @@ function Component(container, descriptor) {
                     $(this).text(),
                     $(this).parents("state").attr("id")
                 );
+                if ($(this).attr("explore") === "true") {
+                    buff.setMode(true);
+                }
                 ctx.selectors[ctx.selectors.length] = buff;
             }
         });
@@ -422,15 +425,15 @@ Component.prototype.retrigger = function(distant) {
     var bind;
     var ctx = this;
 
+// Selecting nodes
     if (!distant) {
         nodes = $(nodes).add($(this.model).find('component > trigger'));
         nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > trigger'));   
-    } else {
-        this.as.unbind();
     }
     nodes = $(nodes).add($(this.model).find('component > master'));
     nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > master'));
     
+    // Triggering parents
     if (this.parents.length > 1) {
         this.parents[1].retrigger(true);
     }
@@ -445,6 +448,7 @@ Component.prototype.retrigger = function(distant) {
         bind = $(this).attr("bind");
 
         // Binding
+        $(targets).unbind(bind);
         $(targets).on(bind, function(event) {
             // Refreshing last triggered node
             ctx.ltn = $(this);
@@ -463,6 +467,7 @@ Component.prototype.retrigger = function(distant) {
             $(item).children("action").each(function() {
                 ctx.call.apply(this, [ctx]);
             });
+            return false;
         });
     });
 };
@@ -768,7 +773,7 @@ Component.prototype.go = function(to, complement) {
     var seq_exit = $();
     var seq_entry = $();
     var drt = CFG.get("components", "css.class.removal");
-
+    
     try {
         // Cleaning delayed tasks
         this.clearDelayedTasks();
@@ -802,64 +807,72 @@ Component.prototype.go = function(to, complement) {
         this.status = 1;
         this.prepare(seq_exit);
         this.defevolve.promise().done(function() {
-            // Executes delayed removal
-            $(ctx.getContainer()).find("." + drt).remove();
+            try {
+                // Executes delayed removal
+                $(ctx.getContainer()).find("." + drt).remove();
 
-            // Switching state
-            ctx.setState(to);
+                // Switching state
+                ctx.setState(to);
 
-            // Setting classes
-            ctx.setSwitchClass(1);
+                // Setting classes
+                ctx.setSwitchClass(1);
 
-            // Revalidating selectors
-            ctx.reselect();
+                // Revalidating selectors
+                ctx.reselect();
 
-            // Executing entry sequence
-            ctx.setStatus(2);
-            ctx.prepare(seq_entry);
-            
-            ctx.defevolve.promise().done(function() {
-                ctx.setStatus(0);
-                if (Toolkit.isNull(to)) {
-                    // Closing component
-                    ctx.clean();
-                } else {
-                    // Executes delayed removal
-                    $(ctx.getContainer()).find("." + drt).remove();
+                // Executing entry sequence
+                ctx.setStatus(2);
+                ctx.prepare(seq_entry);
 
-                    // Reloading triggers
-                    ctx.retrigger();
+                ctx.defevolve.promise().done(function() {
+                    try {
+                        ctx.setStatus(0);
+                        if (Toolkit.isNull(to)) {
+                            // Closing component
+                            ctx.clean();
+                        } else {
+                            // Executes delayed removal
+                            $(ctx.getContainer()).find("." + drt).remove();
 
-                    // Setting classes
-                    ctx.setStateClass(ctx.state, to);
-                    ctx.setSwitchClass(0);
+                            // Reloading triggers
+                            ctx.retrigger();
 
-                    // Executes complementary callback
-                    if (!Toolkit.isNull(complement)) {
-                        complement.apply(ctx);
+                            // Setting classes
+                            ctx.setStateClass(ctx.state, to);
+                            ctx.setSwitchClass(0);
+
+                            // Executes complementary callback
+                            if (!Toolkit.isNull(complement)) {
+                                complement.apply(ctx);
+                            }
+
+                            // Executes conclusion methods
+                            if (!Toolkit.isNull(node_origin)) {
+                                $(node_origin).find("conclude").each(function() {
+                                    ctx.call.apply(this, [ctx]);
+                                });
+                            }
+
+                            // Executes conclusion starters
+                            if (!Toolkit.isNull(node_dest)) {
+                                $(node_dest).find("begin").each(function() {
+                                    ctx.call.apply(this, [ctx]);
+                                });
+                            }
+                        }
+                    } catch (e) {
+                        ErrorManager.process(e);
                     }
-
-                    // Executes conclusion methods
-                    if (!Toolkit.isNull(node_origin)) {
-                        $(node_origin).find("conclude").each(function() {
-                            ctx.call.apply(this, [ctx]);
-                        });
-                    }
-
-                    // Executes conclusion starters
-                    if (!Toolkit.isNull(node_dest)) {
-                        $(node_dest).find("begin").each(function() {
-                            ctx.call.apply(this, [ctx]);
-                        });
-                    }
-                }
-            });
-            if ($(seq_entry).length > 0) {
-                $(seq_entry).each(function() {
-                    ctx.execute(this);
                 });
-            } else {
-                ctx.defevolve.resolve();
+                if ($(seq_entry).length > 0) {
+                    $(seq_entry).each(function() {
+                        ctx.execute(this);
+                    });
+                } else {
+                    ctx.defevolve.resolve();
+                }
+            } catch (e) {
+                ErrorManager.process(e);
             }
         });
         if ($(seq_exit).length > 0) {

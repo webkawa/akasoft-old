@@ -123,46 +123,16 @@
                 </div>
             ]]>
         </dom>
-        <action call="class">
-            <parameter>all</parameter>
-            <parameter>positionAbsolute</parameter>
-        </action>
-        <action call="class">
-            <parameter>head</parameter>
-            <parameter>width640px paddingT32px left64px textCenter</parameter>
-        </action>
-        <action call="class">
-            <parameter>headChilds</parameter>
-            <parameter>spacing4px</parameter>
-        </action>
-        <action call="class">
-            <parameter>headTitle</parameter>
-            <parameter>displayInlineBlock size64px weightNormal</parameter>
-        </action>
-        <action call="class">
-            <parameter>headTitleLeft</parameter>
-            <parameter>weightBold color444</parameter>
-        </action>
-        <action call="class">
-            <parameter>headTitleRight</parameter>
-            <parameter>weightNormal radius8px background444 colorDDD</parameter>
-        </action>
-        <action call="class">
-            <parameter>headSubtitle</parameter>
-            <parameter>displayInlineBlock width320px textLeft italic line24px marginL4px color444</parameter>
-        </action>
-        <action call="class">
-            <parameter>slider</parameter>
-            <parameter>positionRelative height420px width100per borderTop1px borderBottom1px border666</parameter>
-        </action>
-        <action call="class">
-            <parameter>foot</parameter>
-            <parameter>height128px marginB8px paddingH16px bottomNo</parameter>
-        </action>
-        <action call="class">
-            <parameter>footChilds</parameter>
-            <parameter>paddingH16px</parameter>
-        </action>
+        <style target="all">positionAbsolute</style>
+        <style target="head">width640px paddingT32px left64px textCenter</style>
+        <style target="headChilds">spacing4px</style>
+        <style target="headTitle">displayInlineBlock size64px weightNormal</style>
+        <style target="headTitleLeft">weightBold color444</style>
+        <style target="headTitleRight">weightNormal radius8px background444 colorDDD</style>
+        <style target="headSubtitle">displayInlineBlock width320px textLeft italic line24px marginL4px color444</style>
+        <style target="slider">positionRelative height420px width100per borderTop1px borderBottom1px border666</style>
+        <style target="foot">height128px marginB8px paddingH16px bottomNo</style>
+        <style target="footChilds">paddingH16px</style>
         <action call="css">
             <parameter>headChilds</parameter>
             <parameter>opacity</parameter>
@@ -170,6 +140,11 @@
         </action>
         <action call="css">
             <parameter>footChilds</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="css">
+            <parameter>slider</parameter>
             <parameter>opacity</parameter>
             <parameter>0</parameter>
         </action>
@@ -182,10 +157,13 @@
         <action call="realHeight">
             <parameter>footChilds</parameter>
         </action>
-        <to>Ready</to>
+        <to>Start</to>
     </loader>
-    <state id="Ready">
-        <in from="@None">
+    <state id="Start">
+        <begin call="sourceGet">
+            <parameter>slider</parameter>
+        </begin>
+        <out>
             <target>headTitleRight</target>
             <animation base="FadeIn">
                 <easing>easeInCubic</easing>
@@ -198,15 +176,18 @@
                 <target>headSubtitle</target>
                 <animation base="FadeIn" />
             </queue>
-        </in>
-        <in from="@None">
+        </out>
+        <out>
             <target>slider</target>
+            <pre call="css">
+                <parameter>slider</parameter>
+                <parameter>opacity</parameter>
+                <parameter>1</parameter>
+            </pre>
             <animation base="Open" />
-        </in>
-        <begin call="sourceGet">
-            <parameter>slider</parameter>
-        </begin>
-        <begin call="next" on="Slidable" delay="3000" />
+        </out>
+    </state>
+    <state id="Ready">
         <in from="LoadNext LoadBack">
             <target>footLeft</target>
             <pre call="class">
@@ -224,6 +205,7 @@
                 </queue>
             </queue>
         </in>
+        <begin call="next" on="Slidable" delay="3000" />
         <out to="LoadNext LoadBack">
             <target>footLeft</target>
             <pre call="class">

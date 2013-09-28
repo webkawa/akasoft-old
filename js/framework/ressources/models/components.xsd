@@ -41,6 +41,8 @@
                 <xs:attribute name="id" 
                               type="string"
                               use="required" />
+                <xs:attribute name="explore"
+                              type="xs:boolean" />
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -196,6 +198,8 @@
                       use="required" />
         <xs:attribute name="on"
                       type="string" />
+        <xs:attribute name="parent"
+                      type="xs:decimal" />
         <xs:attribute name="delay"
                       type="xs:decimal" />
     </xs:complexType>
@@ -230,10 +234,23 @@
     </xs:complexType>
     
     <!-- Loader -->
+    <xs:complexType name="brush">
+        <xs:simpleContent>
+            <xs:extension base="string">
+                <xs:attribute name="target" 
+                              type="string"
+                              use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
     <xs:complexType name="loader">
         <xs:sequence>
             <xs:element name="dom"
                         type="string" />
+            <xs:element name="style"
+                        type="brush"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="action"
                         type="call"
                         minOccurs="0"
@@ -304,6 +321,10 @@
             <xs:element name="selectors"
                         type="selectors"
                         minOccurs="0" />
+            <xs:element name="master"
+                        type="trigger"
+                        minOccurs="0"
+                        maxOccurs="unbounded" />
             <xs:element name="trigger"
                         type="trigger"
                         minOccurs="0"
@@ -347,6 +368,10 @@
                 <xs:element name="trajectories"
                             type="trajectories"
                             minOccurs="0" />
+                <xs:element name="master"
+                            type="trigger"
+                            minOccurs="0"
+                            maxOccurs="unbounded" />
                 <xs:element name="trigger"
                             type="trigger"
                             minOccurs="0"

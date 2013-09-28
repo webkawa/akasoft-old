@@ -33,12 +33,13 @@ SlidableITF.prototype.start = function(setup) {
     this.getMethod("to", "Slidable").call([0]);
 };
 SlidableITF.prototype.to = function(setup, to) {
-    if (this.slide > to && to !== 0 && !Toolkit.isNull(setup.stateLoadBack)) {
+    var back = this.slide;
+    this.slide = to;
+    if (back > to && to !== 0 && !Toolkit.isNull(setup.stateLoadBack)) {
         this.go(setup.stateLoadBack);
     } else {
         this.go(setup.stateLoadNext);
     }
-    this.slide = to;
 };
 SlidableITF.prototype.next = function(setup) {
     var l = this.getSourceData(setup.source, 's[class="slide"]').length;

@@ -93,26 +93,11 @@
                 <img />
             ]]>
         </dom>
-        <action call="class">
-            <parameter>$SELF</parameter>
-            <parameter>positionRelative width64px height64px marginV8px</parameter>
-        </action>
-        <action call="class">
-            <parameter>icon</parameter>
-            <parameter>positionAbsolute radius8px</parameter>
-        </action>
-        <action call="class">
-            <parameter>wrapper</parameter>
-            <parameter>displayNone positionAbsolute leftM4px topM4px paddingV16px paddingR16px radius8px overflowHidden colorWhite</parameter>
-        </action>
-        <action call="class">
-            <parameter>title</parameter>
-            <parameter>width360px marginH8px marginL96px fontBold</parameter>
-        </action>
-        <action call="class">
-            <parameter>description</parameter>
-            <parameter>width360px marginH4px marginL96px</parameter>
-        </action>
+        <style target="$SELF">positionRelative width64px height64px marginV8px</style>
+        <style target="icon">positionAbsolute radius8px</style>
+        <style target="wrapper">displayNone positionAbsolute leftM4px topM4px paddingV16px paddingR16px radius8px overflowHidden colorWhite</style>
+        <style target="title">width360px marginH8px marginL96px fontBold</style>
+        <style target="description">width360px marginH4px marginL96px</style>
         <to>Close</to>
     </loader>
     <state id="Close">

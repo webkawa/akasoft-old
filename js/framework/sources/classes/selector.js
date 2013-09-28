@@ -17,6 +17,7 @@ function Selector(owner, name, path, state) {
     this.nodes = null;
     this.state = state;
     this.status = false;
+    this.explore = false;
 };
 /* Owner component */
 Selector.prototype.getOwner = function() {
@@ -38,6 +39,14 @@ Selector.prototype.getNodes = function() {
 Selector.prototype.getState = function() {
     return this.state;
 };
+/* Mode */
+Selector.prototype.setMode = function(mode) {
+    Toolkit.checkTypeOf(mode, "boolean");
+    this.explore = mode;
+};
+Selector.prototype.getMode = function() {
+    return this.explore;
+};
 /* Status */
 Selector.prototype.getStatus = function() {
     return this.status;
@@ -57,8 +66,14 @@ Selector.prototype.refresh = function() {
     var subpaths = this.path.split(",");
     
     this.nodes = $([]);
-    for (var i = 0; i < subpaths.length; i++) {
-        this.nodes = this.nodes.add("#" + this.owner.getID() + " > " + subpaths[i]);
+    if (this.explore) {
+        for (var i = 0; i < subpaths.length; i++) {
+            this.nodes = this.nodes.add("#" + this.owner.getID() + " " + subpaths[i]);
+        }
+    } else {
+        for (var i = 0; i < subpaths.length; i++) {
+            this.nodes = this.nodes.add("#" + this.owner.getID() + " > " + subpaths[i]);
+        }
     }
     return this.nodes;
 };

@@ -109,22 +109,10 @@
                 <img />
             ]]>
         </dom>
-        <action call="class">
-            <parameter>$SELF</parameter>
-            <parameter>positionAbsolute width64px height64px marginB8px</parameter>
-        </action>
-        <action call="class">
-            <parameter>icon</parameter>
-            <parameter>positionAbsolute height64px width64px radius8px border1pxWhite</parameter>
-        </action>
-        <action call="class">
-            <parameter>wrapper</parameter>
-            <parameter>displayNone overflowHidden positionAbsolute top4px rightM16px bottom4px width480px radius8px border1pxWhite colorWhite</parameter>
-        </action>
-        <action call="class">
-            <parameter>title</parameter>
-            <parameter>width360px rightNo marginL32px marginV8px textRight fontBold</parameter>
-        </action>
+        <style target="$SELF">positionAbsolute width64px height64px marginB8px</style>
+        <style target="icon">positionAbsolute height64px width64px radius8px border1pxWhite</style>
+        <style target="wrapper">displayNone overflowHidden positionAbsolute top4px rightM16px bottom4px width480px radius8px border1pxWhite colorWhite</style>
+        <style target="title">width360px rightNo marginL32px marginV8px textRight fontBold</style>
         <action call="css">
             <parameter>title</parameter>
             <parameter>opacity</parameter>

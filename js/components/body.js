@@ -16,11 +16,16 @@ function BodyCPN(ctn) {
     };
     cpn.saveInterface(NavigableITF, setup);
     
+    cpn.register("goto", "home", false);
+    
     cpn.registerMethod(this.init, "init", false);
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
     cpn.registerMethod(this.buildNavigation, "buildNavigation", false);
     cpn.registerMethod(this.addNavigation, "addNavigation", false);
     cpn.registerMethod(this.navigate, "navigate", false);
+    cpn.registerMethod(this.followLink, "followLink", false);
+    cpn.registerMethod(this.followLink, "followLeftNavigation", false);
+    
     
     return cpn;
 }
@@ -96,4 +101,14 @@ BodyCPN.prototype.navigate = function(to) {
     }
     cpn.start();
     this.register("body", cpn, false);
+};
+/* Page switch (link click). */
+BodyCPN.prototype.followLink = function() {
+    this.goto = this.qs("$TRIGGERED").attr("href");
+    this.go("Switch");
+};
+/* Page switch (left navigation). */
+BodyCPN.prototype.followLeftNavigation = function() {
+    this.goto = Register.get(this.qs("$TRIGGERED").attr("id")).link;
+    this.go("Switch");
 };

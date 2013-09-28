@@ -26,6 +26,15 @@
                 <to>100%</to>
             </move>
         </trajectory>
+        <trajectory name="FadeOut">
+            <speed>500</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
     </trajectories>
     <loader>
         <dom>
@@ -39,30 +48,12 @@
                 <div class="right" />
             ]]>
         </dom>
-        <action call="class">
-            <parameter>logo</parameter>
-            <parameter>positionAbsolute right48px top48px size48px</parameter>
-        </action>
-        <action call="class">
-            <parameter>left</parameter>
-            <parameter>positionAbsolute width64px leftNo</parameter>
-        </action>
-        <action call="class">
-            <parameter>center</parameter>
-            <parameter>positionAbsolute marginH32px marginV32px</parameter>
-        </action>
-        <action call="class">
-            <parameter>centerBackground</parameter>
-            <parameter>positionAbsolute height100per width100per radius8px opacity06 backgroundWhite border1px border444</parameter>
-        </action>
-        <action call="class">
-            <parameter>centerFrame</parameter>
-            <parameter>positionAbsolute height100per width100per</parameter>
-        </action>
-        <action call="class">
-            <parameter>right</parameter>
-            <parameter>positionAbsolute width64px rightNo</parameter>
-        </action>
+        <style target="logo">positionAbsolute right48px top48px size48px</style>
+        <style target="left">positionAbsolute width64px leftNo</style>
+        <style target="center">positionAbsolute marginH32px marginV32px</style>
+        <style target="centerBackground">positionAbsolute height100per width100per radius8px opacity06 backgroundWhite border1px border444</style>
+        <style target="centerFrame">positionAbsolute height100per width100per</style>
+        <style target="right">positionAbsolute width64px rightNo</style>
         <action call="realHeight">
             <parameter>left</parameter>
         </action>
@@ -82,8 +73,21 @@
     </loader>
     <state id="Ready">
         <selectors>
-            <selector id="openLN">div.left > div.cpnLeftLink.atOpen</selector>
+            <selector id="linksClassic" explore="true">a[href]</selector>
+            <selector id="linksLeft">div.left > div.cpnLeftLink</selector>
         </selectors>
+        <master bind="click" prevent="true">
+            <target refresh="true">linksClassic</target>
+            <action call="log">
+                <parameter>test</parameter>
+            </action>
+        </master>
+        <master bind="click">
+            <target refresh="true">linksLeft</target>
+            <action call="log">
+                <parameter>test2</parameter>
+            </action>
+        </master>
         <in from="@None">
             <target>centerBackground</target>
             <pre call="loadNavigation" />
@@ -102,8 +106,20 @@
                 </move>
             </animation>
             <post call="go" on="Navigable">
-                <parameter>home</parameter>
+                <parameter variable="true">goto</parameter>
             </post>
         </in>
+    </state>
+    <state id="Switch">
+        <in from="Ready">
+            <target>frame</target>
+            <animation base="FadeOut" />
+        </in>
+        <begin call="go" on="Navigable">
+            <parameter variable="true">goto</parameter>
+        </begin>
+        <begin call="go">
+            <parameter>Ready</parameter>
+        </begin>
     </state>
 </component>
