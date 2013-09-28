@@ -1,7 +1,7 @@
 /* Homepage.                                                                    */
 
 function HomeCPN(ctn) {
-    var cpn = new Component(ctn, "js/components/home.xml");
+    var cpn = new Component(ctn, "js/components/pages/home.xml");
     
     cpn.registerSource("slider", "data/site/hpslider.xml", "Ready");
     
@@ -62,4 +62,4 @@ HomeCPN.prototype.sliderBackOrigin = function() {
 };
 HomeCPN.prototype.sliderBackGoal = function() {
     return ($(window).width() - this.qs("slider").offset().left) + "px";
-};
+}; 

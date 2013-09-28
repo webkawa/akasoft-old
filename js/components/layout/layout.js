@@ -2,7 +2,7 @@
  * Global site layout.                                                          */
 
 function LayoutCPN() {
-    var cpn = new Component($("body > div"), "js/components/layout.xml");
+    var cpn = new Component($("body > div"), "js/components/layout/layout.xml");
     var setup;
     
     setup = {

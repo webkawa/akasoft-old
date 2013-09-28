@@ -2,7 +2,7 @@
  * Site body.                                                                   */
 
 function BodyCPN(ctn) {
-    var cpn = new Component(ctn, "js/components/body.xml");
+    var cpn = new Component(ctn, "js/components/layout/body.xml");
     
     var cb = [
         {
@@ -111,4 +111,4 @@ BodyCPN.prototype.followLink = function() {
 BodyCPN.prototype.followLeftNavigation = function() {
     this.goto = Register.get(this.qs("$TRIGGERED").attr("id")).link;
     this.go("Switch");
-};
+}; 
