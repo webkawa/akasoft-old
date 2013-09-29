@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
          name="RightLink" 
          type="classic" >
     <selectors>
@@ -157,7 +157,7 @@
         <out>
             <target>title</target>
             <animation base="FadeOut" />
-            <queue to="Close">
+            <queue>
                 <target>wrapper</target>
                 <animation base="Close" />
                 <post call="class">

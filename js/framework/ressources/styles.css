@@ -2,6 +2,9 @@ body, h1, h2, h3, p {
     margin: 0;
     padding: 0;
 }
+img {
+    border: 0;
+}
 
 .width1024px {
     width: 1024px;
@@ -32,6 +35,9 @@ body, h1, h2, h3, p {
 }
 .width100per {
     width: 100%;
+}
+.width90per {
+    width: 90%;
 }
 .width80per {
     width: 80%;
@@ -78,6 +84,9 @@ body, h1, h2, h3, p {
 }
 .height16px {
     height: 16px;
+}
+.height1px {
+    height: 1px;
 }
 .height100per {
     height: 100%;
@@ -233,6 +242,10 @@ body, h1, h2, h3, p {
     margin-left: 32px;
     margin-right: 32px;
 }
+.marginH5per {
+    margin-left: 5%;
+    margin-right: 5%;
+}
 .marginV4px {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -338,6 +351,14 @@ body, h1, h2, h3, p {
 .paddingH16px {
     padding-left: 16px;
     padding-right: 16px;
+}
+.paddingH5per {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.paddingH10per {
+    padding-left: 10%;
+    padding-right: 10%;
 }
 .paddingV8px {
     padding-top: 8px;

@@ -16,16 +16,14 @@ function BodyCPN(ctn) {
     };
     cpn.saveInterface(NavigableITF, setup);
     
-    cpn.register("goto", "home", false);
+    cpn.register("goto", "sample", false);
     
     cpn.registerMethod(this.init, "init", false);
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
     cpn.registerMethod(this.buildNavigation, "buildNavigation", false);
     cpn.registerMethod(this.addNavigation, "addNavigation", false);
     cpn.registerMethod(this.navigate, "navigate", false);
-    cpn.registerMethod(this.followLink, "followLink", false);
-    cpn.registerMethod(this.followLink, "followLeftNavigation", false);
-    
+    cpn.registerMethod(this.follow, "follow", false);
     
     return cpn;
 }
@@ -90,25 +88,35 @@ BodyCPN.prototype.addNavigation = function(index) {
 };
 /* Page change. */
 BodyCPN.prototype.navigate = function(to) {
+    // Selecting
     var cpn;
     switch(to) {
         case "home":
             cpn = new HomeCPN(this.qs("centerFrame"));
             break;
+        default:
+            cpn = new EditorialCPN(this.qs("centerFrame"), to);
+            break;
     }
+    
+    // Show/hide logo
+    if (to === "home" && this.at !== "home") {
+        this.logo.go("Hidden");
+    } else if (to !== "home" && (this.at === "home" || Toolkit.isNull(this.at))) {
+        this.logo.go("Visible");
+    }
+    
+    // Stopping
     if (!Toolkit.isNull(this.body)) {
         this.body.stop();
     }
     cpn.start();
-    this.register("body", cpn, false);
+    
+    // Registering
+    this.register("body", cpn, true);
 };
 /* Page switch (link click). */
-BodyCPN.prototype.followLink = function() {
-    this.goto = this.qs("$TRIGGERED").attr("href");
+BodyCPN.prototype.follow = function() {
+    this.goto = this.qs("$TRIGGERED").attr("href").replace(/#/g, '');
     this.go("Switch");
 };
-/* Page switch (left navigation). */
-BodyCPN.prototype.followLeftNavigation = function() {
-    this.goto = Register.get(this.qs("$TRIGGERED").attr("id")).link;
-    this.go("Switch");
-}; 

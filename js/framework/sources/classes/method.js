@@ -77,7 +77,7 @@ Method.prototype.call = function(params) {
         var p = {
             name: this.name,
             interface: this.interface,
-            context: this.context,
+            context: this.context.getID(),
             params: params
         };
         ErrorManager.process(new Error("cpn", 1, p, e));

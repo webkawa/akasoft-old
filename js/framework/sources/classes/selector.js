@@ -11,6 +11,8 @@ function Selector(owner, name, path, state) {
     Toolkit.checkTypeOf(name, "string");
     Toolkit.checkTypeOf(path, "string");
     
+    this.cfg_classremoval = CFG.get("components", "css.class.removal");
+    
     this.owner = owner;
     this.name = name;
     this.path = path;
@@ -83,8 +85,6 @@ Selector.prototype.refresh = function() {
  * PARAMETERS : N/A
  * RETURNS : N/A                                                            */
 Selector.prototype.remove = function() {
-    var tag = CFG.get("components", "css.class.removal");
-
     if (this.getOwner().getStatus() < 1) {
         var p = {
             component: this.getOwner().getID(),
@@ -93,6 +93,6 @@ Selector.prototype.remove = function() {
         throw new Error("cpn", 21, p);
     } else {
         this.refresh();
-        $(this.nodes).addClass(tag);
+        $(this.nodes).addClass(this.cfg_classremoval);
     }
 };

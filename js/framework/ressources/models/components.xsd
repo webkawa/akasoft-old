@@ -14,7 +14,7 @@
     </xs:simpleType>
     <xs:simpleType name="upperfstring">
         <xs:restriction base="string">
-            <xs:pattern value="[A-Z]{1}[a-z0-9]*" />
+            <xs:pattern value="[A-Z]{1}[a-zA-Z0-9]*" />
         </xs:restriction>
     </xs:simpleType>
     
@@ -231,6 +231,8 @@
                         minOccurs="0"
                         maxOccurs="unbounded" />
         </xs:sequence>
+        <xs:attribute name="monitor"
+                      type="xs:boolean" />
     </xs:complexType>
     
     <!-- Loader -->

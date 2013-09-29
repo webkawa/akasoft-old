@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
          name="Body" 
          type="classic" >
     <selectors>
@@ -73,20 +73,11 @@
     </loader>
     <state id="Ready">
         <selectors>
-            <selector id="linksClassic" explore="true">a[href]</selector>
-            <selector id="linksLeft">div.left > div.cpnLeftLink</selector>
+            <selector id="links" explore="true">a[href]:not(.special)</selector>
         </selectors>
         <master bind="click" prevent="true">
-            <target refresh="true">linksClassic</target>
-            <action call="log">
-                <parameter>test</parameter>
-            </action>
-        </master>
-        <master bind="click">
-            <target refresh="true">linksLeft</target>
-            <action call="log">
-                <parameter>test2</parameter>
-            </action>
+            <target refresh="true">links</target>
+            <action call="follow" />
         </master>
         <in from="@None">
             <target>centerBackground</target>
@@ -112,7 +103,7 @@
     </state>
     <state id="Switch">
         <in from="Ready">
-            <target>frame</target>
+            <target>centerFrame</target>
             <animation base="FadeOut" />
         </in>
         <begin call="go" on="Navigable">

@@ -65,7 +65,7 @@ Source.prototype.getDataByKey = function(model, key, value) {
     var base = this.getData('s[class="' + model + '"]');
     var result = $([]);
     $(base).each(function() {
-        if ($(this).children('i[class="' + key + '"]') === value) {
+        if ($(this).children('i[class="' + key + '"]').text() === value) {
             result = $(result).add(this);
         }
     });
@@ -77,7 +77,7 @@ Source.prototype.getDataByKeys = function(model, couples) {
     $(base).each(function() {
         var b = true;
         for (var i = 0; i < couples.length; i++) {
-            if ($(this).children('i[class="' + couples[i].key + '"]') === couples[i].value) {
+            if ($(this).children('i[class="' + couples[i].key + '"]').text() === couples[i].value) {
                 b = false;
             }
         }

@@ -8,14 +8,23 @@ function Component(container, descriptor) {
     Toolkit.checkClassOf(container, jQuery);
     Toolkit.checkTypeOf(descriptor, "string");
     
+    this.cfg_ais = CFG.get("components", "allow.inactive.selectors");
+    this.cfg_keyfrom = CFG.get("components", "css.prefix.from");
+    this.cfg_keyto = CFG.get("components", "css.prefix.to");
+    this.cfg_keyat = CFG.get("components", "css.prefix.at");
+    this.cfg_classout = CFG.get("components", "css.class.out");
+    this.cfg_classin = CFG.get("components", "css.class.in");
+    this.cfg_classremoval = CFG.get("components", "css.class.removal");
+    
     this.container = container;                         // Component container
     this.descriptor = descriptor;                       // Component descriptor
     this.model = null;                                  // XML model
     this.methods = [];                                  // Methods list
-    this.parents = [];                                  // Parents list
     this.interface = "";                                // Interface buffer
+    this.parents = [];                                  // Parents list
     this.datas = [];                                    // Interface datas
     this.selectors = [];                                // Selectors
+    this.triggers = [];                                 // Triggers
     this.as;                                            // Active selectors
     this.ltn;                                           // Last triggered node
     this.sources = [];                                  // Data sources
@@ -23,10 +32,10 @@ function Component(container, descriptor) {
     this.status = 3;                                    // Current status
     this.id = Register.add(this);                       // Component ID
     this.dt = [];                                       // Delayed threads
-    this.defstart = new jQuery.Deferred();              // Deffered starter
-    this.defevolve;                                     // Deffered evolver
-    this.qstate;                                        // Queue state
-    this.qobj;                                          // Queue objective
+    this.dfr_start = new jQuery.Deferred();             // Deffered starter
+    this.dfr_evolve;                                    // Deffered evolver
+    this.queue_state;                                   // Queue state
+    this.queue_objective;                               // Queue objective
         
     /* Initialize */
     this.log("Initializing new component");
@@ -52,7 +61,7 @@ function Component(container, descriptor) {
         this.log("Tagging container");
         $(this.container).addClass("cpn" + this.getModelName());
 
-        this.log("Loading selectors");
+        this.log("Loading selectors, triggers and masters");
         var ctx = this;
         $(this.model).find("selector").each(function() {
             var buff;
@@ -74,8 +83,11 @@ function Component(container, descriptor) {
                 ctx.selectors[ctx.selectors.length] = buff;
             }
         });
+        $(this.model).find("trigger, master").each(function() {
+            ctx.triggers[ctx.triggers.length] = new Trigger(ctx, $(this));
+        });
             
-        this.defstart.resolve();
+        this.dfr_start.resolve();
     });
     
     this.log("Saving initial methods"); 
@@ -94,6 +106,8 @@ function Component(container, descriptor) {
     this.registerMethod(this.shortcutRealHeight, "realHeight", false);
     this.registerMethod(this.shortcutRealWidth, "realWidth", false);
     this.registerMethod(this.shortcutCenter, "center", false);
+    this.registerMethod(this.shortcutCenterX, "centerX", false);
+    this.registerMethod(this.shortcutCenterY, "centerY", false);
     this.registerMethod(this.shortcutClean, "clean", false);
     this.registerMethod(this.shortcutClass, "class", false);
     this.registerMethod(this.shortcutAttribute, "attribute", false);
@@ -207,11 +221,10 @@ Component.prototype.isSelector = function(name) {
     }
     return false;
 };
-Component.prototype.getSelector = function(name, refresh) {
-    var cfg_ais = CFG.get("components", "allow.inactive.selectors");
+Component.prototype.getSelector = function(name, refresh, force) {
     for (var i = 0; i < this.selectors.length; i++) {
         if (this.selectors[i].getName() === name) {
-            if (this.selectors[i].getStatus() || cfg_ais) {
+            if (this.selectors[i].getStatus() || this.cfg_ais || force) {
                 if (refresh) {
                     this.selectors[i].refresh();
                 }
@@ -230,7 +243,7 @@ Component.prototype.getSelector = function(name, refresh) {
     };
     throw new Error("cpn", 6, p);
 };
-Component.prototype.quickSelect = function(name, refresh) {
+Component.prototype.quickSelect = function(name, refresh, force) {
     if (Toolkit.isNull(refresh)) {
         refresh = false;
     }
@@ -248,7 +261,7 @@ Component.prototype.quickSelect = function(name, refresh) {
         return this.ltn;
     }
 
-    return this.getSelector(name, refresh).getNodes();
+    return this.getSelector(name, refresh, force).getNodes();
 };
 Component.prototype.qs = function(name, select) {
     if (Toolkit.isNull(select)) {
@@ -315,16 +328,13 @@ Component.prototype.setState = function(state) {
 };
 Component.prototype.setStateClass = function(from, to) {
     var buff;
-    var keyfrom = CFG.get("components", "css.prefix.from");
-    var keyto = CFG.get("components", "css.prefix.to");
-    var keyat = CFG.get("components", "css.prefix.at");
     var ctx = this;
 
     // Pre-clean
     $(this.model).find("state").each(function() {
-        buff = keyfrom + $(this).attr("id") + " " +
-                keyto + $(this).attr("id") + " " +
-                keyat + $(this).attr("id");
+        buff = ctx.cfg_keyfrom + $(this).attr("id") + " " +
+               ctx.cfg_keyto + $(this).attr("id") + " " +
+               ctx.cfg_keyat + $(this).attr("id");
         $(ctx.container).removeClass(buff);
     });
 
@@ -332,26 +342,23 @@ Component.prototype.setStateClass = function(from, to) {
     if (from === "@None" && Toolkit.isNull(to)) {
         return;
     } else if (from === to) {
-        $(this.container).addClass(keyat + from);
+        $(this.container).addClass(this.cfg_keyat + from);
     } else if (Toolkit.isNull(to)) {
-        $(this.container).addClass(keyfrom + from);
+        $(this.container).addClass(this.cfg_keyfrom + from);
     } else if (from === "@None") {
-        $(this.container).addClass(keyto + to);
+        $(this.container).addClass(this.cfg_keyto + to);
     } else {
-        $(this.container).addClass(keyfrom + from + " " + keyto + to);
+        $(this.container).addClass(this.cfg_keyfrom + from + " " + this.cfg_keyto + to);
     }
 };
 Component.prototype.setSwitchClass = function(mode) {
-    var o = CFG.get("components", "css.class.out");
-    var i = CFG.get("components", "css.class.in");
-
     if (mode === -1) {
-        $(this.container).addClass(o);
+        $(this.container).addClass(this.cfg_classout);
     } else if (mode === 0) {
-        $(this.container).removeClass(i);
+        $(this.container).removeClass(this.cfg_classin);
     } else {
-        $(this.container).removeClass(o);
-        $(this.container).addClass(i);
+        $(this.container).removeClass(this.cfg_classout);
+        $(this.container).addClass(this.cfg_classin);
     }
 };
 /* Current status 
@@ -419,57 +426,42 @@ Component.prototype.retrigger = function(distant) {
     if (Toolkit.isNull(distant)) {
         distant = false;
     }
-    
-    var nodes = $([]);
-    var targets;
-    var bind;
-    var ctx = this;
-
-// Selecting nodes
-    if (!distant) {
-        nodes = $(nodes).add($(this.model).find('component > trigger'));
-        nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > trigger'));   
+    this.retriggerParents();
+    if (distant) {
+        var master;
+        var state;
+        for (var i = 0; i < this.triggers.length; i++) {
+            master = this.triggers[i].isMaster();
+            state = this.triggers[i].getState();
+            
+            if (master) {
+                this.triggers[i].off();
+                if (state === "@None" || state === this.state) {
+                    this.triggers[i].on();
+                }
+            }
+        }
+    } else {
+        var state;
+        for (var i = 0; i < this.triggers.length; i++) {
+            state = this.triggers[i].getState();
+               
+            this.triggers[i].off();
+            if (state === "@None" || state === this.state) {
+                this.triggers[i].on();
+            }
+        }
     }
-    nodes = $(nodes).add($(this.model).find('component > master'));
-    nodes = $(nodes).add($(this.model).find('component > state[id="' + this.state + '"] > master'));
-    
-    // Triggering parents
+};
+Component.prototype.retriggerParents = function() {
     if (this.parents.length > 1) {
         this.parents[1].retrigger(true);
     }
-    
-    var i = 0;
-    $(nodes).each(function(i, item) {
-        // Parsing
-        targets = $([]);
-        $(this).children("target").each(function() {
-            targets = $(targets).add(ctx.quickSelect($(this).text(), $(this).attr("refresh") === "true"));
-        });
-        bind = $(this).attr("bind");
-
-        // Binding
-        $(targets).unbind(bind);
-        $(targets).on(bind, function(event) {
-            // Refreshing last triggered node
-            ctx.ltn = $(this);
-            
-            // Preventing
-            if ($(item).attr("prevent") === "true") {
-                event.preventDefault();
-            }
-            
-            // Transfering
-            if ($(item).attr("stop") === "true") {
-                event.stopPropagation();
-            }
-
-            // Executing
-            $(item).children("action").each(function() {
-                ctx.call.apply(this, [ctx]);
-            });
-            return false;
-        });
-    });
+};
+Component.prototype.untrigger = function() {
+    for (var i = 0; i < this.triggers.length; i++) {
+        this.triggers[i].off();
+    }
 };
 /* Selector refresher.
  * Checks all selectors for activation/desactivation.
@@ -591,6 +583,9 @@ Component.prototype.animate = function(animation, targets, postback) {
     var to = {};
     var clean = {};
     var b1, b2;
+    var dfr_animation = new jQuery.Deferred();
+    var animation_state = 0;
+    var animation_objective = $(targets).length;
     var ctx = this;
 
     // Trajectory loading
@@ -653,7 +648,7 @@ Component.prototype.animate = function(animation, targets, postback) {
     // Setup
     $(targets).css(from);
 
-    // Execution
+    // Initialization
     var params = {
         duration:
                 $(animation).children("speed").length === 1 ?
@@ -667,21 +662,28 @@ Component.prototype.animate = function(animation, targets, postback) {
             throw new Error("cpn", 13);
         }, done: function() {
             $(targets).css(clean);
-            ctx.postback(postback);
+            
+            animation_state++;
+            if (animation_state === animation_objective) {
+                dfr_animation.resolve();
+            }
         }
     };
     if ($(animation).children("progress").length === 1) {
         params.progress = function() {
             ctx.call.apply($(animation).children("progress"), [ctx]);
         };
-    }
-    ;
-    $(targets).animate(to, params).promise().always(function() {
-            ctx.qstate++;
-            if (ctx.qstate === ctx.qobj) {
-                ctx.defevolve.resolve();
-            }
-        });
+    };
+    dfr_animation.promise().done(function() {
+        ctx.postback(postback);
+        ctx.queue_state++;
+        if (ctx.queue_state === ctx.queue_objective) {
+            ctx.dfr_evolve.resolve();
+        }
+    });
+    
+    // Animation
+    $(targets).animate(to, params);
 };
 /* Executes a pre-saved sequence.
  * PARAMETERS :
@@ -712,6 +714,11 @@ Component.prototype.execute = function(sequence) {
     $(sequence).children("pre").each(function() {
         ctx.call.apply(this, [ctx]);
     });
+    
+    // Retriggering parents
+    if ($(sequence).attr("monitor") === "true") {
+        this.retriggerParents();
+    }
 
     // Loading targets
     $(sequence).children("target").each(function() {
@@ -772,11 +779,13 @@ Component.prototype.go = function(to, complement) {
     }
     var seq_exit = $();
     var seq_entry = $();
-    var drt = CFG.get("components", "css.class.removal");
     
     try {
         // Cleaning delayed tasks
         this.clearDelayedTasks();
+        
+        // Untriggering
+        this.untrigger();
 
         // Setting classes
         this.setStateClass(this.state, to);
@@ -800,16 +809,13 @@ Component.prototype.go = function(to, complement) {
             }
         }
 
-        // Unloading triggers
-        this.as.unbind();
-
         // Executing exit sequence
         this.status = 1;
         this.prepare(seq_exit);
-        this.defevolve.promise().done(function() {
+        this.dfr_evolve.promise().done(function() {
             try {
                 // Executes delayed removal
-                $(ctx.getContainer()).find("." + drt).remove();
+                $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
 
                 // Switching state
                 ctx.setState(to);
@@ -824,7 +830,7 @@ Component.prototype.go = function(to, complement) {
                 ctx.setStatus(2);
                 ctx.prepare(seq_entry);
 
-                ctx.defevolve.promise().done(function() {
+                ctx.dfr_evolve.promise().done(function() {
                     try {
                         ctx.setStatus(0);
                         if (Toolkit.isNull(to)) {
@@ -832,7 +838,7 @@ Component.prototype.go = function(to, complement) {
                             ctx.clean();
                         } else {
                             // Executes delayed removal
-                            $(ctx.getContainer()).find("." + drt).remove();
+                            $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
 
                             // Reloading triggers
                             ctx.retrigger();
@@ -869,7 +875,7 @@ Component.prototype.go = function(to, complement) {
                         ctx.execute(this);
                     });
                 } else {
-                    ctx.defevolve.resolve();
+                    ctx.dfr_evolve.resolve();
                 }
             } catch (e) {
                 ErrorManager.process(e);
@@ -880,7 +886,7 @@ Component.prototype.go = function(to, complement) {
                 ctx.execute(this);
             });
         } else {
-            this.defevolve.resolve();
+            this.dfr_evolve.resolve();
         }
     } catch (e) {
         var p = {
@@ -890,9 +896,9 @@ Component.prototype.go = function(to, complement) {
     }
 };
 Component.prototype.prepare = function(node) {
-    this.defevolve = new jQuery.Deferred();
-    this.qstate = 0;
-    this.qobj = $(node).add($(node).find("queue")).length;
+    this.dfr_evolve = new jQuery.Deferred();
+    this.queue_state = 0;
+    this.queue_objective = $(node).add($(node).find("queue")).length;
 };
 /* Starts component to initial state.
  * PARAMETERS : N/A
@@ -900,7 +906,7 @@ Component.prototype.prepare = function(node) {
  *  True if starting was successfull, false else.                               */
 Component.prototype.start = function() {
     var ctx = this;
-    this.defstart.promise().done(function() {
+    this.dfr_start.promise().done(function() {
         ctx.log("Starting component");
         if (ctx.state !== "@None") {
             if (CFG.get("components", "allow.invalid.start")) {
@@ -952,6 +958,9 @@ Component.prototype.start = function() {
  * RETURNS : N/A                                                                */
 Component.prototype.stop = function() {
     this.log("Cleaning component");
+
+    // Stop threads
+    this.clearDelayedTasks();
 
     // Removing DOM
     this.setStateClass();
@@ -1061,6 +1070,12 @@ Component.prototype.shortcutRealWidth = function(target, difference) {
  * RETURNS : N/A                                                                */
 Component.prototype.shortcutCenter = function(target) {
     Toolkit.center(this.qs(target));
+};
+Component.prototype.shortcutCenterX = function(target) {
+    Toolkit.centerX(this.qs(target));
+};
+Component.prototype.shortcutCenterY = function(target) {
+    Toolkit.centerY(this.qs(target));
 };
 /* Executes cleaning on a given element style.
  * PARAMETERS :

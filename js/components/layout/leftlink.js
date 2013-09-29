@@ -23,6 +23,7 @@ function LeftLinkCPN(ctn, setup) {
 }
 /* Initialization. */
 LeftLinkCPN.prototype.init = function() {
+    this.qs("link").attr("href", "#" + this.link);
     this.qs("title").text(this.title);
     this.qs("description").text(this.description);
     this.qs("icon").attr("src", "data/img/" + this.image);

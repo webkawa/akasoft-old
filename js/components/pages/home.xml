@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
          name="Home" 
          type="classic" >
     <selectors>
@@ -39,7 +39,7 @@
             </move>
         </trajectory>
         <trajectory name="QuickFadeIn">
-            <speed>200</speed>
+            <speed>120</speed>
             <easing>swing</easing>
             <move clean="false">
                 <property>opacity</property>
@@ -47,7 +47,7 @@
             </move>
         </trajectory>
         <trajectory name="QuickFadeOut">
-            <speed>200</speed>
+            <speed>120</speed>
             <easing>swing</easing>
             <move clean="false">
                 <property>opacity</property>
@@ -230,7 +230,7 @@
             <animation base="SlideNextOut" />
         </in>
         <begin call="build" on="Slidable" />
-        <out to="Ready">
+        <out to="Ready" monitor="true">
             <target refresh="true">slide</target>
             <animation base="SlideNextIn" />
         </out>
@@ -241,7 +241,7 @@
             <animation base="SlideBackOut" />
         </in>
         <begin call="build" on="Slidable" />
-        <out to="Ready">
+        <out to="Ready" monitor="true">
             <target refresh="true">slide</target>
             <animation base="SlideBackIn" />
         </out>

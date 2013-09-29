@@ -1,23 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../framework/ressources/models/components.xsd"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
          name="Editorial" 
          type="classic" >
     <selectors>
-        
+        <selector id="wrapper">div</selector>
+        <selector id="wrapperTB">div > div.tb</selector>
+        <selector id="wrapperBB">div > div.bb</selector>
+        <selector id="frame">div > div.frame</selector>
+        <selector id="title">div > div.frame > h1</selector>
+        <selector id="subtitle">div > div.frame > h2</selector>
+        <selector id="content">div > div.frame > *:not(h1:first()):not(h2:first())</selector>
+        <selector id="images" explore="true">img</selector>
+        <selector id="frames" explore="true">iframe</selector>
     </selectors>
     <trajectories>
-        
+        <trajectory name="OpenWrapperX">
+            <speed>500</speed>
+            <easing>easeOutQuad</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+            <move>
+                <property>width</property>
+                <from>0%</from>
+                <to>90%</to>
+            </move>
+        </trajectory>
+        <trajectory name="OpenWrapperY">
+            <speed>500</speed>
+            <easing>easeInOutCubic</easing>
+            <move>
+                <property>height</property>
+                <to>100%</to>
+                <goal call="get">
+                    <parameter>heightMax</parameter>
+                </goal>
+            </move>
+        </trajectory>
+        <trajectory name="CloseWrapperY">
+            <speed>500</speed>
+            <easing>easeInOutCubic</easing>
+            <move clean="false">
+                <property>height</property>
+                <to>1px</to>
+                <goal call="get">
+                    <parameter>heightMin</parameter>
+                </goal>
+            </move>
+        </trajectory>
+        <trajectory name="FadeIn">
+            <speed>120</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeOut">
+            <speed>120</speed>
+            <easing>swing</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+        <trajectory name="Reduce">
+            <speed>200</speed>
+            <easing>swing</easing>
+            <move>
+                <property>width</property>
+                <to>0%</to>
+            </move>
+            <move clean="false">
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+        <trajectory name="Expand">
+            <speed>200</speed>
+            <easing>swing</easing>
+            <move>
+                <property>width</property>
+                <to>100%</to>
+            </move>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
     </trajectories>
     <loader>
         <dom>
             <![CDATA[
-                
+                <div>
+                    <div class="tb" />
+                    <div class="frame">
+                        <h1>&nbsp;</h1>
+                        <h2>&nbsp;</h2>
+                    </div>
+                    <div class="bb" />
+                </div>
             ]]>
         </dom>
-        <to>Ready</to>
+        <style target="wrapper">positionAbsolute overflowHidden width90per marginH5per</style>
+        <style target="wrapperTB">positionAbsolute topNo leftNo width100per height1px background444</style>
+        <style target="wrapperBB">positionAbsolute bottomNo rightNo width100per height1px background444</style>
+        <style target="frame">padding16px</style>
+        <to>Loading</to>
     </loader>
+    <state id="Loading">
+        <in from="@None">
+            <target>wrapper</target>
+            <pre call="centerY">
+                <parameter>wrapper</parameter>
+            </pre>
+            <animation base="OpenWrapperX">
+                <progress call="centerX">
+                    <parameter>wrapper</parameter>
+                </progress>
+            </animation>
+            <post call="height">
+                <parameter>false</parameter>
+            </post>
+            <post call="css">
+                <parameter>wrapper</parameter>
+                <parameter>height</parameter>
+                <parameter variable="true">heightMin</parameter>
+            </post>
+        </in>
+        <begin call="sourceGet">
+            <parameter>data</parameter>
+        </begin>
+    </state>
     <state id="Ready">
-        
+        <selectors>
+            <selector id="links" explore="true">a.special[href]</selector>
+        </selectors>
+        <trigger bind="click">
+            <target>links</target>
+            <action call="follow" />
+        </trigger>
+        <in from="Loading">
+            <target>title</target>
+            <pre call="css">
+                <parameter>title</parameter>
+                <parameter>opacity</parameter>
+                <parameter>0</parameter>
+            </pre>
+            <pre call="css">
+                <parameter>subtitle</parameter>
+                <parameter>opacity</parameter>
+                <parameter>0</parameter>
+            </pre>
+            <pre call="css">
+                <parameter>content</parameter>
+                <parameter>opacity</parameter>
+                <parameter>0</parameter>
+            </pre>
+            <animation base="FadeIn" />
+            <queue>
+                <target>subtitle</target>
+                <animation base="FadeIn" />
+                <queue>
+                    <target>wrapper</target>
+                    <pre call="height">
+                        <parameter>true</parameter>
+                    </pre>
+                    <animation base="OpenWrapperY">
+                        <progress call="centerY">
+                            <parameter>wrapper</parameter>
+                        </progress>
+                    </animation>
+                    <queue>
+                        <target>wrapperTB</target>
+                        <target>wrapperBB</target>
+                        <animation base="Reduce" />
+                    </queue>
+                </queue>
+                <queue>
+                    <target>content</target>
+                    <animation base="FadeIn" /> 
+                </queue>
+            </queue>
+        </in>
+    </state>
+    <state id="Switch">
+        <in from="Ready">
+            <target>wrapperTB</target>
+            <target>wrapperBB</target>
+            <animation base="Expand" />
+            <queue>
+                <target>content</target>
+                <animation base="FadeOut" />
+            </queue>
+            <queue>
+                <target>wrapper</target>
+                <animation base="CloseWrapperY">
+                    <progress call="centerY">
+                        <parameter>wrapper</parameter>
+                    </progress>
+                </animation>
+                <queue>
+                    <target>title</target>
+                    <animation base="FadeOut" />
+                    <queue>
+                        <target>subtitle</target>
+                        <animation base="FadeOut" />
+                    </queue>
+                </queue>
+            </queue>
+        </in>
+        <begin call="build" />
+        <begin call="height">
+            <parameter>true</parameter>
+        </begin>
+        <begin call="reselect">
+            <parameter>content</parameter>
+        </begin>
+        <begin call="css">
+            <parameter>content</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </begin>
+        <begin call="load" on="Loadable" />
+        <out to="Ready">
+            <target>title</target>
+            <animation base="FadeIn" />
+            <queue>
+                <target>subtitle</target>
+                <animation base="FadeIn" />
+                <queue to="Ready">
+                    <target>wrapper</target>
+                    <animation base="OpenWrapperY">
+                        <progress call="centerY">
+                            <parameter>wrapper</parameter>
+                        </progress>
+                    </animation>
+                    <queue>
+                        <target>wrapperTB</target>
+                        <target>wrapperBB</target>
+                        <animation base="Reduce" />
+                    </queue>
+                </queue>
+                <queue to="Ready">
+                    <target refresh="true">content</target>
+                    <animation base="FadeIn" />
+                </queue>
+            </queue>
+        </out>
     </state>
 </component>

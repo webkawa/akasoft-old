@@ -29,6 +29,7 @@ LoadableITF.prototype.check = function(setup) {
 LoadableITF.prototype.load = function(setup) {
     this.register("load_count", 0, true);
     this.register("load_length", setup.load.length, true);
+    this.register("load_targets", 0, true);
     
     var ctx = this;
     for (var i = 0; i < this.load_length; i++) {
@@ -36,9 +37,13 @@ LoadableITF.prototype.load = function(setup) {
         this.qs(setup.load[i]).load(function() {
             ctx.getMethod("check", "Loadable").call([]);
         }).each(function() {
+            ctx.load_targets++;
             if(this.complete) {
                 $(this).trigger('load');
             }
         });
+    }
+    if (this.load_targets === 0) {
+        this.go(setup.back);
     }
 };

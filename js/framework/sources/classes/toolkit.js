@@ -199,7 +199,7 @@ var Toolkit = {
         $(target).width(width - padding);
     },
     
-    /* Executes a vertical centering on a element.
+    /* Executes a centering on a element.
      * PARAMETERS :
      *  > target         Target element.
      * RETURNS : N/A                                                            */
@@ -212,5 +212,19 @@ var Toolkit = {
         });
         $(target).css("margin-top", (($(target).parent().height() - $(target).outerHeight(false)) / 2) + "px");
         $(target).css("margin-left", (($(target).parent().width() - $(target).outerWidth(false)) / 2) + "px");
+    },
+    centerX: function(target) {
+        $(target).css({
+            "margin-right": "",
+            "margin-left": ""
+        });
+        $(target).css("margin-left", (($(target).parent().width() - $(target).outerWidth(false)) / 2) + "px");
+    },
+    centerY: function(target) {
+        $(target).css({
+            "margin-top": "",
+            "margin-bottom": "",
+        });
+        $(target).css("margin-top", (($(target).parent().height() - $(target).outerHeight(false)) / 2) + "px");
     }
 };
