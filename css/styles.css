@@ -1,0 +1,25 @@
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.fullOpacityOnHover:hover {
+    opacity: 1;
+}
+.redBackgroundOnHover:hover {
+    background-color: rgb(211, 38, 0)
+}
+.blueBackgroundOnHover:hover {
+    background-color: rgb(58, 115, 173)
+}
+.greenBackgroundOnHover:hover {
+    background-color: rgb(107, 167, 28)
+}

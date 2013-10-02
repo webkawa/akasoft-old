@@ -51,7 +51,7 @@
         <style target="logo">positionAbsolute right48px top48px size48px</style>
         <style target="left">positionAbsolute width64px leftNo</style>
         <style target="center">positionAbsolute marginH32px marginV32px</style>
-        <style target="centerBackground">positionAbsolute height100per width100per radius8px opacity06 backgroundWhite border1px border444</style>
+        <style target="centerBackground">positionAbsolute height100per width100per radius8px opacity07 backgroundWhite border1px border444</style>
         <style target="centerFrame">positionAbsolute height100per width100per</style>
         <style target="right">positionAbsolute width64px rightNo</style>
         <action call="realHeight">

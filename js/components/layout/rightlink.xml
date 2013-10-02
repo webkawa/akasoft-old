@@ -6,7 +6,7 @@
     <selectors>
         <selector id="icon">img</selector>
         <selector id="wrapper">div</selector>
-        <selector id="title">div > h1</selector>
+        <selector id="title">div > p</selector>
         <selector id="hover">img, div</selector>
     </selectors>
     <trajectories>
@@ -104,7 +104,7 @@
         <dom>
             <![CDATA[
                 <div>
-                    <h1 />
+                    <p />
                 </div>
                 <img />
             ]]>
@@ -112,7 +112,7 @@
         <style target="$SELF">positionAbsolute width64px height64px marginB8px</style>
         <style target="icon">positionAbsolute height64px width64px radius8px border1pxWhite</style>
         <style target="wrapper">displayNone overflowHidden positionAbsolute top4px rightM16px bottom4px width480px radius8px border1pxWhite colorWhite</style>
-        <style target="title">width360px rightNo marginL32px marginV8px textRight fontBold</style>
+        <style target="title">width360px rightNo marginL32px marginV8px size32px weightBold textRight</style>
         <action call="css">
             <parameter>title</parameter>
             <parameter>opacity</parameter>

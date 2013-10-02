@@ -3,14 +3,16 @@
  * PARAMETERS :
  *  > cpn                     * Owner component.
  *  > setup.load              * Loaded components selectors (as array).
- *  > setup.back              * Return state.                                   */
+ *  > setup.callbacks           Callbacks as array.
+ *  > setup.state             * Return state.                                   */
 
 function LoadableITF(cpn, setup) {
     Toolkit.checkTypeOf(setup.load, "object");
-    Toolkit.checkTypeOf(setup.back, "string");
+    Toolkit.checkTypeOf(setup.state, "string");
     
     cpn.registerMethod(LoadableITF.prototype.check, "check", false);
     cpn.registerMethod(LoadableITF.prototype.load, "load", false);
+    cpn.registerMethod(LoadableITF.prototype.execute, "execute", false);
 }
 /* Name. */
 LoadableITF.prototype.name = "Loadable";
@@ -22,7 +24,7 @@ LoadableITF.prototype.check = function(setup) {
             this.qs(setup.load[i]).unbind("load");
             this.qs(setup.load[i]).removeClass("displayNone");
         }
-        this.go(setup.back);
+        this.getMethod("execute", "Loadable").call([]);
     }
 };
 /* Starter. */
@@ -44,6 +46,13 @@ LoadableITF.prototype.load = function(setup) {
         });
     }
     if (this.load_targets === 0) {
-        this.go(setup.back);
+        this.getMethod("execute", "Loadable").call([]);
     }
+};
+/* Execution. */
+LoadableITF.prototype.execute = function(setup) {
+    for (var i = 0; !Toolkit.isNull(setup.callbacks) && i < setup.callbacks.length; i++) {
+        this.getMethod(setup.callbacks[i].call, setup.callbacks[i].interface).call([]);
+    }
+    this.go(setup.state);
 };

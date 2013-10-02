@@ -5,30 +5,13 @@
          type="classic" >
     <selectors>
         <selector id="wrapper">div</selector>
-        <selector id="wrapperTB">div > div.tb</selector>
-        <selector id="wrapperBB">div > div.bb</selector>
+        <selector id="border">div > div.bb</selector>
         <selector id="frame">div > div.frame</selector>
         <selector id="title">div > div.frame > h1</selector>
         <selector id="subtitle">div > div.frame > h2</selector>
         <selector id="content">div > div.frame > *:not(h1:first()):not(h2:first())</selector>
-        <selector id="images" explore="true">img</selector>
-        <selector id="frames" explore="true">iframe</selector>
     </selectors>
     <trajectories>
-        <trajectory name="OpenWrapperX">
-            <speed>500</speed>
-            <easing>easeOutQuad</easing>
-            <move>
-                <property>opacity</property>
-                <from>0</from>
-                <to>1</to>
-            </move>
-            <move>
-                <property>width</property>
-                <from>0%</from>
-                <to>90%</to>
-            </move>
-        </trajectory>
         <trajectory name="OpenWrapperY">
             <speed>500</speed>
             <easing>easeInOutCubic</easing>
@@ -87,7 +70,7 @@
             <easing>swing</easing>
             <move>
                 <property>width</property>
-                <to>100%</to>
+                <to>96%</to>
             </move>
             <move clean="false">
                 <property>opacity</property>
@@ -100,7 +83,6 @@
         <dom>
             <![CDATA[
                 <div>
-                    <div class="tb" />
                     <div class="frame">
                         <h1>&nbsp;</h1>
                         <h2>&nbsp;</h2>
@@ -109,22 +91,19 @@
                 </div>
             ]]>
         </dom>
-        <style target="wrapper">positionAbsolute overflowHidden width90per marginH5per</style>
-        <style target="wrapperTB">positionAbsolute topNo leftNo width100per height1px background444</style>
-        <style target="wrapperBB">positionAbsolute bottomNo rightNo width100per height1px background444</style>
+        <style target="wrapper">positionAbsolute overflowHidden paddingT48px paddingL64px paddingR16px</style>
+        <style target="border">positionAbsolute bottomNo rightNo height1px background444 width96per marginH2per</style>
         <style target="frame">padding16px</style>
+        <action call="realWidth">
+            <parameter>wrapper</parameter>
+        </action>
         <to>Loading</to>
     </loader>
     <state id="Loading">
         <in from="@None">
             <target>wrapper</target>
-            <pre call="centerY">
-                <parameter>wrapper</parameter>
-            </pre>
-            <animation base="OpenWrapperX">
-                <progress call="centerX">
-                    <parameter>wrapper</parameter>
-                </progress>
+            <animation base="FadeIn">
+                <speed>500</speed>
             </animation>
             <post call="height">
                 <parameter>false</parameter>
@@ -173,40 +152,34 @@
                     <pre call="height">
                         <parameter>true</parameter>
                     </pre>
-                    <animation base="OpenWrapperY">
-                        <progress call="centerY">
-                            <parameter>wrapper</parameter>
-                        </progress>
-                    </animation>
+                    <animation base="OpenWrapperY" />
                     <queue>
-                        <target>wrapperTB</target>
-                        <target>wrapperBB</target>
+                        <target>border</target>
                         <animation base="Reduce" />
                     </queue>
                 </queue>
                 <queue>
                     <target>content</target>
-                    <animation base="FadeIn" /> 
+                    <animation base="FadeIn">
+                        <speed>500</speed>
+                    </animation> 
                 </queue>
             </queue>
         </in>
     </state>
     <state id="Switch">
         <in from="Ready">
-            <target>wrapperTB</target>
-            <target>wrapperBB</target>
+            <target>border</target>
             <animation base="Expand" />
             <queue>
                 <target>content</target>
-                <animation base="FadeOut" />
+                <animation base="FadeOut">
+                    <speed>400</speed>
+                </animation>
             </queue>
             <queue>
                 <target>wrapper</target>
-                <animation base="CloseWrapperY">
-                    <progress call="centerY">
-                        <parameter>wrapper</parameter>
-                    </progress>
-                </animation>
+                <animation base="CloseWrapperY" />
                 <queue>
                     <target>title</target>
                     <animation base="FadeOut" />
@@ -236,24 +209,26 @@
             <queue>
                 <target>subtitle</target>
                 <animation base="FadeIn" />
-                <queue to="Ready">
+                <queue>
                     <target>wrapper</target>
-                    <animation base="OpenWrapperY">
-                        <progress call="centerY">
-                            <parameter>wrapper</parameter>
-                        </progress>
-                    </animation>
+                    <animation base="OpenWrapperY" />
                     <queue>
-                        <target>wrapperTB</target>
-                        <target>wrapperBB</target>
+                        <target>border</target>
                         <animation base="Reduce" />
                     </queue>
                 </queue>
-                <queue to="Ready">
+                <queue>
                     <target refresh="true">content</target>
-                    <animation base="FadeIn" />
+                    <animation base="FadeIn" wait="200">
+                        <speed>400</speed>
+                    </animation>
                 </queue>
             </queue>
         </out>
+    </state>
+    <state id="Error">
+        <begin call="go" on="Navigable" parent="1">
+            <parameter>404</parameter>
+        </begin>
     </state>
 </component>

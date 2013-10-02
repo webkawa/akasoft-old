@@ -8,107 +8,129 @@
         <column>footcenter</column>
         <column>footright</column>
     </model>
+    <s>
+        <i>discount</i>
+        <i>
+            <![CDATA[
+                <img src="data/img/picts/bonsai.png" />
+                <div class="title">
+                    <h1>Une grande idée</h1>
+                    <h2>ne mérite aucun compromis.</h2>
+                </div>
+                <div class="text">
+                    <p>La question matérielle ou financière ne doit pas brider votre créativité.</p>
+                    <p>Présentez-nous votre projet : nous vous aidons à le lancer.</p>
+                    <p>
+                        <a href="#d">
+                            <span>Devenons partenaires</span>
+                        </a>
+                    </p>
+                </div>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Novice ?</h2>
+                <p>Pas d'inquiétude. Nos collaborateurs vous accompagnent dans vos choix techniques, du début à la fin de votre projet.</p>
+                <a href="#a">En savoir plus ...</a>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>N'hésitez plus.</h2>
+                <p>Mettez enfin vos moyens à la hauteur de vos ambitions : offrez-vous un logiciel sur mesure, fiable, adapté.</p>
+                <a href="#b">Parlons-en</a>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Budget serré ?</h2>
+                <p>Investissez judicieusement : nos services présentent le meilleur rapport qualité/prix du marché.</p>
+                <a href="#c">Découvrez pourquoi</a>
+            ]]>
+        </i>
+    </s>
+    <s>
+        <i>deluxe</i>
+        <i>
+            <![CDATA[
+                <img src="data/img/picts/bp.png" />
+                <div class="title">
+                    <h1>Sans maîtrise,</h1>
+                    <h2>la technologie ne résoud rien.</h2>
+                </div>
+                <div class="text">
+                    <p>Ne faites plus de concessions : imaginez, concevez, exploitez.<br/>Nous nous chargeons du reste.</p>
+                    <p>
+                        <a href="#products">
+                            <span>Découvrez nos services</span>
+                        </a>
+                    </p>
+                </div>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Objectif : qualité.</h2>
+                <p>Les apparences sont trompeuses : nos applications dépassent de loin le simple ressenti.</p>
+                <a href="#d">Notre philosophie</a>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Exigent ?</h2>
+                <p>Faites-vous votre propre idée ! Nous offrons une période d'essai, sans engagement contractuel, pour vous convaincre.</p>
+                <a href="#e">Nos garanties</a>
+            ]]>
+        </i>
+        <i>
+            <![CDATA[
+                <h2>Gardez le choix.</h2>
+                <p>Car un projet informatique n'est jamais simple, sélectionnez vos prestations à la carte.</p>
+                <a href="#f">Nos méthodes</a>
+            ]]>
+        </i>
+    </s>
     <s> 
-        <i>1</i>
+        <i>fasttrack</i>
         <i>
             <![CDATA[
-                <h1>Test 1</h1><a href="#sample">Click click click click click click click click click</a>
+                <img src="data/img/picts/red.png" />
+                <div class="title">
+                    <h1>Dans l'urgence ?</h1>
+                    <h2>Nous analysons, produisons, livrons plus vite.</h2>
+                </div>
+                <div class="text">
+                    <div />
+                    <div>
+                        <p>Ne laissez pas un problème de délai influer sur la qualité de votre projet.</p>
+                        <p>Découvrez dès à présent notre service de développement sous tension.</p>
+                    </div>
+                    <div class="button">
+                        <a href="#fasttrack">En savoir plus</a>
+                    </div>
+                </div>
             ]]>
         </i>
         <i>
             <![CDATA[
-                <h2>Test 1</h1>
-                <p>Lorem ipsum</p>
+                <h2>A l'essentiel.</h2>
+                <p>Seul un cadrage rigoureux peut pallier à une situation d'urgence. Nous vous assistons dans le choix d'une stratégie efficace.</p>
+                <a href="#c">Voilà comment ...</a>
             ]]>
         </i>
         <i>
             <![CDATA[
-                <h2>Test 1</h1>
-                <p>Lorem ipsum</p>
+                <h2>Vite, mais bien.</h2>
+                <p>La nécessité d'une action rapide n'implique pas de bâcler le travail. Nous nous portons garants du résultat.</p>
+                <a href="#d">Plus de détails</a>
             ]]>
         </i>
         <i>
             <![CDATA[
-                <h2>Test 1</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-    </s>
-    <s>
-        <i>2</i>
-        <i>
-            <![CDATA[
-                <h1>Test 2</h1>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 2</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 2</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 2</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-    </s>
-    <s>
-        <i>3</i>
-        <i>
-            <![CDATA[
-                <h1>Test 3</h1>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 3</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 3</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 3</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-    </s>
-    <s>
-        <i>4</i>
-        <i>
-            <![CDATA[
-                <h1>Test 4</h1>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 4</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 4</h1>
-                <p>Lorem ipsum</p>
-            ]]>
-        </i>
-        <i>
-            <![CDATA[
-                <h2>Test 4</h1>
-                <p>Lorem ipsum</p>
+                <h2>Vraiment pressé ?</h2>
+                <p>Nous vous rappelons dans les prochaines heures pour faire le point sur la situation.</p>
+                <a href="#contact">Utiliser la voie rapide</a>
             ]]>
         </i>
     </s>

@@ -1,9 +1,24 @@
-body, h1, h2, h3, p {
+body, h1, h2, h3, p, a {
     margin: 0;
     padding: 0;
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+}
+a {
+    color: black;
 }
 img {
     border: 0;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+li {
+    margin: 0;
+    padding: 0;
 }
 
 .width1024px {
@@ -35,6 +50,9 @@ img {
 }
 .width100per {
     width: 100%;
+}
+.width96per {
+    width: 96%;
 }
 .width90per {
     width: 90%;
@@ -125,6 +143,9 @@ img {
 }
 .top64px {
     top: 64px;
+}
+.top92px {
+    top: 92px;
 }
 .topM4px {
     top: -4px;
@@ -242,9 +263,17 @@ img {
     margin-left: 32px;
     margin-right: 32px;
 }
+.marginH2per {
+    margin-left: 2%;
+    margin-right: 2%;
+}
 .marginH5per {
     margin-left: 5%;
     margin-right: 5%;
+}
+.marginV2px {
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 .marginV4px {
     margin-top: 4px;
@@ -344,6 +373,21 @@ img {
 .padding16px {
     padding: 16px;
 }
+.padding32px {
+    padding: 32px;
+}
+.paddingH8px {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.paddingH2px {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.paddingH4px {
+    padding-left: 4px;
+    padding-right: 4px;
+}
 .paddingH8px {
     padding-left: 8px;
     padding-right: 8px;
@@ -351,6 +395,14 @@ img {
 .paddingH16px {
     padding-left: 16px;
     padding-right: 16px;
+}
+.paddingH32px {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+.paddingH64px {
+    padding-left: 64px;
+    padding-right: 64px;
 }
 .paddingH5per {
     padding-left: 5%;
@@ -360,6 +412,14 @@ img {
     padding-left: 10%;
     padding-right: 10%;
 }
+.paddingV2px {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.paddingV4px {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
 .paddingV8px {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -368,14 +428,41 @@ img {
     padding-top: 16px;
     padding-bottom: 16px;
 }
+.paddingT16px {
+    padding-top: 16px;
+}
 .paddingT32px {
     padding-top: 32px;
+}
+.paddingT48px {
+    padding-top: 48px;
 }
 .paddingT64px {
     padding-top: 64px;
 }
+.paddingR8px {
+    padding-right: 8px;
+}
 .paddingR16px {
     padding-right: 16px;
+}
+.paddingR24px {
+    padding-right: 24px;
+}
+.paddingR32px {
+    padding-right: 32px;
+}
+.paddingB32px {
+    padding-bottom: 32px;
+}
+.paddingL32px {
+    padding-left: 32px;
+}
+.paddingL48px {
+    padding-left: 48px;
+}
+.paddingL64px {
+    padding-left: 64px;
 }
 .paddingNo {
     padding: 0;
@@ -397,6 +484,9 @@ img {
 }
 .displayBlock {
     display: block;
+}
+.displayInline {
+    display: inline;
 }
 .displayInlineBlock {
     display: inline-block;
@@ -461,6 +551,25 @@ img {
     background-color:#991a1a;
 }
 
+.backgroundNoRepeat {
+    background-repeat: no-repeat;
+}
+.backgroundRepeatX {
+    background-repeat: repeat-x;
+}
+.backgroundRepeatY {
+    background-repeat: repeat-y;
+}
+.backgroundAlignTop {
+    background-position-y: top;
+}
+.backgroundAlignMiddle {
+    background-position-y: center;
+}
+.backgroundAlignBottom {
+    background-position-y: bottom;
+}
+
 .textLeft {
     text-align: left;
 }
@@ -469,6 +578,15 @@ img {
 }
 .textCenter {
     text-align: center;
+}
+.verticalTop {
+    vertical-align: top;
+}
+.verticalMiddle {
+    vertical-align: middle;
+}
+.verticalBottom {
+    vertical-align: bottom;
 }
 
 .weightNormal {
@@ -507,6 +625,15 @@ img {
 .size20px {
     font-size: 20px;
 }
+.size22px {
+    font-size: 22px;
+}
+.size24px {
+    font-size: 24px;
+}
+.size32px {
+    font-size: 32px;
+}
 .size48px {
     font-size: 48px;
 }
@@ -514,6 +641,9 @@ img {
     font-size: 64px;
 }
 
+.line12px {
+    line-height: 12px;
+}
 .line24px {
     line-height: 24px;
 }
@@ -580,6 +710,9 @@ img {
     border-color: #DDD;
 }
 
+.radius2px {
+    border-radius: 2px;
+}
 .radius4px {
     border-radius: 4px;
 }

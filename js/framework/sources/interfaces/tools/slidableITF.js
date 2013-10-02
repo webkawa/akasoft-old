@@ -30,12 +30,14 @@ SlidableITF.prototype.init = function(setup) {
 };
 /* Navigation. */
 SlidableITF.prototype.start = function(setup) {
+    this.register("slideLength", this.getSourceData(setup.source, 's[class="slide"]').length, true);
     this.getMethod("to", "Slidable").call([0]);
 };
 SlidableITF.prototype.to = function(setup, to) {
-    var back = this.slide;
+    var from = this.slide;
+    
     this.slide = to;
-    if (back > to && to !== 0 && !Toolkit.isNull(setup.stateLoadBack)) {
+    if ((from === 0 && to === this.slideLength - 1) || (from > to && !(from === this.slideLength - 1 && to === 0)) && !Toolkit.isNull(setup.stateLoadBack)) {
         this.go(setup.stateLoadBack);
     } else {
         this.go(setup.stateLoadNext);
@@ -43,16 +45,15 @@ SlidableITF.prototype.to = function(setup, to) {
 };
 SlidableITF.prototype.next = function(setup) {
     var l = this.getSourceData(setup.source, 's[class="slide"]').length;
-    if (this.slide === l - 1) {
+    if (this.slide === this.slideLength - 1) {
         this.getMethod("to", "Slidable").call([0]);
     } else {
         this.getMethod("to", "Slidable").call([this.slide + 1]);
     }
 };
 SlidableITF.prototype.back = function(setup) {
-    var l = this.getSourceData(setup.source, 's[class="slide"]').length;
     if (this.slide === 0) {
-        this.getMethod("to", "Slidable").call([l - 1]);
+        this.getMethod("to", "Slidable").call([this.slideLength - 1]);
     } else {
         this.getMethod("to", "Slidable").call([this.slide - 1]);
     }

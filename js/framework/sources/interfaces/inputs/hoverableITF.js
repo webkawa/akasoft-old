@@ -15,6 +15,7 @@ function HoverableITF(cpn, setup) {
     cpn.registerMethod(HoverableITF.prototype.start, "start", false);
     cpn.registerMethod(HoverableITF.prototype.check, "check", false);
     cpn.registerMethod(HoverableITF.prototype.back, "back", false);
+    cpn.registerMethod(HoverableITF.prototype.forceBack, "forceBack", false);
 };
 /* Name. */
 HoverableITF.prototype.name = "Hoverable";
@@ -46,7 +47,7 @@ HoverableITF.prototype.start = function() {
 };
 /* Check. */
 HoverableITF.prototype.check = function() {
-    if (this.hoverable_back) {
+    if (this.hoverable_back || this.hoverable_forceback) {
         this.getMethod("back", "Hoverable").call([]);
     }
 };
@@ -60,5 +61,13 @@ HoverableITF.prototype.back = function(setup) {
             this.getMethod(setup.callback, setup.callbackITF).call([]);
         }
         this.go(setup.state);
+    }
+};
+/* Force back. */
+HoverableITF.prototype.forceBack = function(setup) {
+    if (this.status === 0) {
+        this.go(setup.state);
+    } else {
+        this.register("hoverable_forceback", true, true);
     }
 };

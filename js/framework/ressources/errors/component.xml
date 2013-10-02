@@ -145,5 +145,9 @@
         <param required="true" id="component">Component</param>
         <param id="name">Name</param>
     </error>
+    <error code="29">
+        <message>Error on component start</message>
+        <param required="true" id="component">Component</param>
+    </error>
     
 </catalog>

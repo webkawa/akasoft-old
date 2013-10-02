@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
+         name="Products" 
+         type="classic" >
+    <selectors>
+        <selector id="wrapper">div.wrapper</selector>
+        <selector id="title">div.wrapper > h1</selector>
+        <selector id="preview">div.wrapper > div.preview</selector>
+        <selector id="previewChilds">div.wrapper > div.preview > div</selector>
+        <selector id="previewLeft">div.wrapper > div.preview > div.left</selector>
+        <selector id="previewCenter">div.wrapper > div.preview > div.center</selector>
+        <selector id="previewRight">div.wrapper > div.preview > div.right</selector>
+        <selector id="previewSubtitles">div.wrapper > div.preview > div > h2</selector>
+        <selector id="previewTexts">div.wrapper > div.preview > div > div</selector>
+        <selector id="detail">div.detail</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>200</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="SlideIn">
+            <speed>800</speed>
+            <easing>easeOutCubic</easing>
+            <move clean="false">
+                <property>margin-top</property>
+                <from>-100%</from>
+                <to>16px</to>
+            </move>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div class="wrapper">
+                    <h1>Nos services</h1>
+                    <div class="preview">
+                        <div class="left">
+                            <h2 />
+                            <div />
+                            <a />
+                        </div>
+                        <div class="center">
+                            <h2 />
+                            <div />
+                            <a />
+                        </div>
+                        <div class="right">
+                            <h2 />
+                            <div />
+                            <a />
+                        </div>
+                    </div>
+                </div>
+                <div class="detail" />
+            ]]>
+        </dom>
+        <style target="title">borderBottom1px border444</style>
+        <style target="wrapper">positionAbsolute paddingT48px paddingL64px paddingR16px</style>
+        <style target="preview">positionAbsolute overflowHidden</style>
+        <style target="previewChilds">paddingB32px paddingT16px paddingH16px marginB16px</style>
+        <style target="previewSubtitles"></style>
+        <style target="previewTexts">paddingV8px</style>
+        <style target="detail">positionAbsolute height0px</style>
+        <action call="realWidth">
+            <parameter>wrapper</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>wrapper</parameter>
+        </action>
+        <action call="realWidth">
+            <parameter>preview</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>preview</parameter>
+            <parameter variable="true">tnoh</parameter>
+        </action>
+        <action call="realWidth">
+            <parameter>detail</parameter>
+        </action>
+        <action call="css">
+            <parameter>previewChilds</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <to>Loading</to>
+    </loader>
+    <state id="Loading">
+        <in from="@None">
+            <target>title</target>
+            <animation base="FadeIn" />
+        </in>
+        <begin call="sourceGet">
+            <parameter>data</parameter>
+        </begin>
+    </state>
+    <state id="Preview">
+        <in from="Loading">
+            <target>previewLeft</target>
+            <pre call="apply" on="Columnable" />
+            <pre call="refresh" on="Equalizable" />
+            <pre call="realHeight">
+                <parameter>previewChilds</parameter>
+                <parameter>-16px</parameter>
+            </pre>
+            <animation base="SlideIn" />
+        </in>
+        <in from="Loading">
+            <target>previewCenter</target>
+            <animation base="SlideIn" wait="250" />
+        </in>
+        <in from="Loading">
+            <target>previewRight</target>
+            <animation base="SlideIn" wait="500" />
+        </in>
+    </state>
+    <state id="Detail">
+        
+    </state>
+</component>

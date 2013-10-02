@@ -16,7 +16,7 @@ function BodyCPN(ctn) {
     };
     cpn.saveInterface(NavigableITF, setup);
     
-    cpn.register("goto", "sample", false);
+    cpn.register("goto", "products", false);
     
     cpn.registerMethod(this.init, "init", false);
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
@@ -94,6 +94,19 @@ BodyCPN.prototype.navigate = function(to) {
         case "home":
             cpn = new HomeCPN(this.qs("centerFrame"));
             break;
+        case "products":
+            cpn = new ProductsCPN(this.qs("centerFrame"));
+            break;
+        case "404":
+            var s = {
+                title: "Erreur 404",
+                message: "Cette page n'existe pas ou semble avoir été supprimée ...",
+                icon: "xion.png",
+                linklabel: "Retour à l'accueil",
+                linkreference: "home"
+            };
+            cpn = new FlashCPN(this.qs("centerFrame"), s);
+            break;
         default:
             cpn = new EditorialCPN(this.qs("centerFrame"), to);
             break;
@@ -117,6 +130,12 @@ BodyCPN.prototype.navigate = function(to) {
 };
 /* Page switch (link click). */
 BodyCPN.prototype.follow = function() {
-    this.goto = this.qs("$TRIGGERED").attr("href").replace(/#/g, '');
+    var tr = this.qs("$TRIGGERED");
+    
+    if (tr.parents(".cpnLeftLink").length > 0) {
+        Register.getFrom(tr.parents(".cpnLeftLink")).getMethod("forceBack", "Hoverable").call([]);
+    }
+    
+    this.goto = tr.attr("href").replace(/#/g, '');
     this.go("Switch");
 };

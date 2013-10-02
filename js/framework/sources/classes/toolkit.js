@@ -179,11 +179,10 @@ var Toolkit = {
         } else {
             height = $(target).parent().height() + parseInt(difference);
         }
-        var padding = $(target).outerHeight(true) - $(target).height();
-        $(target).height(height - padding);
+        Toolkit.absRealHeight(target, height);
     },
              
-    /* Executes a horizontal resizing on a element.
+    /* Executes an horizontal resizing on a element.
      * PARAMETERS :
      *  > target        Target element.
      *  > difference    Target difference width (add/remove).
@@ -195,8 +194,33 @@ var Toolkit = {
         } else {
             width = $(target).parent().width() + parseInt(difference);
         }
-        var padding = $(target).outerWidth(true) - $(target).width();
-        $(target).width(width - padding);
+        Toolkit.absRealWidth(target, width);
+    },
+            
+    /* Executes an (absolute) vertical resizing on a element.
+     * PARAMETERS :
+     *  > target        Target element.
+     *  > height        Height.
+     * RETURNS : N/A                                                           */
+    absRealHeight: function(target, height) {
+        var padding;
+        $(target).each(function(i, buff) {
+            padding = $(buff).outerHeight(true) - $(buff).height();
+            $(buff).height(height - padding);
+        });
+    },
+             
+    /* Executes an (absolute) horizontal resizing on a element.
+     * PARAMETERS :
+     *  > target        Target element.
+     *  > width         Width.
+     * RETURNS : N/A                                                            */
+    absRealWidth: function(target, width) {
+        var padding;
+        $(target).each(function(i, buff) {
+            padding = $(buff).outerWidth(true) - $(buff).width();
+            $(buff).width(width - padding);
+        });
     },
     
     /* Executes a centering on a element.

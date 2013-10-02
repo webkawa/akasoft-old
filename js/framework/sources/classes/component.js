@@ -105,9 +105,12 @@ function Component(container, descriptor) {
     this.registerMethod(this.shortcutOuterWidth, "outerWidth", false);
     this.registerMethod(this.shortcutRealHeight, "realHeight", false);
     this.registerMethod(this.shortcutRealWidth, "realWidth", false);
+    this.registerMethod(this.shortcutAbsRealHeight, "absRealHeight", false);
+    this.registerMethod(this.shortcutAbsRealWidth, "absRealWidth", false);
     this.registerMethod(this.shortcutCenter, "center", false);
     this.registerMethod(this.shortcutCenterX, "centerX", false);
     this.registerMethod(this.shortcutCenterY, "centerY", false);
+    this.registerMethod(this.shortcutPosition, "position", false);
     this.registerMethod(this.shortcutClean, "clean", false);
     this.registerMethod(this.shortcutClass, "class", false);
     this.registerMethod(this.shortcutAttribute, "attribute", false);
@@ -260,12 +263,21 @@ Component.prototype.quickSelect = function(name, refresh, force) {
     if (!Toolkit.isNull(this.ltn) && name === "$TRIGGERED") {
         return this.ltn;
     }
+    if (name === "$IMAGES") {
+        return $(this.container).find("img");
+    }
+    if (name === "$IFRAMES") {
+        return $(this.container).find("iframes");
+    }
 
     return this.getSelector(name, refresh, force).getNodes();
 };
 Component.prototype.qs = function(name, select) {
     if (Toolkit.isNull(select)) {
         return this.quickSelect(name);
+    }
+    if (select.indexOf(" ") !== -1) {
+        return this.quickSelect(name).find(select);
     }
     return this.quickSelect(name).children(select);
 };
@@ -649,6 +661,10 @@ Component.prototype.animate = function(animation, targets, postback) {
     $(targets).css(from);
 
     // Initialization
+    var delay= 0
+    if ($(animation).is("[wait]")) {
+        delay = parseInt($(animation).attr("wait"));
+    }
     var params = {
         duration:
                 $(animation).children("speed").length === 1 ?
@@ -683,7 +699,7 @@ Component.prototype.animate = function(animation, targets, postback) {
     });
     
     // Animation
-    $(targets).animate(to, params);
+    $(targets).delay(delay).animate(to, params);
 };
 /* Executes a pre-saved sequence.
  * PARAMETERS :
@@ -907,49 +923,56 @@ Component.prototype.prepare = function(node) {
 Component.prototype.start = function() {
     var ctx = this;
     this.dfr_start.promise().done(function() {
-        ctx.log("Starting component");
-        if (ctx.state !== "@None") {
-            if (CFG.get("components", "allow.invalid.start")) {
-                return false;
-            } else {
-                var p = {
-                    component: ctx.getID()
-                };
-                throw new Error("cpn", 10, p);
-            }
-        } else {
-            // Writing initial DOM
-            ctx.rewrite($(ctx.model).find("component > loader > dom").text());
-
-            // Loading global selectors
-            ctx.reselect();
-            
-            // Selecting parents
-            ctx.parents[0] = ctx;
-            $(ctx.container).parents("[id]").each(function() {
-                ctx.parents[ctx.parents.length] = Register.get($(this).attr("id"));
-            });
-            
-            // Applying styles
-            $(ctx.model).find("component > loader > style").each(function() {
-                ctx.qs($(this).attr("target")).addClass($(this).text());
-            });
-
-            // Launching start actions
-            $(ctx.model).find("component > loader > action").each(function() {
-                ctx.call.apply(this, [ctx]);
-            });
-
-            // Launching init actions
-            for (var i = 0; i < ctx.methods.length; i++) {
-                if (ctx.methods[i].getName().indexOf("init") === 0) {
-                    ctx.methods[i].call([]);
+        try {
+            ctx.log("Starting component");
+            if (ctx.state !== "@None") {
+                if (CFG.get("components", "allow.invalid.start")) {
+                    return false;
+                } else {
+                    var p = {
+                        component: ctx.getID()
+                    };
+                    throw new Error("cpn", 10, p);
                 }
-            }
+            } else {
+                // Writing initial DOM
+                ctx.rewrite($(ctx.model).find("component > loader > dom").text());
 
-            // Migrating to initial state
-            ctx.setStatus(0);
-            ctx.go($(ctx.model).find("component > loader > to").text());
+                // Loading global selectors
+                ctx.reselect();
+
+                // Selecting parents
+                ctx.parents[0] = ctx;
+                $(ctx.container).parents("[id]").each(function() {
+                    ctx.parents[ctx.parents.length] = Register.get($(this).attr("id"));
+                });
+
+                // Applying styles
+                $(ctx.model).find("component > loader > style").each(function() {
+                    ctx.qs($(this).attr("target")).addClass($(this).text());
+                });
+
+                // Launching init actions
+                for (var i = 0; i < ctx.methods.length; i++) {
+                    if (ctx.methods[i].getName().indexOf("init") === 0) {
+                        ctx.methods[i].call([]);
+                    }
+                }
+
+                // Launching start actions
+                $(ctx.model).find("component > loader > action").each(function() {
+                    ctx.call.apply(this, [ctx]);
+                });
+
+                // Migrating to initial state
+                ctx.setStatus(0);
+                ctx.go($(ctx.model).find("component > loader > to").text());
+            }
+        } catch (e) {
+            var p = {
+                component: ctx.getID()
+            };
+            ErrorManager.process(new Error("cpn", 29, p, e));
         }
     });
 };
@@ -1056,6 +1079,9 @@ Component.prototype.shortcutOuterWidth = function(target, margin) {
 Component.prototype.shortcutRealHeight = function(target, difference) {
     Toolkit.realHeight(this.qs(target), difference);
 };
+Component.prototype.shortcutAbsRealHeight = function(target, height) {
+    Toolkit.absRealHeight(this.qs(target), height);
+};
 /* Manual horizontal re-sizing.
  * PARAMETERS :
  *  target          Target selector.
@@ -1064,7 +1090,10 @@ Component.prototype.shortcutRealHeight = function(target, difference) {
 Component.prototype.shortcutRealWidth = function(target, difference) {
     Toolkit.realWidth(this.qs(target), difference);
 };
-/* Executes a vertical centering on a element.
+Component.prototype.shortcutAbsRealWidth = function(target, width) {
+    Toolkit.absRealWidth(this.qs(target), width);
+};
+/* Executes a global centering on a element.
  * PARAMETERS :
  *  target          Target element.
  * RETURNS : N/A                                                                */
@@ -1076,6 +1105,54 @@ Component.prototype.shortcutCenterX = function(target) {
 };
 Component.prototype.shortcutCenterY = function(target) {
     Toolkit.centerY(this.qs(target));
+};
+/* Executes an absolute positioning on a element.
+ * PARAMETERS :
+ *  target          Target element.
+ *  hpos            Horizontal positionning.
+ *  vpos            Vertical positionning.
+ *  mode            Inversion mode.
+ *                   0 Classic (left/top)
+ *                   1 Horizontal switch (right/top)
+ *                   2 Vertical switch (left/bottom)
+ *                   3 Global switch (right/bottom)
+ * RETURNS : N/A                                                                */
+Component.prototype.shortcutPosition = function(target, hpos, vpos, mode) {
+    var p;
+    switch(mode) {
+        case 0:
+            p = {
+                left: hpos,
+                top: vpos
+            };
+            break;
+        case 1:
+            p = {
+                right: hpos,
+                top: vpos
+            };
+            break;
+        case 2:
+            p = {
+                left: hpos,
+                bottom: vpos
+            };
+            break;
+        case 3:
+            p = {
+                right: hpos,
+                bottom: vpos
+            };
+            break
+        default:
+            p = {
+                left: hpos,
+                top: vpos
+            };
+            break;
+    }
+    this.qs(target).addClass("positionAbsolute");
+    this.qs(target).css(p);
 };
 /* Executes cleaning on a given element style.
  * PARAMETERS :

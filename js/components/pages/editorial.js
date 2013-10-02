@@ -8,18 +8,13 @@ function EditorialCPN(ctn, src) {
             call: "start"
         }
     ];
-    cpn.registerSource("data", "data/site/editorial_" + src + ".xml", "Ready", cb);
+    cpn.registerSource("data", "data/site/editorial_" + src + ".xml", "Error", cb);
     
     var s = {
-        load: ['images', 'frames'],
-        back: "Ready"
+        load: ['$IMAGES', '$IFRAMES'],
+        state: "Ready"
     };
     cpn.saveInterface(LoadableITF, s);
-    
-    setup = {
-        driver: "build"
-    };
-    cpn.saveInterface(NavigableITF, setup);
     
     cpn.registerMethod(this.start, "start", false);
     cpn.registerMethod(this.follow, "follow", false);
@@ -28,14 +23,12 @@ function EditorialCPN(ctn, src) {
     
     return cpn;
 }
-/* Starter */
 EditorialCPN.prototype.start = function() {
     this.register("goto", this.getSourceData("data", 's[class="page"]:first() > i[class="name"]').text(), true);
-    this.getMethod("build").call([this.goto]);
+    this.getMethod("build").call([]);
     this.getMethod("load", "Loadable").call([]);
 };
-/* Navigation */
-EditorialCPN.prototype.build = function(to) {
+EditorialCPN.prototype.build = function() {
     var data = this.getSource("data").getDataByKey("page", "name", this.goto);
     
     this.qs("content").remove();
@@ -43,12 +36,10 @@ EditorialCPN.prototype.build = function(to) {
     this.qs("subtitle").text($(data).children('i[class="subtitle"]').text());
     this.qs("frame").append($(data).children('i[class="content"]').text());
 };
-/* Navigation */
 EditorialCPN.prototype.follow = function() {
     this.goto = this.qs("$TRIGGERED").attr("href").replace(/#/g, '');
     this.go("Switch");
 };
-/* Content height */
 EditorialCPN.prototype.height = function(mode) {
     var v;
     mode === "true" ?

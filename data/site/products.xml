@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >    
+    <model alias="category">
+        <column>id</column>
+        <column>title</column>
+        <column>text</column>
+        <column>linklabel</column>
+        <column>linkreference</column>
+        <column>process</column>
+    </model>
+    <s> 
+        <i>1</i>
+        <i>Produit 1</i>
+        <i>
+            <![CDATA[
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque at dui at dictum. Vivamus mauris metus, molestie quis ultrices vulputate, vulputate a dolor. Mauris quis erat ultrices, dapibus nulla nec, eleifend risus. Nulla in dapibus tellus. Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+            ]]>
+        </i>
+        <i>Découvrir</i>
+        <i>A</i>
+        <i>N/A</i>
+    </s>
+    <s> 
+        <i>2</i>
+        <i>Ipsum dolor sit amet pellentesque at</i>
+        <i>
+            <![CDATA[
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+            ]]>
+        </i>
+        <i>Découvrir</i>
+        <i>B</i>
+        <i>N/A</i>
+    </s>
+    <s> 
+        <i>3</i>
+        <i>Produit 3</i>
+        <i>
+            <![CDATA[
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque at dui at dictum. Vivamus mauris metus, molestie quis ultrices vulputate, vulputate a dolor. Mauris quis erat ultrices, dapibus nulla nec, eleifend risus. Nulla in dapibus tellus. Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+            ]]>
+        </i>
+        <i>Découvrir</i>
+        <i>C</i>
+        <i>N/A</i>
+    </s>
+</data>

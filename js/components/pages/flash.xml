@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
+         name="Editorial" 
+         type="classic" >
+    <selectors>
+        <selector id="wrapper">div</selector>
+        <selector id="title">div > h1</selector>
+        <selector id="message">div > p.message</selector>
+        <selector id="frame">div > p.link</selector>
+        <selector id="link">div > p.link > a</selector>
+        <selector id="childs">div > *</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>240</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div>
+                    <h1 />
+                    <p class="message" />
+                    <p class="link">
+                        <a />
+                    </p>
+                </div>
+            ]]>
+        </dom>
+        <style target="wrapper">width360px</style>
+        <style target="title">paddingL48px paddingV4px colorDDD backgroundNoRepeat background444 backgroundAlignMiddle verticalMiddle radius4px</style>
+        <style target="message">paddingL48px paddingV8px size16px</style>
+        <style target="frame">textRight size16px</style>
+        <action call="center">
+            <parameter>wrapper</parameter>
+        </action>
+        <action call="css">
+            <parameter>childs</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="css">
+            <parameter>title</parameter>
+            <parameter>background-position-x</parameter>
+            <parameter>8px</parameter>
+        </action>
+        <to>Ready</to>
+    </loader>
+    <state id="Ready">
+        <in from="@None">
+            <target>title</target>
+            <animation base="FadeIn" />
+        </in>
+        <in from="@None">
+            <target>message</target>
+            <animation base="FadeIn" wait="200" />
+        </in>
+        <in from="@None">
+            <target>frame</target>
+            <animation base="FadeIn" wait="400" />
+        </in>
+    </state>
+</component>

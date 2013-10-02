@@ -143,6 +143,8 @@
         <xs:attribute name="base"
                       type="string"
                       use="required" />
+        <xs:attribute name="wait"
+                      type="xs:decimal" />
     </xs:complexType>
     <xs:complexType name="trajectory">
         <xs:sequence>
