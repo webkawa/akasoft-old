@@ -11,15 +11,84 @@ h3 {
     font-weight: bold;
 }
 
-.fullOpacityOnHover:hover {
+.speFullOpacityOnHover:hover {
     opacity: 1;
 }
-.redBackgroundOnHover:hover {
-    background-color: rgb(211, 38, 0)
+.speColorBlue {
+    color: #3a73ad;
 }
-.blueBackgroundOnHover:hover {
-    background-color: rgb(58, 115, 173)
+.speColorHoverBlue:hover {
+    color: #3a73ad;
 }
-.greenBackgroundOnHover:hover {
-    background-color: rgb(107, 167, 28)
+.speColorDarkBlue {
+    color: #285786;
+}
+.speColorRed {
+    color: #d32600;
+}
+.speColorDarkRed {
+    color: #9A1C00;
+}
+.speColorYellow {
+    color: #f59600;
+}
+.speColorDarkYellow {
+    color: #CC6600;
+}
+.speColorGreen {
+    color: #6ba71c;
+}
+.speColorDarkGreen {
+    color: #4F810D;
+}
+.speBackgroundBlue {
+    background-color: #3a73ad;
+}
+.speBackgroundDarkBlue {
+    background-color: #285786;
+}
+.speBackgroundRed {
+    background-color: #d32600;
+}
+.speBackgroundYellow {
+    background-color: #f59600;
+}
+.speBackgroundGreen {
+    background-color: #6ba71c;
+}
+.speBackgroundHoverBlue:hover {
+    background-color: #3a73ad;
+}
+.speBackgroundHoverRed:hover {
+    background-color: #d32600;
+}
+.speBackgroundHoverYellow:hover {
+    background-color: #f59600;
+}
+.speBackgroundHoverGreen:hover {
+    background-color: #6ba71c;
+}
+.speBorderBlue {
+    border-color: #3a73ad;
+}
+.speBorderDarkBlue {
+    border-color: #285786;
+}
+.speBorderRed {
+    border-color: #d32600;
+}
+.speBorderDarkRed {
+    border-color: #9A1C00;
+}
+.speBorderYellow {
+    border-color: #f59600;
+}
+.speBorderDarkYellow {
+    border-color: #CC6600;
+}
+.speBorderGreen {
+    border-color: #6ba71c;
+}
+.speBorderDarkGreen {
+    border-color: #4F810D;
 }

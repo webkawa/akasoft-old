@@ -7,11 +7,10 @@
         <selector id="icon">img</selector>
         <selector id="wrapper">div</selector>
         <selector id="title">div > p</selector>
-        <selector id="hover">img, div</selector>
     </selectors>
     <trajectories>
         <trajectory name="Deploy">
-            <speed>750</speed>
+            <speed>640</speed>
             <easing>easeInOutQuad</easing>
             <move>
                 <property>right</property>
@@ -29,7 +28,7 @@
             </move>
         </trajectory>
         <trajectory name="Open">
-            <speed>320</speed>
+            <speed>240</speed>
             <easing>easeOutQuint</easing>
             <move>
                 <property>opacity</property>
@@ -121,24 +120,20 @@
         <action call="center">
             <parameter>icon</parameter>
         </action>
+        <action call="reselect" parent="1">
+            <parameter>linksRight</parameter>
+        </action>
         <to>Close</to>
     </loader>
     <state id="Close">
-        <trigger bind="mousemove">
-            <target>icon</target>
-            <action call="go">
-                <parameter>Open</parameter>
-            </action>
-        </trigger>
         <in from="@None">
             <target>$SELF</target>
             <animation base="Deploy" />
         </in>
     </state>
     <state id="Open">
-        <in from="Close">
+        <in from="Close" monitor="true">
             <target>wrapper</target>
-            <pre call="start" on="Hoverable" />
             <pre call="class">
                 <parameter>wrapper</parameter>
                 <parameter>displayNone</parameter>
@@ -153,8 +148,7 @@
                 <animation base="FadeIn" />
             </queue>
         </in>
-        <begin call="check" on="Hoverable" />
-        <out>
+        <out monitor="true">
             <target>title</target>
             <animation base="FadeOut" />
             <queue>

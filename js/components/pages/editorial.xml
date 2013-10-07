@@ -4,47 +4,27 @@
          name="Editorial" 
          type="classic" >
     <selectors>
-        <selector id="wrapper">div</selector>
-        <selector id="border">div > div.bb</selector>
-        <selector id="frame">div > div.frame</selector>
-        <selector id="title">div > div.frame > h1</selector>
-        <selector id="subtitle">div > div.frame > h2</selector>
-        <selector id="content">div > div.frame > *:not(h1:first()):not(h2:first())</selector>
+        <selector id="head">div.head</selector>
+        <selector id="breadcrumb">div.head > span</selector>
+        <selector id="title">div.head > h1</selector>
+        <selector id="subtitle">div.head > h2</selector>
+        <selector id="body">div.body</selector>
+        <selector id="wrapper">div.body > div.wrapper</selector>
+        <selector id="content">div.body > div.wrapper > *</selector>
+        <selector id="columnables" explore="true">div.body > div.wrapper div.columned</selector>
     </selectors>
     <trajectories>
-        <trajectory name="OpenWrapperY">
-            <speed>500</speed>
-            <easing>easeInOutCubic</easing>
-            <move>
-                <property>height</property>
-                <to>100%</to>
-                <goal call="get">
-                    <parameter>heightMax</parameter>
-                </goal>
-            </move>
-        </trajectory>
-        <trajectory name="CloseWrapperY">
-            <speed>500</speed>
-            <easing>easeInOutCubic</easing>
-            <move clean="false">
-                <property>height</property>
-                <to>1px</to>
-                <goal call="get">
-                    <parameter>heightMin</parameter>
-                </goal>
-            </move>
-        </trajectory>
         <trajectory name="FadeIn">
-            <speed>120</speed>
+            <speed>320</speed>
             <easing>swing</easing>
-            <move clean="false">
+            <move>
                 <property>opacity</property>
                 <from>0</from>
                 <to>1</to>
             </move>
         </trajectory>
         <trajectory name="FadeOut">
-            <speed>120</speed>
+            <speed>320</speed>
             <easing>swing</easing>
             <move clean="false">
                 <property>opacity</property>
@@ -52,71 +32,94 @@
                 <to>0</to>
             </move>
         </trajectory>
-        <trajectory name="Reduce">
-            <speed>200</speed>
-            <easing>swing</easing>
+        <trajectory name="ContentIn">
+            <speed>640</speed>
+            <easing>easeOutExpo</easing>
             <move>
-                <property>width</property>
-                <to>0%</to>
-            </move>
-            <move clean="false">
-                <property>opacity</property>
-                <from>1</from>
-                <to>0</to>
-            </move>
-        </trajectory>
-        <trajectory name="Expand">
-            <speed>200</speed>
-            <easing>swing</easing>
-            <move>
-                <property>width</property>
-                <to>96%</to>
-            </move>
-            <move clean="false">
                 <property>opacity</property>
                 <from>0</from>
                 <to>1</to>
+            </move>
+            <move>
+                <property>margin-top</property>
+                <from>-100%</from>
+                <to>0%</to>
+            </move>
+        </trajectory>
+        <trajectory name="ContentOut">
+            <speed>640</speed>
+            <easing>easeInExpo</easing>
+            <move clean="false">
+                <property>margin-top</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+            <move clean="false">
+                <property>margin-top</property>
+                <from>0%</from>
+                <to>-100%</to>
             </move>
         </trajectory>
     </trajectories>
     <loader>
         <dom>
             <![CDATA[
-                <div>
-                    <div class="frame">
-                        <h1>&nbsp;</h1>
-                        <h2>&nbsp;</h2>
-                    </div>
-                    <div class="bb" />
+                <div class="head">
+                    <span>&nbsp;</span>
+                    <h1>&nbsp;</h1>
+                    <h2>&nbsp;</h2>
+                </div>
+                <div class="body">
+                    <div class="wrapper" />
                 </div>
             ]]>
         </dom>
-        <style target="wrapper">positionAbsolute overflowHidden paddingT48px paddingL64px paddingR16px</style>
-        <style target="border">positionAbsolute bottomNo rightNo height1px background444 width96per marginH2per</style>
-        <style target="frame">padding16px</style>
+        <style target="head">overflowHidden marginL64px marginR8px paddingT48px borderB1px speBorderDarkBlue</style>
+        <style target="breadcrumb">displayBlock</style>
+        <style target="title">displayInline nowrap marginR8px speColorDarkBlue size48px </style>
+        <style target="subtitle">displayInline nowrap size32px color444</style>
+        <style target="body">overflowHidden paddingL64px paddingR64px paddingR4px</style>
+        <style target="wrapper">paddingV8px paddingL8px paddingR32px</style>
         <action call="realWidth">
-            <parameter>wrapper</parameter>
+            <parameter>head body</parameter>
         </action>
-        <to>Loading</to>
+        <action call="css">
+            <parameter>wrapper title subtitle</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <to>Switch</to>
     </loader>
-    <state id="Loading">
+    <state id="Switch">
         <in from="@None">
-            <target>wrapper</target>
-            <animation base="FadeIn">
-                <speed>500</speed>
-            </animation>
-            <post call="height">
-                <parameter>false</parameter>
-            </post>
-            <post call="css">
-                <parameter>wrapper</parameter>
-                <parameter>height</parameter>
-                <parameter variable="true">heightMin</parameter>
-            </post>
+            <target>$SELF</target>
+            <animation base="FadeIn" />
         </in>
-        <begin call="sourceGet">
-            <parameter>data</parameter>
-        </begin>
+        <in from="Ready">
+            <target>wrapper</target>
+            <animation base="ContentOut" />
+            <queue>
+                <target>title</target>
+                <animation base="FadeOut" />
+            </queue>
+            <queue>
+                <target>subtitle</target>
+                <animation base="FadeOut" wait="200" />
+            </queue>
+        </in>
+        <begin call="build" />
+        <out to="Ready">
+            <target>title</target>
+            <animation base="FadeIn" />
+            <queue>
+                <target>wrapper</target>
+                <animation base="ContentIn" />
+            </queue>
+        </out>
+        <out to="Ready">
+            <target>subtitle</target>
+            <animation base="FadeIn" wait="200" />
+        </out>
     </state>
     <state id="Ready">
         <selectors>
@@ -126,105 +129,6 @@
             <target>links</target>
             <action call="follow" />
         </trigger>
-        <in from="Loading">
-            <target>title</target>
-            <pre call="css">
-                <parameter>title</parameter>
-                <parameter>opacity</parameter>
-                <parameter>0</parameter>
-            </pre>
-            <pre call="css">
-                <parameter>subtitle</parameter>
-                <parameter>opacity</parameter>
-                <parameter>0</parameter>
-            </pre>
-            <pre call="css">
-                <parameter>content</parameter>
-                <parameter>opacity</parameter>
-                <parameter>0</parameter>
-            </pre>
-            <animation base="FadeIn" />
-            <queue>
-                <target>subtitle</target>
-                <animation base="FadeIn" />
-                <queue>
-                    <target>wrapper</target>
-                    <pre call="height">
-                        <parameter>true</parameter>
-                    </pre>
-                    <animation base="OpenWrapperY" />
-                    <queue>
-                        <target>border</target>
-                        <animation base="Reduce" />
-                    </queue>
-                </queue>
-                <queue>
-                    <target>content</target>
-                    <animation base="FadeIn">
-                        <speed>500</speed>
-                    </animation> 
-                </queue>
-            </queue>
-        </in>
-    </state>
-    <state id="Switch">
-        <in from="Ready">
-            <target>border</target>
-            <animation base="Expand" />
-            <queue>
-                <target>content</target>
-                <animation base="FadeOut">
-                    <speed>400</speed>
-                </animation>
-            </queue>
-            <queue>
-                <target>wrapper</target>
-                <animation base="CloseWrapperY" />
-                <queue>
-                    <target>title</target>
-                    <animation base="FadeOut" />
-                    <queue>
-                        <target>subtitle</target>
-                        <animation base="FadeOut" />
-                    </queue>
-                </queue>
-            </queue>
-        </in>
-        <begin call="build" />
-        <begin call="height">
-            <parameter>true</parameter>
-        </begin>
-        <begin call="reselect">
-            <parameter>content</parameter>
-        </begin>
-        <begin call="css">
-            <parameter>content</parameter>
-            <parameter>opacity</parameter>
-            <parameter>0</parameter>
-        </begin>
-        <begin call="load" on="Loadable" />
-        <out to="Ready">
-            <target>title</target>
-            <animation base="FadeIn" />
-            <queue>
-                <target>subtitle</target>
-                <animation base="FadeIn" />
-                <queue>
-                    <target>wrapper</target>
-                    <animation base="OpenWrapperY" />
-                    <queue>
-                        <target>border</target>
-                        <animation base="Reduce" />
-                    </queue>
-                </queue>
-                <queue>
-                    <target refresh="true">content</target>
-                    <animation base="FadeIn" wait="200">
-                        <speed>400</speed>
-                    </animation>
-                </queue>
-            </queue>
-        </out>
     </state>
     <state id="Error">
         <begin call="go" on="Navigable" parent="1">

@@ -9,11 +9,10 @@
         <selector id="wrapper">div</selector>
         <selector id="title">div > p.title</selector>
         <selector id="description">div > p.description</selector>
-        <selector id="hover">a > img, div</selector>
     </selectors>
     <trajectories>
         <trajectory name="Deploy">
-            <speed>750</speed>
+            <speed>640</speed>
             <easing>easeInOutQuad</easing>
             <move>
                 <property>margin-left</property>
@@ -31,7 +30,7 @@
             </move>
         </trajectory>
         <trajectory name="Open">
-            <speed>320</speed>
+            <speed>240</speed>
             <easing>easeOutQuint</easing>
             <move>
                 <property>opacity</property>
@@ -49,7 +48,7 @@
             </move>
         </trajectory>
         <trajectory name="Close">
-            <speed>480</speed>
+            <speed>360</speed>
             <easing>easeOutQuint</easing>
             <move>
                 <property>opacity</property>
@@ -101,24 +100,20 @@
         <style target="wrapper">displayNone positionAbsolute leftM4px topM4px paddingV16px paddingR16px radius8px overflowHidden colorWhite</style>
         <style target="title">width360px marginH8px marginL96px weightBold size32px</style>
         <style target="description">width360px marginH4px marginL96px</style>
+        <action call="reselect" parent="1">
+            <parameter>linksLeft</parameter>
+        </action>
         <to>Close</to>
     </loader>
     <state id="Close">
-        <trigger bind="mousemove">
-            <target>icon</target>
-            <action call="go">
-                <parameter>Open</parameter>
-            </action>
-        </trigger>
         <in from="@None">
             <target>$SELF</target>
             <animation base="Deploy" />
         </in>
     </state>
     <state id="Open">
-        <in from="Close">
+        <in from="Close" monitor="true">
             <target>wrapper</target>
-            <pre call="start" on="Hoverable" />
             <pre call="class">
                 <parameter>wrapper</parameter>
                 <parameter>displayNone</parameter>
@@ -129,8 +124,7 @@
             <target>icon</target>
             <animation base="Select" />
         </in>
-        <begin call="check" on="Hoverable" />
-        <out to="Close">
+        <out to="Close" monitor="true">
             <target>wrapper</target>
             <animation base="Close" />
             <post call="class">

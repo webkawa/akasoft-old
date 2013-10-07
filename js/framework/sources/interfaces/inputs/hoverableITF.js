@@ -2,72 +2,32 @@
  * Manages mouse hover check in case of premature exit.
  * PARAMETERS :
  *  > cpn                         * Owner component.
- *  > setup.target                * Monitored area.
- *  > setup.state                 * Return state.
- *  > setup.callback                Return callback.
- *  > setup.callbackITF             Return callback interface.                   */
+ *  > setup.openState             * Open state.
+ *  > setup.openCallback            Open callback.
+ *  > setup.openCallbackITF         Open callback interface.                    
+ *  > setup.closeState            * Close state.
+ *  > setup.closeCallback           Close callback.
+ *  > setup.closeCallbackITF        Close callback interface.                    */
 
 function HoverableITF(cpn, setup) {
-    Toolkit.checkTypeOf(setup.target, "string");
-    Toolkit.checkTypeOf(setup.state, "string");
+    Toolkit.checkTypeOf(setup.openState, "string");
+    Toolkit.checkTypeOf(setup.closeState, "string");
     
-    cpn.registerMethod(HoverableITF.prototype.init, "init", false);
-    cpn.registerMethod(HoverableITF.prototype.start, "start", false);
-    cpn.registerMethod(HoverableITF.prototype.check, "check", false);
-    cpn.registerMethod(HoverableITF.prototype.back, "back", false);
-    cpn.registerMethod(HoverableITF.prototype.forceBack, "forceBack", false);
+    cpn.registerMethod(HoverableITF.prototype.enter, "enter", false);
+    cpn.registerMethod(HoverableITF.prototype.leave, "leave", false);
 };
 /* Name. */
 HoverableITF.prototype.name = "Hoverable";
-/* Initialization. */
-HoverableITF.prototype.init = function(setup) {
-    var ctx = this;
-    
-    this.register("hoverable_ignore", false, true);
-    this.register("hoverable_targets", this.qs(setup.target).add(this.qs(setup.target).find("*")));
-    this.register("hoverable_in", function(evt) {
-        ctx.register("hoverable_ignore", true, true);
-        ctx.register("hoverable_back", false, true);
-    });
-    this.register("hoverable_out", function() {
-        if (!ctx.hoverable_ignore) {
-            ctx.register("hoverable_back", true, true);
-            ctx.getMethod("check", "Hoverable").call([]);
-        } else {
-            ctx.register("hoverable_ignore", false, true);
-        }
-    });
-};
-/* Starter. */
-HoverableITF.prototype.start = function() {
-    this.register("hoverable_back", false, true);
-    
-    $(this.hoverable_targets).bind("mousemove", this.hoverable_in);
-    $("body").bind("mousemove", this.hoverable_out);
-};
-/* Check. */
-HoverableITF.prototype.check = function() {
-    if (this.hoverable_back || this.hoverable_forceback) {
-        this.getMethod("back", "Hoverable").call([]);
+/* Switch */
+HoverableITF.prototype.enter = function(setup) {
+    if (!Toolkit.isNull(setup.openCallback)) {
+        this.getMethod(setup.openCallback, setup.openCallbackITF).call([]);
     }
+    this.go(setup.openState);
 };
-/* Back. */
-HoverableITF.prototype.back = function(setup) {
-    if (this.getStatus() === 0) {
-        $(this.hoverable_targets).unbind("mousemove", this.hoverable_in);
-        $("body").unbind("mousemove", this.hoverable_out);
-        
-        if (!Toolkit.isNull(setup.callback)) {
-            this.getMethod(setup.callback, setup.callbackITF).call([]);
-        }
-        this.go(setup.state);
+HoverableITF.prototype.leave = function(setup) {
+    if (!Toolkit.isNull(setup.closeCallback)) {
+        this.getMethod(setup.closeCallback, setup.closeCallbackITF).call([]);
     }
-};
-/* Force back. */
-HoverableITF.prototype.forceBack = function(setup) {
-    if (this.status === 0) {
-        this.go(setup.state);
-    } else {
-        this.register("hoverable_forceback", true, true);
-    }
+    this.go(setup.closeState);
 };

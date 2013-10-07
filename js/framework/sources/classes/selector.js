@@ -70,11 +70,11 @@ Selector.prototype.refresh = function() {
     this.nodes = $([]);
     if (this.explore) {
         for (var i = 0; i < subpaths.length; i++) {
-            this.nodes = this.nodes.add("#" + this.owner.getID() + " " + subpaths[i]);
+            this.nodes = $(this.nodes).add("#" + this.owner.getID() + " " + subpaths[i]);
         }
     } else {
         for (var i = 0; i < subpaths.length; i++) {
-            this.nodes = this.nodes.add("#" + this.owner.getID() + " > " + subpaths[i]);
+            this.nodes = $(this.nodes).add("#" + this.owner.getID() + " > " + subpaths[i]);
         }
     }
     return this.nodes;

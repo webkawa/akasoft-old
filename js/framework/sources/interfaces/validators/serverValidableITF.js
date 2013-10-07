@@ -33,8 +33,8 @@ ServerValidableITF.prototype.validate = function(setup) {
 };
 /* Concludes server validation. */
 ServerValidableITF.prototype.conclude = function(setup) {
-    var result = this.getSourceData(setup.gatekeeper, 'i[class="result"]').text();
-    var message = this.getSourceData(setup.gatekeeper, 'i[class="message"]').text();
+    var result = this.getSourceData(setup.gatekeeper, 'i.result').text();
+    var message = this.getSourceData(setup.gatekeeper, 'i.message').text();
     if (result === "OK") {
         this.qs(setup.selectNotification).text("\xa0");
         if (!Toolkit.isNull(setup.stateOk)) {

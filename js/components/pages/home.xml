@@ -6,13 +6,11 @@
     <selectors>
         <selector id="all">div</selector>
         <selector id="head">div.head</selector>
-        <selector id="headChilds">div.head > h1 > span, div.head > h2</selector>
         <selector id="headTitle">div.head > h1</selector>
         <selector id="headTitleLeft">div.head > h1 > span:first()</selector>
         <selector id="headTitleRight">div.head > h1 > span:last()</selector>
         <selector id="headSubtitle">div.head > h2</selector>
         <selector id="sliderNavigation">div.navigation</selector>
-        <selector id="sliderBackNext">div.navigation > div</selector>
         <selector id="sliderBack">div.navigation > div.back</selector>
         <selector id="sliderNext">div.navigation > div.next</selector>
         <selector id="slider">div.slider</selector>
@@ -41,15 +39,6 @@
                 <property>opacity</property>
                 <from>0</from>
                 <to>1</to>
-            </move>
-        </trajectory>
-        <trajectory name="SoftFadeIn">
-            <speed>1000</speed>
-            <easing>easeOutCubic</easing>
-            <move>
-                <property>opacity</property>
-                <from>0</from>
-                <to>0.8</to>
             </move>
         </trajectory>
         <trajectory name="QuickFadeIn">
@@ -127,7 +116,7 @@
             <![CDATA[
                 <div class="head">
                     <h1><span>Aka</span><span>soft</span></h1>
-                    <h2>Applications sur mesure</br>au service de l'humain</h2>
+                    <h2>L'application sur mesure,</br>au service de l'humain</h2>
                 </div>
                 <div class="navigation">
                     <div class="back" />
@@ -143,28 +132,18 @@
         </dom>
         <style target="all">positionAbsolute</style>
         <style target="head">positionRelative width640px paddingT32px left64px textCenter</style>
-        <style target="headChilds">spacing4px</style>
         <style target="headTitle">displayInlineBlock size64px weightNormal</style>
         <style target="headTitleLeft">weightBold color444</style>
         <style target="headTitleRight">weightNormal radius8px background444 colorDDD</style>
         <style target="headSubtitle">displayInlineBlock width640px textLeft marginL8px size24px weightBold italic line24px marginL4px color444</style>
+        <style target="headTitle headSubtitle">spacing4px</style>
         <style target="sliderNavigation">positionAbsolute right32px top92px radius2px</style>
-        <style target="sliderBackNext">displayInlineBlock radius2px opacity08 fullOpacityOnHover height32px width32px margin2px background444</style>
-        <style target="slider">positionRelative height420px width100per borderTop1px borderBottom1px border666</style>
+        <style target="sliderBack sliderNext">displayInlineBlock speFullOpacityOnHover radius2px opacity08 height32px width32px margin2px background444</style>
+        <style target="slider">positionRelative height420px width100per borderT1px borderB1px border666</style>
         <style target="foot">height128px marginB8px paddingL16px paddingR32px bottomNo</style>
         <style target="footChilds">positionRelative paddingT16px paddingH16px</style>
         <action call="css">
-            <parameter>headChilds</parameter>
-            <parameter>opacity</parameter>
-            <parameter>0</parameter>
-        </action>
-        <action call="css">
-            <parameter>footChilds</parameter>
-            <parameter>opacity</parameter>
-            <parameter>0</parameter>
-        </action>
-        <action call="css">
-            <parameter>sliderBackNext</parameter>
+            <parameter>headTitleLeft headTitleRight headSubtitle slider footChilds sliderNavigation</parameter>
             <parameter>opacity</parameter>
             <parameter>0</parameter>
         </action>
@@ -177,11 +156,6 @@
             <parameter>sliderNext</parameter>
             <parameter>background-image</parameter>
             <parameter>url('data/img/visuals/next.png')</parameter>
-        </action>
-        <action call="css">
-            <parameter>slider</parameter>
-            <parameter>opacity</parameter>
-            <parameter>0</parameter>
         </action>
         <action call="center">
             <parameter>slider</parameter>
@@ -200,22 +174,10 @@
             <parameter>slider</parameter>
         </begin>
         <out>
-            <target>sliderBackNext</target>
-            <animation base="SoftFadeIn" />
-        </out>
-        <out>
-            <target>headTitleRight</target>
-            <animation base="FadeIn">
+            <target>headTitleRight headTitleLeft headSubtitle</target>
+            <animation base="FadeIn" cascade="200">
                 <easing>easeInCubic</easing>
             </animation>
-        </out>
-        <out>
-            <target>headTitleLeft</target>
-            <animation base="FadeIn" wait="200" />
-        </out>
-        <out>
-            <target>headSubtitle</target>
-            <animation base="FadeIn" wait="400" />
         </out>
         <out>
             <target>slider</target>
@@ -238,39 +200,31 @@
             <action call="back" on="Slidable" /> 
             <action call="stop" />
         </trigger>
-        <in from="LoadNext LoadBack">
-            <target>footLeft</target>
+        <in from="LoadNext LoadBack Start">
+            <target>footLeft footCenter footRight</target>
             <pre call="class">
                 <parameter>slide</parameter>
                 <parameter>in</parameter>
                 <parameter>remove</parameter>
             </pre>
-            <animation base="QuickFadeIn" />
+            <animation base="QuickFadeIn" cascade="100" />
             <queue>
-                <target>footCenter</target>
+                <target>sliderNavigation</target>
                 <animation base="QuickFadeIn" />
-                <queue>
-                    <target>footRight</target>
-                    <animation base="QuickFadeIn" />
-                </queue>
             </queue>
         </in>
         <begin call="auto" delay="8000" />
         <out to="LoadNext LoadBack">
-            <target>footLeft</target>
-            <pre call="class">
-                <parameter>slide</parameter>
-                <parameter>out</parameter>
-                <parameter>add</parameter>
-            </pre>
+            <target>sliderNavigation</target>
             <animation base="QuickFadeOut" />
             <queue>
-                <target>footCenter</target>
-                <animation base="QuickFadeOut" />
-                <queue>
-                    <target>footRight</target>
-                    <animation base="QuickFadeOut" />
-                </queue>
+                <target>footLeft footCenter footRight</target>
+                <pre call="class">
+                    <parameter>slide</parameter>
+                    <parameter>out</parameter>
+                    <parameter>add</parameter>
+                </pre>
+                <animation base="QuickFadeOut" cascade="100" />
             </queue>
         </out>
     </state>

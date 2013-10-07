@@ -1,67 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >    
+      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >
+    <model alias="editorial">
+        <column>breadcrumb</column>
+    </model>
     <model alias="page">
         <column>name</column>
+        <column>area</column>
         <column>title</column>
         <column>subtitle</column>
         <column>content</column>
         <column>post</column>
     </model>
-    <s> 
-        <i>p1</i>
-        <i>Page 1</i>
-        <i>Sous-titre 1</i>
+    <s>
         <i>
-            <![CDATA[
-                <h3>Lorem ipsum</h3>
-                <p>Proin <a href="#home">test</a> fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
-                <h3>Lorem ipsum</h3>
-                <p>Lorem <a href="#p2" class="special">ipsum dolor</a> sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
-            ]]>
+            <![CDATA[<a href="#products">Nos services</a> > <span>Studio</span>]]>
         </i>
-        <i>N/A</i>
-    </s>
-    <s> 
-        <i>p2</i>
-        <i>Page 2</i>
-        <i>Sous-titre 2</i>
-        <i>
-            <![CDATA[
-                <h3>Lorem ipsum</h3>
-                <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
-                <h3>Lorem ipsum</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
-            ]]>
-        </i>
-        <i>N/A</i>
-    </s>
-    <s> 
-        <i>p3</i>
-        <i>Page 3</i>
-        <i>Sous-titre 3</i>
-        <i>
-            <![CDATA[
-                <h3>Lorem ipsum</h3>
-                <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
-                <h3>Lorem ipsum</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
-            ]]>
-        </i>
-        <i>N/A</i>
-    </s>
-    <s> 
-        <i>p4</i>
-        <i>Page 4</i>
-        <i>Sous-titre 4</i>
-        <i>
-            <![CDATA[
-                <h3>Lorem ipsum</h3>
-                <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
-                <h3>Lorem ipsum</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
-            ]]>
-        </i>
-        <i>N/A</i>
+        <s> 
+            <i>p1</i>
+            <i>Le studio</i>
+            <i>Page 1</i>
+            <i>Sous-titre 1</i>
+            <i>
+                <![CDATA[
+                    <h3>Lorem ipsum</h3>
+                    <img src="http://blog.atlantisthepalm.com/wp-content/uploads/2012/09/Dolphin-Scuba-Dolphin-Bay.jpg" class="width360px height360px" />
+                    <p>Proin <a href="#home">test</a> fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
+                    <h3>Lorem ipsum</h3>
+                    <p>Lorem <a href="#p2" class="special">ipsum dolor</a> sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
+                ]]>
+            </i>
+            <i>N/A</i>
+        </s>
+        <s> 
+            <i>p2</i>
+            <i>Le tremplin</i>
+            <i>Page 2</i>
+            <i>Sous-titre 2</i>
+            <i>
+                <![CDATA[
+                    <h3>Lorem ipsum</h3>
+                    <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
+                    <h3>Lorem ipsum</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
+                ]]>
+            </i>
+            <i>N/A</i>
+        </s>
+        <s> 
+            <i>p3</i>
+            <i>L'express</i>
+            <i>Page 3</i>
+            <i>Sous-titre 3</i>
+            <i>
+                <![CDATA[
+                    <h3>Lorem ipsum</h3>
+                    <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
+                    <h3>Lorem ipsum</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
+                ]]>
+            </i>
+            <i>N/A</i>
+        </s>
+        <s> 
+            <i>p4</i>
+            <i>Page 4</i>
+            <i>Sous-titre 4</i>
+            <i>
+                <![CDATA[
+                    <h3>Lorem ipsum</h3>
+                    <p>Proin fermentum est id ante rutrum, vel imperdiet risus euismod. Vestibulum enim diam, mattis a hendrerit a, ullamcorper sit amet ante. Nulla dignissim malesuada diam vel accumsan. Ut nisi risus, bibendum quis vehicula vitae, luctus malesuada felis. Morbi id enim non leo commodo lacinia vitae a risus. Praesent rutrum erat vitae diam consectetur, a pellentesque elit euismod. In quis dictum neque, in tempor leo. Nulla eu faucibus erat. Duis posuere sagittis purus id porttitor. Donec id posuere velit. Morbi sit amet libero ultricies, dictum tortor ac, elementum eros. Nam molestie, urna non convallis vehicula, tortor metus aliquam ipsum, non sodales arcu neque a sem.</p>
+                    <h3>Lorem ipsum</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam ipsum id massa facilisis, non tempor augue porta. Proin adipiscing erat ut semper faucibus. Pellentesque mollis arcu a consequat egestas. Sed pretium leo ac tellus scelerisque porttitor id nec lectus. Aliquam hendrerit arcu et diam sollicitudin, vel adipiscing ante imperdiet. Fusce ut placerat leo, vel accumsan sem. Suspendisse auctor sodales nunc vulputate tempus. Phasellus et imperdiet diam. Aenean ultrices lacinia orci eu semper.</p>
+                ]]>
+            </i>
+            <i>N/A</i>
+        </s>
     </s>
 </data>

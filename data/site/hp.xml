@@ -15,7 +15,7 @@
                 <img src="data/img/picts/bonsai.png" />
                 <div class="title">
                     <h1>Une grande idée</h1>
-                    <h2>ne mérite aucun compromis.</h2>
+                    <h2>ne permet aucun compromis.</h2>
                 </div>
                 <div class="text">
                     <p>La question matérielle ou financière ne doit pas brider votre créativité.</p>
@@ -51,7 +51,7 @@
         </i>
     </s>
     <s>
-        <i>deluxe</i>
+        <i>classic</i>
         <i>
             <![CDATA[
                 <img src="data/img/picts/bp.png" />
@@ -60,7 +60,7 @@
                     <h2>la technologie ne résoud rien.</h2>
                 </div>
                 <div class="text">
-                    <p>Ne faites plus de concessions : imaginez, concevez, exploitez.<br/>Nous nous chargeons du reste.</p>
+                    <p>Ne faites plus de concessions : imaginez, concevez, exploitez.<br/><strong>Nous nous chargeons du reste.</strong></p>
                     <p>
                         <a href="#products">
                             <span>Découvrez nos services</span>
@@ -98,7 +98,7 @@
                 <img src="data/img/picts/red.png" />
                 <div class="title">
                     <h1>Dans l'urgence ?</h1>
-                    <h2>Nous analysons, produisons, livrons plus vite.</h2>
+                    <h2>Nous analysons, réalisons, livrons plus vite.</h2>
                 </div>
                 <div class="text">
                     <div />
@@ -130,7 +130,7 @@
             <![CDATA[
                 <h2>Vraiment pressé ?</h2>
                 <p>Nous vous rappelons dans les prochaines heures pour faire le point sur la situation.</p>
-                <a href="#contact">Utiliser la voie rapide</a>
+                <a href="#contact">Par ici !</a>
             ]]>
         </i>
     </s>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../js/framework/ressources/models/data.xsd" >
+    <model alias="area">
+        <column>breadcrumb</column>
+    </model>
+    <model alias="page">
+        <column>name</column>
+        <column>title</column>
+        <column>subtitle</column>
+        <column>content</column>
+        <column>post</column>
+    </model>
+    <s>
+        <i>
+            <![CDATA[<a href="#products">Nos services</a>]]>
+        </i>
+        <s> 
+            <i>st</i>
+            <i>Le studio</i>
+            <i>Réalisations sur mesure</i>
+            <i>
+                <![CDATA[
+                    <div class="left">
+                        <img src="data/img/picts/bp_small.png" />
+                    </div>
+                    <div class="right">
+                        <p>
+                            <span class="weightBold">Fixez un objectif sur votre calendrier : nous nous chargeons du reste.</span>
+                            <span>
+                                La sélection d'un prestataire spécialisé ne devrait jamais se faire à la légère.
+                                Sans cadrage rigoureux ou de garantie sur résultat, un projet informatique peut trop facilement s'enliser, et impacter votre budget autant que votre crédibilité.
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Le Studio vous ouvre la porte</strong> d'un service irréprochable et adapté, dont le secret repose dans la confiance établie entre la maîtrise d'oeuvre et la maîtrise d'ouvrage.
+                        </p>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Garanties maximales.</span>
+                                <ul>
+                                    <li>Aucun règlement avant cadrage complet et validation mutuelle des spécifications projet.</li>
+                                    <li>Périmètre fonctionnel et dates de livraison garanties au lancement.</li>
+                                    <li>Premier projet livré sans accompte ni engagement, avec possibilité de rétraction à la recette.</li>
+                                </ul>
+                                <a href="#warranty">
+                                    <span>En détails ...</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Satisfaction assurée.</span>
+                                <ul>
+                                    <li>Productions fortement qualitatives, faciles à exploiter et à magnifier.</li>
+                                    <li>Maintenance applicative incluse sur la totalité du périmètre fonctionnel vendu - et même un peu plus.</li>
+                                    <li>Large flexibilité sur les demandes d'évolution ou de refonte.</li>
+                                </ul>
+                                <a href="#services@orga" class="special">
+                                    <span>Notre organisation</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Qualité incluse.</span>
+                                <ul>
+                                    <li>Livraison d'un cahier des charges complet, techniquement précis, pleinement compréhensible.</li>
+                                    <li>Lotification en livrables adaptés à une période de recette confortable.</li>
+                                    <li>Pleine réactivité en cas d'anomalie après passage en production.</li>
+                                </ul>
+                                <a href="#services@eng">
+                                    <span>Nos engagements</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Prestations à la carte.</span>
+                                <ul>
+                                    <li>Décidez avec exactitude notre domaine d'intervention ; nous nous adaptons à vos contraintes.</li>
+                                    <li>Possibilités de fonctionnement en mode mission ou au forfait.</li>
+                                    <li>Accompagnement au cadrage et à la recette en option.</li>
+                                </ul>
+                                <a href="#tech">
+                                    <span>Nos techniques</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                ]]>
+            </i>
+            <i>speProduct</i>
+        </s>
+        <s> 
+            <i>orga</i>
+            <i>Le tremplin</i>
+            <i>Incubateurs d'idées</i>
+            <i>
+                <![CDATA[
+                    <div class="left">
+                        <img src="data/img/picts/bp_small.png" />
+                    </div>
+                    <div class="right"></div>
+                ]]>
+            </i>
+            <i>speProduct</i>
+        </s>
+        <s> 
+            <i>dc</i>
+            <i>Le tremplin</i>
+            <i>Incubateurs d'idées</i>
+            <i>
+                <![CDATA[
+                    <div class="left">
+                        <img src="data/img/picts/bp_small.png" />
+                    </div>
+                    <div class="right"></div>
+                ]]>
+            </i>
+            <i>speProduct</i>
+        </s>
+        <s> 
+            <i>ft</i>
+            <i>L'express</i>
+            <i>Solutions à court terme</i>
+            <i>
+                <![CDATA[
+                    <div class="left">
+                        <img src="data/img/picts/bp_small.png" />
+                    </div>
+                    <div class="right"></div>
+                ]]>
+            </i>
+            <i>speProduct</i>
+        </s>
+    </s>
+</data>

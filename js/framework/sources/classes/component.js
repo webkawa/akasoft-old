@@ -29,6 +29,8 @@ function Component(container, descriptor) {
     this.ltn;                                           // Last triggered node
     this.sources = [];                                  // Data sources
     this.state = "@None";                               // Current state
+    this.nstate = "@None";                              // Next state
+    this.nstatecp;                                      // Next state complements
     this.status = 3;                                    // Current status
     this.id = Register.add(this);                       // Component ID
     this.dt = [];                                       // Delayed threads
@@ -251,26 +253,24 @@ Component.prototype.quickSelect = function(name, refresh, force) {
         refresh = false;
     }
     
-    if (name === "$BODY") {
-        return $("body");
+    var r = $([]);
+    var s = name.split(" ");
+    for (var i = 0; i < s.length; i++) {
+        switch (s[i]) {
+            case "$TRIGGERED":
+                if (!Toolkit.isNull(this.ltn)) {
+                    r = $(r).add(this.ltn);
+                }
+                break;
+            case "$BODY":       r = $(r).add($("body")); break;
+            case "$WINDOW":     r = $(r).add($(window)); break;
+            case "$SELF":       r = $(r).add(this.container); break;
+            case "$IMAGES":     r = $(r).add($(this.container).find("img")); break;
+            case "$IFRAMES":    r = $(r).add($(this.container).find("iframe")); break;
+            default:            r = $(r).add(this.getSelector(s[i], refresh, force).getNodes()); break;
+        }
     }
-    if (name === "$WINDOW") {
-        return $(window);
-    }
-    if (name === "$SELF") {
-        return this.container;
-    }
-    if (!Toolkit.isNull(this.ltn) && name === "$TRIGGERED") {
-        return this.ltn;
-    }
-    if (name === "$IMAGES") {
-        return $(this.container).find("img");
-    }
-    if (name === "$IFRAMES") {
-        return $(this.container).find("iframes");
-    }
-
-    return this.getSelector(name, refresh, force).getNodes();
+    return r;
 };
 Component.prototype.qs = function(name, select) {
     if (Toolkit.isNull(select)) {
@@ -515,9 +515,24 @@ Component.prototype.call = function(context) {
         interface = $(this).attr("on");
     }
     
-    var caller = context;
-    if ($(this).is('[parent]')) {
-        caller = context.parents[$(this).attr("parent")];
+    var caller;
+    if ($(this).attr('context') === "distant") {
+        var t = context.qs("$TRIGGERED").is('[id]') ?
+            context.qs("$TRIGGERED").attr("id") :
+            context.qs("$TRIGGERED").parents("[id]:first()").attr("id");
+        var tcpn = Register.get(t);
+    
+        if ($(this).is('[parent]')) {
+            caller = tcpn.getParent($(this).attr("parent"));
+        } else {
+            caller = tcpn;
+        }
+    } else {
+        if ($(this).is('[parent]')) {
+            caller = context.parents[$(this).attr("parent")];
+        } else {
+            caller = context;
+        }
     }
     
     var params = [];
@@ -582,7 +597,7 @@ Component.prototype.postback = function(postback) {
     $(postback.sequences).each(function() {
         ctx.execute(this);
     });
-}
+};
 /* Executes a pre-saved animation.
  * PARAMETERS :
  *  animation               Descripting animation node.
@@ -661,17 +676,17 @@ Component.prototype.animate = function(animation, targets, postback) {
     $(targets).css(from);
 
     // Initialization
-    var delay= 0
+    var delay = 0
     if ($(animation).is("[wait]")) {
         delay = parseInt($(animation).attr("wait"));
     }
     var params = {
         duration:
-                $(animation).children("speed").length === 1 ?
+            $(animation).children("speed").length === 1 ?
                 parseInt($(animation).children("speed").text()) :
                 parseInt($(trajectory).children("speed").text()),
         easing:
-                $(animation).children("easing").length === 1 ?
+            $(animation).children("easing").length === 1 ?
                 $(animation).children("easing").text() :
                 $(trajectory).children("easing").text(),
         fail: function() {
@@ -699,7 +714,21 @@ Component.prototype.animate = function(animation, targets, postback) {
     });
     
     // Animation
-    $(targets).delay(delay).animate(to, params);
+    if ($(animation).is("[cascade]")) {
+        var cascade = $(animation).attr("cascade");
+        if (cascade === "0") {
+            cascade = params.duration;
+        }
+        
+        $(targets).each(function(i) {
+            $(this).delay(delay + (cascade * i)).animate(to, params);
+        });
+    } else {
+        $(targets).delay(delay).animate(to, params);
+    }
+    if ($(targets).length === 0) {
+        dfr_animation.resolve();
+    }
 };
 /* Executes a pre-saved sequence.
  * PARAMETERS :
@@ -769,146 +798,156 @@ Component.prototype.execute = function(sequence) {
  * RETURN : N/A                                                                 */
 Component.prototype.go = function(to, complement) {
     if (this.status !== 0) {
-        var p = {
-            component: this.getID(),
-            error: "Component not ready"
-        };
-        throw new Error("cpn", 15, p);
-    }
-    if (Toolkit.isNull(to)) {
-        var p = {
-            component: this.getID(),
-            error: "No destination defined"
-        };
-        throw new Error("cpn", 15, p);
-    }
-
-    // Used variables
-    var ctx = this;
-    var node_origin;
-    var node_dest;
-    if (!Toolkit.isNull(this.state)) {
-        node_origin = $(this.model).find('component > state[id="' + this.state + '"]');
-    }
-    if (!Toolkit.isNull(to)) {
-        node_dest = $(this.model).find('component > state[id="' + to + '"]');
-    }
-    var seq_exit = $();
-    var seq_entry = $();
-    
-    try {
-        // Cleaning delayed tasks
-        this.clearDelayedTasks();
-        
-        // Untriggering
-        this.untrigger();
-
-        // Setting classes
-        this.setStateClass(this.state, to);
-        this.setSwitchClass(-1);
-
-        // Loading exit/entry sequences
-        if (!Toolkit.isNull(node_origin)) {
-            if ($(node_origin).children('out[to*="' + to + '"]').length > 0) {
-                seq_exit = $(seq_exit).add($(node_origin).children('out[to*="' + to + '"]'));
-            }
-            if ($(node_origin).children('out:not([to])').length > 0) {
-                seq_exit = $(seq_exit).add($(node_origin).children('out:not([to])'));
-            }
-        }
-        if (!Toolkit.isNull(node_dest)) {
-            if ($(node_dest).children('in[from*="' + this.state + '"]').length > 0) {
-                seq_entry = $(seq_entry).add($(node_dest).children('in[from*="' + this.state + '"]'));
-            }
-            if ($(node_dest).children('in:not([from])').length > 0) {
-                seq_entry = $(seq_entry).add($(node_dest).children('in:not([from])'));
-            }
+        this.nstate = to;
+        this.nstatecp = complement;
+    } else {
+        if (Toolkit.isNull(to)) {
+            var p = {
+                component: this.getID(),
+                error: "No destination defined"
+            };
+            throw new Error("cpn", 15, p);
         }
 
-        // Executing exit sequence
-        this.status = 1;
-        this.prepare(seq_exit);
-        this.dfr_evolve.promise().done(function() {
-            try {
-                // Executes delayed removal
-                $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
+        // Used variables
+        var ctx = this;
+        var node_origin;
+        var node_dest;
+        if (!Toolkit.isNull(this.state)) {
+            node_origin = $(this.model).find('component > state[id="' + this.state + '"]');
+        }
+        if (!Toolkit.isNull(to)) {
+            node_dest = $(this.model).find('component > state[id="' + to + '"]');
+        }
+        var seq_exit = $();
+        var seq_entry = $();
 
-                // Switching state
-                ctx.setState(to);
+        try {
+            // Cleaning delayed tasks
+            this.clearDelayedTasks();
 
-                // Setting classes
-                ctx.setSwitchClass(1);
+            // Untriggering
+            this.untrigger();
 
-                // Revalidating selectors
-                ctx.reselect();
+            // Setting classes
+            this.setStateClass(this.state, to);
+            this.setSwitchClass(-1);
 
-                // Executing entry sequence
-                ctx.setStatus(2);
-                ctx.prepare(seq_entry);
-
-                ctx.dfr_evolve.promise().done(function() {
-                    try {
-                        ctx.setStatus(0);
-                        if (Toolkit.isNull(to)) {
-                            // Closing component
-                            ctx.clean();
-                        } else {
-                            // Executes delayed removal
-                            $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
-
-                            // Reloading triggers
-                            ctx.retrigger();
-
-                            // Setting classes
-                            ctx.setStateClass(ctx.state, to);
-                            ctx.setSwitchClass(0);
-
-                            // Executes complementary callback
-                            if (!Toolkit.isNull(complement)) {
-                                complement.apply(ctx);
-                            }
-
-                            // Executes conclusion methods
-                            if (!Toolkit.isNull(node_origin)) {
-                                $(node_origin).find("conclude").each(function() {
-                                    ctx.call.apply(this, [ctx]);
-                                });
-                            }
-
-                            // Executes conclusion starters
-                            if (!Toolkit.isNull(node_dest)) {
-                                $(node_dest).find("begin").each(function() {
-                                    ctx.call.apply(this, [ctx]);
-                                });
-                            }
-                        }
-                    } catch (e) {
-                        ErrorManager.process(e);
-                    }
-                });
-                if ($(seq_entry).length > 0) {
-                    $(seq_entry).each(function() {
-                        ctx.execute(this);
-                    });
-                } else {
-                    ctx.dfr_evolve.resolve();
+            // Loading exit/entry sequences
+            if (!Toolkit.isNull(node_origin)) {
+                if ($(node_origin).children('out[to*="' + to + '"]').length > 0) {
+                    seq_exit = $(seq_exit).add($(node_origin).children('out[to*="' + to + '"]'));
                 }
-            } catch (e) {
-                ErrorManager.process(e);
+                if ($(node_origin).children('out:not([to])').length > 0) {
+                    seq_exit = $(seq_exit).add($(node_origin).children('out:not([to])'));
+                }
             }
-        });
-        if ($(seq_exit).length > 0) {
-            $(seq_exit).each(function() {
-                ctx.execute(this);
+            if (!Toolkit.isNull(node_dest)) {
+                if ($(node_dest).children('in[from*="' + this.state + '"]').length > 0) {
+                    seq_entry = $(seq_entry).add($(node_dest).children('in[from*="' + this.state + '"]'));
+                }
+                if ($(node_dest).children('in:not([from])').length > 0) {
+                    seq_entry = $(seq_entry).add($(node_dest).children('in:not([from])'));
+                }
+            }
+
+            // Executing exit sequence
+            this.status = 1;
+            this.prepare(seq_exit);
+            this.dfr_evolve.promise().done(function() {
+                try {
+                    // Executes delayed removal
+                    $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
+
+                    // Switching state
+                    ctx.setState(to);
+
+                    // Setting classes
+                    ctx.setSwitchClass(1);
+
+                    // Revalidating selectors
+                    ctx.reselect();
+
+                    // Executing entry sequence
+                    ctx.setStatus(2);
+                    ctx.prepare(seq_entry);
+
+                    ctx.dfr_evolve.promise().done(function() {
+                        try {
+                            ctx.setStatus(0);
+                            if (Toolkit.isNull(to)) {
+                                // Closing component
+                                ctx.clean();
+                            } else {
+                                // Executes delayed removal
+                                $(ctx.getContainer()).find("." + ctx.cfg_classremoval).remove();
+
+                                // Setting classes
+                                ctx.setStateClass(ctx.state, to);
+                                ctx.setSwitchClass(0);
+
+                                // Executes complementary callback
+                                if (!Toolkit.isNull(complement)) {
+                                    complement.apply(ctx);
+                                }
+
+                                // Executes conclusion methods
+                                if (!Toolkit.isNull(node_origin)) {
+                                    $(node_origin).find("conclude").each(function() {
+                                        ctx.call.apply(this, [ctx]);
+                                    });
+                                }
+
+                                // Executes conclusion starters
+                                if (!Toolkit.isNull(node_dest)) {
+                                    $(node_dest).find("begin").each(function() {
+                                        ctx.call.apply(this, [ctx]);
+                                    });
+                                }
+                                
+                                // Going next state or retriggering
+                                if (ctx.nstate !== "@None") {
+                                    var ns = ctx.nstate;
+                                    var nscp = ctx.nstatecp;
+                                    
+                                    ctx.nstate = "@None";
+                                    ctx.nstatecp = null;
+                                    
+                                    if (ns !== ctx.state) {
+                                        ctx.go(ns, nscp);
+                                    }
+                                } else {
+                                    ctx.retrigger();
+                                }
+                            }
+                        } catch (e) {
+                            ErrorManager.process(e);
+                        }
+                    });
+                    if ($(seq_entry).length > 0) {
+                        $(seq_entry).each(function() {
+                            ctx.execute(this);
+                        });
+                    } else {
+                        ctx.dfr_evolve.resolve();
+                    }
+                } catch (e) {
+                    ErrorManager.process(e);
+                }
             });
-        } else {
-            this.dfr_evolve.resolve();
+            if ($(seq_exit).length > 0) {
+                $(seq_exit).each(function() {
+                    ctx.execute(this);
+                });
+            } else {
+                this.dfr_evolve.resolve();
+            }
+        } catch (e) {
+            var p = {
+                component: this.getID()
+            };
+            ErrorManager.process(new Error("cpn", 14, p, e));
         }
-    } catch (e) {
-        var p = {
-            component: this.getID()
-        };
-        ErrorManager.process(new Error("cpn", 14, p, e));
     }
 };
 Component.prototype.prepare = function(node) {
@@ -949,7 +988,11 @@ Component.prototype.start = function() {
 
                 // Applying styles
                 $(ctx.model).find("component > loader > style").each(function() {
-                    ctx.qs($(this).attr("target")).addClass($(this).text());
+                    if ($(this).is("[find]")) {
+                        ctx.qs($(this).attr("target"), $(this).attr("find")).addClass($(this).text());
+                    } else {
+                        ctx.qs($(this).attr("target")).addClass($(this).text());
+                    }
                 });
 
                 // Launching init actions
@@ -1011,7 +1054,11 @@ Component.prototype.log = function(message, add) {
  *  > selector      Selector name.
  * RETURNS : N/A                                                                */
 Component.prototype.shortcutReselect = function(selector) {
-    this.getSelector(selector, true);
+    if (Toolkit.isNull(selector)) {
+        this.reselect();
+    } else {
+        this.quickSelect(selector, true);
+    }
 };
 /* Manual getting.
  * PARAMETERS :

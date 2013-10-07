@@ -145,6 +145,8 @@
                       use="required" />
         <xs:attribute name="wait"
                       type="xs:decimal" />
+        <xs:attribute name="cascade"
+                      type="xs:decimal" />
     </xs:complexType>
     <xs:complexType name="trajectory">
         <xs:sequence>
@@ -179,6 +181,13 @@
     </xs:complexType>
     
     <!-- Function calls -->
+    <xs:simpleType name="context">
+        <xs:restriction base="string">
+            <xs:enumeration value="self" />
+            <xs:enumeration value="distant" />
+        </xs:restriction>
+    </xs:simpleType>
+    
     <xs:complexType name="parameter">
         <xs:simpleContent>
             <xs:extension base="string">
@@ -202,6 +211,9 @@
                       type="string" />
         <xs:attribute name="parent"
                       type="xs:decimal" />
+        <xs:attribute name="context"
+                      type="context" 
+                      default="self" />
         <xs:attribute name="delay"
                       type="xs:decimal" />
     </xs:complexType>
@@ -244,6 +256,9 @@
                 <xs:attribute name="target" 
                               type="string"
                               use="required" />
+                <xs:attribute name="find" 
+                              type="string"
+                              use="optional" />
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

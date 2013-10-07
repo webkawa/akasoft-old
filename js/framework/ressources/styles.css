@@ -39,6 +39,12 @@ li {
 .width196px {
     width: 196px;
 }
+.width128px {
+    width: 128px;
+}
+.width96px {
+    width: 96px;
+}
 .width64px {
     width: 64px;
 }
@@ -247,6 +253,10 @@ li {
 .margin16px {
     margin: 16px;
 }
+.marginH2px {
+    margin-left: 2px;
+    margin-right: 2px;
+}
 .marginH4px {
     margin-left: 4px;
     margin-right: 4px;
@@ -315,6 +325,9 @@ li {
 .marginLNone {
     margin-left: 0;
 }
+.marginTM4px {
+    margin-top: -4px;
+}
 .marginT4px {
     margin-top: 4px;
 }
@@ -347,6 +360,15 @@ li {
 }
 .marginBNone {
     margin-bottom: 0;
+}
+.marginR4px {
+    margin-right: 4px;
+}
+.marginR8px {
+    margin-right: 8px;
+}
+.marginR16px {
+    margin-right: 16px;
 }
 .marginR32px {
     margin-right: 32px;
@@ -452,8 +474,26 @@ li {
 .paddingR32px {
     padding-right: 32px;
 }
+.paddingB2px {
+    padding-bottom: 2px;
+}
+.paddingB4px {
+    padding-bottom: 4px;
+}
+.paddingB8px {
+    padding-bottom: 8px;
+}
+.paddingB16px {
+    padding-bottom: 16px;
+}
 .paddingB32px {
     padding-bottom: 32px;
+}
+.paddingL8px {
+    padding-left: 8px;
+}
+.paddingL16px {
+    padding-left: 16px;
 }
 .paddingL32px {
     padding-left: 32px;
@@ -523,26 +563,50 @@ li {
 .backgroundBlack {
     background-color: black;
 }
+.background111 {
+    background-color: #111;
+}
 .background222 {
     background-color: #222;
+}
+.background333 {
+    background-color: #333;
 }
 .background444 {
     background-color: #444;
 }
+.background555 {
+    background-color: #555;
+}
 .background666 {
     background-color: #666;
+}
+.background777 {
+    background-color: #777;
 }
 .background888 {
     background-color: #888;
 }
+.background999 {
+    background-color: #999;
+}
 .background000 {
     background-color: #000;
+}
+.backgroundAAA {
+    background-color: #AAA;
 }
 .backgroundBBB {
     background-color: #BBB;
 }
+.backgroundCCC {
+    background-color: #CCC;
+}
 .backgroundDDD {
     background-color: #DDD;
+}
+.backgroundEEE {
+    background-color: #EEE;
 }
 .backgroundWhite {
     background-color: white;
@@ -606,6 +670,9 @@ li {
 .italic {
     font-style: italic;
 }
+.underline {
+    text-decoration:underline;
+}
 
 .size10px {
     font-size: 10px;
@@ -631,6 +698,9 @@ li {
 .size24px {
     font-size: 24px;
 }
+.size28px {
+    font-size: 28px;
+}
 .size32px {
     font-size: 32px;
 }
@@ -644,8 +714,35 @@ li {
 .line12px {
     line-height: 12px;
 }
+.line14px {
+    line-height: 14px;
+}
+.line16px {
+    line-height: 16px;
+}
+.line18px {
+    line-height: 18px;
+}
+.line20px {
+    line-height: 20px;
+}
+.line22px {
+    line-height: 22px;
+}
 .line24px {
     line-height: 24px;
+}
+.line26px {
+    line-height: 26px;
+}
+.line28px {
+    line-height: 28px;
+}
+.line30px {
+    line-height: 30px;
+}
+.line32px {
+    line-height: 32px;
 }
 
 .spacing1px {
@@ -676,16 +773,16 @@ li {
 .border2pxWhite {
     border: 2px solid white;
 }
-.borderTop1px {
+.borderT1px {
     border-top: 1px solid;
 }
-.borderRight1px {
+.borderR1px {
     border-right: 1px solid;
 }
-.borderBottom1px {
+.borderB1px {
     border-bottom: 1px solid;
 }
-.borderLeft1px {
+.borderL1px {
     border-left: 1px solid;
 }
 .borderWhite {
@@ -708,6 +805,16 @@ li {
 }
 .borderDDD {
     border-color: #DDD;
+}
+
+.listCircle {
+    list-style: circle;
+}
+.listSquare {
+    list-style: square;
+}
+.listDisc {
+    list-style: disc;
 }
 
 .radius2px {

@@ -6,7 +6,7 @@ function LayoutCPN() {
     var setup;
     
     setup = {
-        load: ['image'],
+        load: 'image',
         state: "Ready"
     };
     cpn.saveInterface(LoadableITF, setup);

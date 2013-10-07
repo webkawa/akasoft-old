@@ -6,11 +6,29 @@
     <selectors>
         <selector id="logo">div.logo</selector>
         <selector id="left">div.left</selector>
+        <selector id="linksLeft">div.left > div.cpnLeftLink</selector>
+        <selector id="linksRight">div.right > div.cpnRightLink</selector>
         <selector id="center">div.center</selector>
         <selector id="centerBackground">div.center > div.background</selector>
         <selector id="centerFrame">div.center > div.frame</selector>
         <selector id="right">div.right</selector>
     </selectors>
+    <master bind="mouseenter">
+        <target>linksLeft</target>
+        <action call="enter" on="Hoverable" context="distant" />
+    </master>
+    <master bind="mouseleave">
+        <target>linksLeft</target>
+        <action call="leave" on="Hoverable" context="distant" />
+    </master>
+    <master bind="mouseenter">
+        <target>linksRight</target>
+        <action call="enter" on="Hoverable" context="distant" />
+    </master>
+    <master bind="mouseleave">
+        <target>linksRight</target>
+        <action call="leave" on="Hoverable" context="distant" />
+    </master>
     <trajectories>
         <trajectory name="Open">
             <speed>1000</speed>
@@ -55,16 +73,10 @@
         <style target="centerFrame">positionAbsolute height100per width100per</style>
         <style target="right">positionAbsolute width64px rightNo</style>
         <action call="realHeight">
-            <parameter>left</parameter>
-        </action>
-        <action call="realHeight">
-            <parameter>center</parameter>
+            <parameter>left center right</parameter>
         </action>
         <action call="realWidth">
             <parameter>center</parameter>
-        </action>
-        <action call="realHeight">
-            <parameter>right</parameter>
         </action>
         <action call="center">
             <parameter>center</parameter>

@@ -16,7 +16,7 @@ function BodyCPN(ctn) {
     };
     cpn.saveInterface(NavigableITF, setup);
     
-    cpn.register("goto", "products", false);
+    cpn.register("goto", "services", false);
     
     cpn.registerMethod(this.init, "init", false);
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
@@ -108,7 +108,8 @@ BodyCPN.prototype.navigate = function(to) {
             cpn = new FlashCPN(this.qs("centerFrame"), s);
             break;
         default:
-            cpn = new EditorialCPN(this.qs("centerFrame"), to);
+            var s = to.split("@");
+            cpn = new EditorialCPN(this.qs("centerFrame"), s[0], s[1]);
             break;
     }
     
@@ -133,7 +134,7 @@ BodyCPN.prototype.follow = function() {
     var tr = this.qs("$TRIGGERED");
     
     if (tr.parents(".cpnLeftLink").length > 0) {
-        Register.getFrom(tr.parents(".cpnLeftLink")).getMethod("forceBack", "Hoverable").call([]);
+        Register.getFrom(tr.parents(".cpnLeftLink")).getMethod("leave", "Hoverable").call([]);
     }
     
     this.goto = tr.attr("href").replace(/#/g, '');

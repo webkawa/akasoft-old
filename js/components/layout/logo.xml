@@ -4,7 +4,6 @@
          name="Logo" 
          type="classic" >
     <selectors>
-        <selector id="both">span</selector>
         <selector id="left">span:first()</selector>
         <selector id="right">span:last()</selector>
     </selectors>
@@ -34,11 +33,10 @@
                 <span>Aka</span><span>soft</span>
             ]]>
         </dom>
-        <style target="both">spacing2px</style>
-        <style target="left">weightBold color444</style>
-        <style target="right">radius4px background444 colorWhite</style>
+        <style target="left">weightBold spacing2px color444</style>
+        <style target="right">radius4px spacing2px background444 colorWhite</style>
         <action call="css">
-            <parameter>both</parameter>
+            <parameter>left right</parameter>
             <parameter>opacity</parameter>
             <parameter>0</parameter>
         </action>

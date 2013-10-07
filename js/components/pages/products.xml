@@ -11,8 +11,12 @@
         <selector id="previewLeft">div.wrapper > div.preview > div.left</selector>
         <selector id="previewCenter">div.wrapper > div.preview > div.center</selector>
         <selector id="previewRight">div.wrapper > div.preview > div.right</selector>
-        <selector id="previewSubtitles">div.wrapper > div.preview > div > h2</selector>
-        <selector id="previewTexts">div.wrapper > div.preview > div > div</selector>
+        <selector id="previewHeads">div.wrapper > div.preview > div > div.head</selector>
+        <selector id="previewTitles">div.wrapper > div.preview > div > div.head > h2</selector>
+        <selector id="previewSubtitles">div.wrapper > div.preview > div > div.head > h3</selector>
+        <selector id="previewBodies">div.wrapper > div.preview > div > div.body</selector>
+        <selector id="previewLinksWrapper">div.wrapper > div.preview > div > p</selector>
+        <selector id="previewLinks">div.wrapper > div.preview > div > p > a</selector>
         <selector id="detail">div.detail</selector>
     </selectors>
     <trajectories>
@@ -47,32 +51,48 @@
                     <h1>Nos services</h1>
                     <div class="preview">
                         <div class="left">
-                            <h2 />
-                            <div />
-                            <a />
+                            <div class="head">
+                                <h2 />
+                                <h3 />
+                            </div>
+                            <div class="body" />
+                            <p>
+                                <a />
+                            </p>
                         </div>
                         <div class="center">
-                            <h2 />
-                            <div />
-                            <a />
+                            <div class="head">
+                                <h2 />
+                                <h3 />
+                            </div>
+                            <div class="body" />
+                            <p>
+                                <a />
+                            </p>
                         </div>
                         <div class="right">
-                            <h2 />
-                            <div />
-                            <a />
+                            <div class="head">
+                                <h2 />
+                                <h3 />
+                            </div>
+                            <div class="body" />
+                            <p>
+                                <a />
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="detail" />
             ]]>
         </dom>
-        <style target="title">borderBottom1px border444</style>
+        <style target="title">speColorDarkBlue size48px borderB1px speBorderDarkBlue</style>
         <style target="wrapper">positionAbsolute paddingT48px paddingL64px paddingR16px</style>
         <style target="preview">positionAbsolute overflowHidden</style>
-        <style target="previewChilds">paddingB32px paddingT16px paddingH16px marginB16px</style>
-        <style target="previewSubtitles"></style>
-        <style target="previewTexts">paddingV8px</style>
-        <style target="detail">positionAbsolute height0px</style>
+        <style target="previewChilds">paddingB32px paddingT8px paddingH16px marginB16px</style>
+        <style target="previewTitles">displayInline speColorBlue textLeft size24px line12px</style>
+        <style target="previewSubtitles">displayInline marginL4px weightBold size18px</style>
+        <style target="previewBodies">paddingB16px</style>
+        <style target="previewLinksWrapper">textCenter</style>
+        <style target="previewLinks">colorWhite speBackgroundHoverBlue paddingV4px paddingH8px size20px weightBold background444 radius4px</style>
         <action call="realWidth">
             <parameter>wrapper</parameter>
         </action>
@@ -107,25 +127,14 @@
     </state>
     <state id="Preview">
         <in from="Loading">
-            <target>previewLeft</target>
+            <target>previewLeft previewCenter previewRight</target>
             <pre call="apply" on="Columnable" />
             <pre call="refresh" on="Equalizable" />
             <pre call="realHeight">
                 <parameter>previewChilds</parameter>
                 <parameter>-16px</parameter>
             </pre>
-            <animation base="SlideIn" />
+            <animation base="SlideIn" cascade="250" />
         </in>
-        <in from="Loading">
-            <target>previewCenter</target>
-            <animation base="SlideIn" wait="250" />
-        </in>
-        <in from="Loading">
-            <target>previewRight</target>
-            <animation base="SlideIn" wait="500" />
-        </in>
-    </state>
-    <state id="Detail">
-        
     </state>
 </component>

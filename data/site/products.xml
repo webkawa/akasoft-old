@@ -4,45 +4,118 @@
     <model alias="category">
         <column>id</column>
         <column>title</column>
+        <column>subtitle</column>
         <column>text</column>
         <column>linklabel</column>
         <column>linkreference</column>
         <column>process</column>
     </model>
     <s> 
-        <i>1</i>
-        <i>Produit 1</i>
+        <i>classic</i>
+        <i>Le studio</i>
+        <i>Le forfait liberté. Vous pilotez, nous réalisons.</i>
         <i>
             <![CDATA[
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque at dui at dictum. Vivamus mauris metus, molestie quis ultrices vulputate, vulputate a dolor. Mauris quis erat ultrices, dapibus nulla nec, eleifend risus. Nulla in dapibus tellus. Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+                <p>
+                    <img src="data/img/visuals/light_small.png" />
+                    <strong>Pour qui ?</strong>
+                    <span>
+                        Les petites et moyennes structures (entreprises, associations, institutions) à la recherche d'un prestataire spécialisé.
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/gear_small.png" />
+                    <strong>Pour quoi ?</strong>
+                    <span>
+                        Tout projet nécessitant une application connectée.
+                        Notre gamme de prestations s'étend de la conception à la livraison, mais peut parfaitement s'adapter à votre besoin :
+                        développement de l'applicatif ou des interfaces, cadrage, maintenance, hébergement ...
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/search_small.png" />
+                    <strong>Quels avantages ?</strong>
+                    <span>
+                        Profitez du meilleur de nos services, sans perturber la conduite de vos projets ou la cohérence de votre infrastructure.
+                        Nous nous adaptons à vos contraintes et intervenons de façon transparente, simple et efficace.
+                    </span>
+                </p>
             ]]>
         </i>
         <i>Découvrir</i>
-        <i>A</i>
+        <i>services@st</i>
         <i>N/A</i>
     </s>
     <s> 
-        <i>2</i>
-        <i>Ipsum dolor sit amet pellentesque at</i>
+        <i>discount</i>
+        <i>Le tremplin</i>
+        <i>L'incubateur des projets à fort potentiel.</i>
         <i>
             <![CDATA[
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+                <p>
+                    <img src="data/img/visuals/light_small.png" />
+                    <strong>Pour qui ?</strong>
+                    <span>
+                        Les particuliers, entrepreneurs individuels et petites structures (associations, TPE, PME) 
+                        dotés de moyens réduits mais de bonnes idées.
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/gear_small.png" />
+                    <strong>Pour quoi ?</strong>
+                    <span>
+                        La mise en oeuvre applicative, entièrement sur mesure, de votre projet.
+                        Nous étudions votre concept, évaluons sa faisabilité et, après validation du dossier, vous proposons un partenariat.
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/search_small.png" />
+                    <strong>Quels avantages ?</strong>
+                    <span>
+                        Créez votre application ... à petit prix !
+                        Nos contrats de partenariats vous ouvrent la porte à un applicatif de qualité, à un tarif unique :
+                        nous appuyons votre projet, à vous d'en exploiter le maximum.
+                    </span>
+                </p>
             ]]>
         </i>
         <i>Découvrir</i>
-        <i>B</i>
+        <i>services@dc</i>
         <i>N/A</i>
     </s>
     <s> 
-        <i>3</i>
-        <i>Produit 3</i>
+        <i>fasttrack</i>
+        <i>L'express</i>
+        <i>La voie la plus courte vers votre solution.</i>
         <i>
             <![CDATA[
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque at dui at dictum. Vivamus mauris metus, molestie quis ultrices vulputate, vulputate a dolor. Mauris quis erat ultrices, dapibus nulla nec, eleifend risus. Nulla in dapibus tellus. Pellentesque tincidunt sapien dui. Integer fringilla gravida ante, sed laoreet risus convallis nec. Phasellus feugiat adipiscing dui a congue. Duis pellentesque condimentum dui, non pulvinar nunc iaculis ac. Fusce mattis vitae diam a mollis. Proin odio leo, dignissim et fringilla luctus, suscipit ac nisl. Sed convallis mauris ac feugiat bibendum. Sed tincidunt luctus nisl, non aliquet mauris ornare sed. Nam egestas porta dictum. Donec malesuada dapibus varius. Nulla volutpat et diam et rhoncus. In facilisis orci sit amet nunc egestas, a rutrum mauris sollicitudin.</p>
+                <p>
+                    <img src="data/img/visuals/light_small.png" />
+                    <strong>Pour qui ?</strong>
+                    <span>
+                        Les entreprises de toute taille, en recherche urgente d'un prestataire spécialisé dans les applications en ligne.
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/gear_small.png" />
+                    <strong>Pour quoi ?</strong>
+                    <span>
+                        L'élaboration, la réalisation et le déploiement d'un solution adaptée à votre besoin, dans les délais que vous fixez.
+                        A la réception de votre demande, nous vous recontactons pour tracer le périmètre de votre projet et engagons le travail dans un délai maximal de 24 heures.
+                    </span>
+                </p>
+                <p>
+                    <img src="data/img/visuals/search_small.png" />
+                    <strong>Quels avantages ?</strong>
+                    <span>
+                        Rapidité, flexibilité, qualité.
+                        Nos prestations express sont facturées au forfait : vous gardez le contrôle de votre budget, nous garantissons celui de votre planning.
+                    </span>
+                </p>
             ]]>
         </i>
         <i>Découvrir</i>
-        <i>C</i>
+        <i>services@ft</i>
         <i>N/A</i>
     </s>
 </data>

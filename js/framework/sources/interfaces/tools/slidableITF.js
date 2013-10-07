@@ -30,7 +30,7 @@ SlidableITF.prototype.init = function(setup) {
 };
 /* Navigation. */
 SlidableITF.prototype.start = function(setup) {
-    this.register("slideLength", this.getSourceData(setup.source, 's[class="slide"]').length, true);
+    this.register("slideLength", this.getSourceData(setup.source, 's.slide').length, true);
     this.getMethod("to", "Slidable").call([0]);
 };
 SlidableITF.prototype.to = function(setup, to) {
@@ -44,7 +44,7 @@ SlidableITF.prototype.to = function(setup, to) {
     }
 };
 SlidableITF.prototype.next = function(setup) {
-    var l = this.getSourceData(setup.source, 's[class="slide"]').length;
+    var l = this.getSourceData(setup.source, 's.slide').length;
     if (this.slide === this.slideLength - 1) {
         this.getMethod("to", "Slidable").call([0]);
     } else {
@@ -59,7 +59,7 @@ SlidableITF.prototype.back = function(setup) {
     }
 };
 SlidableITF.prototype.build = function(setup) {
-    this.getMethod(setup.build, setup.buildITF).call([this.getSourceData(setup.source, 's[class="slide"]:eq(' + this.slide + ')')]);
+    this.getMethod(setup.build, setup.buildITF).call([this.getSourceData(setup.source, 's.slide:eq(' + this.slide + ')')]);
     if (!Toolkit.isNull(setup.stateBack)) {
         this.go(setup.stateBack);
     }

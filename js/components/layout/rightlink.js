@@ -5,8 +5,8 @@ function RightLinkCPN(ctn, setup) {
     var cpn = new Component(ctn, "js/components/layout/rightlink.xml");
     
     s = {
-        target: "hover",
-        state: "Close"
+        openState: "Open",
+        closeState: "Close"
     };
     cpn.saveInterface(HoverableITF, s);
     
