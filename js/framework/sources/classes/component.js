@@ -93,30 +93,30 @@ function Component(container, descriptor) {
     });
     
     this.log("Saving initial methods"); 
-    this.registerMethod(this.go, "go", false);
-    this.registerMethod(this.log, "log", true);
-    this.registerMethod(this.retrigger, "retrigger", false);
-    this.registerMethod(this.shortcutGet, "get", false);
-    this.registerMethod(this.shortcutReselect, "reselect", false);
-    this.registerMethod(this.shortcutTrigger, "trigger", false);
-    this.registerMethod(this.shortcutSourcePost, "sourcePost", false);
-    this.registerMethod(this.shortcutSourcePostForce, "sourcePostForce", false);
-    this.registerMethod(this.shortcutSourceGet, "sourceGet", false);
-    this.registerMethod(this.shortcutSourceGetForce, "sourceGetForce", false);
-    this.registerMethod(this.shortcutOuterHeight, "outerHeight", false);
-    this.registerMethod(this.shortcutOuterWidth, "outerWidth", false);
-    this.registerMethod(this.shortcutRealHeight, "realHeight", false);
-    this.registerMethod(this.shortcutRealWidth, "realWidth", false);
-    this.registerMethod(this.shortcutAbsRealHeight, "absRealHeight", false);
-    this.registerMethod(this.shortcutAbsRealWidth, "absRealWidth", false);
-    this.registerMethod(this.shortcutCenter, "center", false);
-    this.registerMethod(this.shortcutCenterX, "centerX", false);
-    this.registerMethod(this.shortcutCenterY, "centerY", false);
-    this.registerMethod(this.shortcutPosition, "position", false);
-    this.registerMethod(this.shortcutClean, "clean", false);
-    this.registerMethod(this.shortcutClass, "class", false);
-    this.registerMethod(this.shortcutAttribute, "attribute", false);
-    this.registerMethod(this.shortcutCss, "css", false);
+    this.pushMethod(this.go, "go");
+    this.pushMethod(this.log, "log");
+    this.pushMethod(this.retrigger, "retrigger");
+    this.pushMethod(this.shortcutGet, "get");
+    this.pushMethod(this.shortcutReselect, "reselect");
+    this.pushMethod(this.shortcutTrigger, "trigger");
+    this.pushMethod(this.shortcutSourcePost, "sourcePost");
+    this.pushMethod(this.shortcutSourcePostForce, "sourcePostForce");
+    this.pushMethod(this.shortcutSourceGet, "sourceGet");
+    this.pushMethod(this.shortcutSourceGetForce, "sourceGetForce");
+    this.pushMethod(this.shortcutOuterHeight, "outerHeight");
+    this.pushMethod(this.shortcutOuterWidth, "outerWidth");
+    this.pushMethod(this.shortcutRealHeight, "realHeight");
+    this.pushMethod(this.shortcutRealWidth, "realWidth");
+    this.pushMethod(this.shortcutAbsRealHeight, "absRealHeight");
+    this.pushMethod(this.shortcutAbsRealWidth, "absRealWidth");
+    this.pushMethod(this.shortcutCenter, "center");
+    this.pushMethod(this.shortcutCenterX, "centerX");
+    this.pushMethod(this.shortcutCenterY, "centerY");
+    this.pushMethod(this.shortcutPosition, "position");
+    this.pushMethod(this.shortcutClean, "clean");
+    this.pushMethod(this.shortcutClass, "class");
+    this.pushMethod(this.shortcutAttribute, "attribute");
+    this.pushMethod(this.shortcutCss, "css");
 };
 /* Container */
 Component.prototype.getContainer = function() {
@@ -190,6 +190,11 @@ Component.prototype.saveMethod = function(method) {
             }
         }
     }
+    this.methods[this.methods.length] = method;
+};
+Component.prototype.pushMethod = function(ref, name) {
+    var method = new Method(ref, name, false);
+    method.setContext(this);
     this.methods[this.methods.length] = method;
 };
 Component.prototype.registerMethod = function(ref, name, rw) {
@@ -427,8 +432,7 @@ Component.prototype.register = function(name, value, force) {
  *  data                    DOM data.
  * RETURN : N/A                                                                 */
 Component.prototype.rewrite = function(data) {
-    $(this.container).empty();
-    $(this.container).append(data);
+    $(this.container).html(data);
 };
 /* Triggers refresher.
  * Re-bind all triggers for the selected state.
