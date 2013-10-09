@@ -139,7 +139,7 @@ Source.prototype.loadForce = function(params, mode) {
         url: ctx.getService(),
         data: params,
         dataType: "xml",
-        cache: false,
+        cache: true,
         async: true,
         timeout: 5000
     }).error(function(jqXHR, status, info) {

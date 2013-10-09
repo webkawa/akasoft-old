@@ -36,6 +36,14 @@ function Component(container, descriptor) {
     this.status = 3;                                    // Current status
     this.id = Register.add(this);                       // Component ID
     this.dt = [];                                       // Delayed threads
+    
+    this.nds_states;                                    // State nodes
+    this.nds_trajectories;                              // Trajectories nodes.
+    this.nds_dom;                                       // Dom node.
+    this.nds_styles;                                    // Styles nodes.
+    this.nds_actions;                                   // Action nodes.
+    this.nds_to;                                        // To node.
+    
     this.dfr_start = new jQuery.Deferred();             // Deffered starter
     this.dfr_evolve;                                    // Deffered evolver
     this.queue_state;                                   // Queue state
@@ -50,7 +58,7 @@ function Component(container, descriptor) {
         url: this.descriptor,
         data: null,
         dataType: "xml",
-        cache: false,
+        cache: true,
         async: true,
         timeout: 500
     }).error(function(jqXHR, status, info) {
@@ -66,8 +74,36 @@ function Component(container, descriptor) {
         $(this.container).addClass("cpn" + this.getModelName());
 
         this.log("Loading selectors, triggers and masters");
+        var name = this.getModelName();
+        var s, t;
+        if (Register.has(name)) {
+            s = Register.load(name).selectors;
+            t = Register.load(name).triggers;
+            
+            this.nds_states = Register.load(name).states;
+            this.nds_trajectories = Register.load(name).trajectories;
+            this.nds_dom = Register.load(name).dom;
+            this.nds_styles = Register.load(name).styles;
+            this.nds_actions = Register.load(name).actions;
+            this.nds_to = Register.load(name).to;
+        } else {
+            s = $(this.model).children("component").children("selectors").children("selector");
+            s = $(s).add($(this.model).children("component").children("state").children("selectors").children("selector"));
+            t = $(this.model).children("component").children("trigger, master");
+            t = $(t).add($(this.model).children("component").children("state").children("trigger, master"));
+            
+            this.nds_states = $(this.model).children("component").children("state");
+            this.nds_trajectories = $(this.model).children("component").children("trajectories").children("trajectory");
+            this.nds_dom = $(this.model).children("component").children("loader").children("dom");
+            this.nds_styles = $(this.model).children("component").children("loader").children("style");
+            this.nds_actions = $(this.model).children("component").children("loader").children("action");
+            this.nds_to = $(this.model).children("component").children("loader").children("to");
+            
+            Register.save(name, s, t, this.nds_states, this.nds_trajectories, this.nds_dom, this.nds_styles, this.nds_actions, this.nds_to);
+        }
+        
         var ctx = this;
-        $(this.model).find("selector").each(function() {
+        $(s).each(function() {
             var buff;
             if (ctx.isSelector($(this).attr("id"))) {
                 var p = {
@@ -88,7 +124,7 @@ function Component(container, descriptor) {
                 ctx.selectors_idx[buff.getName()] = buff;
             }
         });
-        $(this.model).find("trigger, master").each(function() {
+        $(t).each(function() {
             ctx.triggers[ctx.triggers.length] = new Trigger(ctx, $(this));
         });
             
@@ -141,10 +177,10 @@ Component.prototype.getModel = function() {
     return this.model;
 };
 Component.prototype.getModelName = function() {
-    return $(this.model).find("component").attr("name");
+    return $(this.model).children("component").attr("name");
 };
 Component.prototype.getModelType = function() {
-    return $(this.model).find("component").attr("type");
+    return $(this.model).children("component").attr("type");
 };
 /* Methods */
 Component.prototype.isMethod = function(name, interface) {
@@ -335,7 +371,7 @@ Component.prototype.getState = function() {
     return this.state;
 };
 Component.prototype.setState = function(state) {
-    if ($(this.model).find('state[id="' + state + '"]').length === 1) {
+    if ($(this.nds_states).filter('[id="' + state + '"]').length === 1) {
         this.state = state;
     } else {
         var p = {
@@ -350,7 +386,7 @@ Component.prototype.setStateClass = function(from, to) {
     var ctx = this;
 
     // Pre-clean
-    $(this.model).find("state").each(function() {
+    $(this.nds_states).each(function() {
         buff = ctx.cfg_keyfrom + $(this).attr("id") + " " +
                ctx.cfg_keyto + $(this).attr("id") + " " +
                ctx.cfg_keyat + $(this).attr("id");
@@ -492,8 +528,10 @@ Component.prototype.reselect = function() {
     for (var i = 0; i < this.selectors.length; i++) {
         buff = this.selectors[i];
         if (buff.getState() === this.state || Toolkit.isNull(buff.getState())) {
-            buff.on();
-            buff.refresh();
+            if (!buff.getStatus()) {
+                buff.on();
+                buff.refresh();
+            }
             this.as = $(this.as).add(buff.getNodes());
         } else {
             buff.off();
@@ -622,7 +660,7 @@ Component.prototype.animate = function(animation, targets, postback) {
     var ctx = this;
 
     // Trajectory loading
-    trajectory = $(this.model).find('trajectories > trajectory[name="' + $(animation).attr("base") + '"]');
+    trajectory = $(this.nds_trajectories).filter('[name="' + $(animation).attr("base") + '"]');
     if ($(trajectory).length === 0) {
         var p = {
             component: this.getID(),
@@ -822,10 +860,10 @@ Component.prototype.go = function(to, complement) {
         var node_origin;
         var node_dest;
         if (!Toolkit.isNull(this.state)) {
-            node_origin = $(this.model).find('component > state[id="' + this.state + '"]');
+            node_origin = $(this.nds_states).filter('[id="' + this.state + '"]');
         }
         if (!Toolkit.isNull(to)) {
-            node_dest = $(this.model).find('component > state[id="' + to + '"]');
+            node_dest = $(this.nds_states).filter('state[id="' + to + '"]');
         }
         var seq_exit = $();
         var seq_entry = $();
@@ -983,7 +1021,7 @@ Component.prototype.start = function() {
                 }
             } else {
                 // Writing initial DOM
-                ctx.rewrite($(ctx.model).find("component > loader > dom").text());
+                ctx.rewrite($(ctx.nds_dom).text());
 
                 // Loading global selectors
                 ctx.reselect();
@@ -995,7 +1033,7 @@ Component.prototype.start = function() {
                 });
 
                 // Applying styles
-                $(ctx.model).find("component > loader > style").each(function() {
+                $(ctx.nds_styles).each(function() {
                     if ($(this).is("[find]")) {
                         ctx.qs($(this).attr("target"), $(this).attr("find")).addClass($(this).text());
                     } else {
@@ -1011,13 +1049,13 @@ Component.prototype.start = function() {
                 }
 
                 // Launching start actions
-                $(ctx.model).find("component > loader > action").each(function() {
+                $(ctx.nds_actions).each(function() {
                     ctx.call.apply(this, [ctx]);
                 });
 
                 // Migrating to initial state
                 ctx.setStatus(0);
-                ctx.go($(ctx.model).find("component > loader > to").text());
+                ctx.go($(ctx.nds_to).text());
             }
         } catch (e) {
             var p = {

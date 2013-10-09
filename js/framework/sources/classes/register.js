@@ -6,6 +6,9 @@ var Register = {
     /* Components list */
     idx: [],
     
+    /* Presets list */
+    presets: {},
+    
     /* Registers a new component.
      * PARAMETERS :
      *  cpn                 Registered component.
@@ -56,5 +59,47 @@ var Register = {
       * RETURNS : N/A                                                           */
      remove: function(id) {
          delete this.idx[id];
+     },
+     
+     /* Saves a preset.
+      * PARAMETERS :
+      *  name               Preset (model) name.
+      *  selectors          Selectors list.
+      *  triggers           Triggers list.
+      *  states             States list.
+      *  trajectories       Trajectories list.                                 
+      *  dom                DOM node.
+      *  styles             Styles list.
+      *  actions            Actions list.
+      *  to                 To node.     
+      * RETURNS : N/A                                                           */
+     save: function(name, selectors, triggers, states, trajectories, dom, styles, actions, to) {
+         Register.presets[name] = {
+             selectors: selectors,
+             triggers: triggers,
+             states: states,
+             trajectories: trajectories,
+             dom: dom,
+             styles: styles,
+             actions: actions,
+             to: to
+         };
+     },
+             
+     /* Returns a presets.
+      * PARAMETERS :
+      *  name               Preset (model) name.
+      * RETURNS : N/A                                                           */
+     load: function(name) {
+         return Register.presets[name];
+     },
+             
+     /* Checks if a preset exists.
+      * PARAMETERS :
+      *  name               Preset (model) name.
+      * RETURNS :
+      *  true if preset exists, false else.                                     */
+     has: function(name) {
+        return !Toolkit.isNull(Register.presets[name]);
      }
 };
