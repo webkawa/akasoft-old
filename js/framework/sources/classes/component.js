@@ -20,6 +20,7 @@ function Component(container, descriptor) {
     this.descriptor = descriptor;                       // Component descriptor
     this.model = null;                                  // XML model
     this.methods = [];                                  // Methods list
+    this.methods_idx = {};                              // Methods list index
     this.interface = "";                                // Interface buffer
     this.parents = [];                                  // Parents list
     this.datas = [];                                    // Interface datas
@@ -144,22 +145,20 @@ Component.prototype.getModelType = function() {
     return $(this.model).find("component").attr("type");
 };
 /* Methods */
-Component.prototype.isMethod = function(name) {
-    for (var i = 0; i < this.methods.length; i++) {
-        if (this.methods[i].getName() === name) {
-            return true;
-        }
-    }
-    return false;
+Component.prototype.isMethod = function(name, interface) {
+    return Toolkit.isNull(interface) ?
+        !Toolkit.isNull(this.methods_idx[name]) :
+        !Toolkit.isNull(this.methods_idx[name + '@' + interface]);
 };
 Component.prototype.getMethod = function(name, interface) {
-    for (var i = 0; i < this.methods.length; i++) {
-        if (this.methods[i].getName() === name) {
-            if ((Toolkit.isNull(interface) && Toolkit.isNull(this.methods[i].getInterface())) || this.methods[i].getInterface() === interface) {
-                return this.methods[i];
-            }
-        }
+    var m = Toolkit.isNull(interface) ? 
+        this.methods_idx[name] : 
+        this.methods_idx[name + '@' + interface];
+    
+    if (!Toolkit.isNull(m)) {
+        return m;
     }
+    
     var p = {
         component: this.getID(),
         name: name,
@@ -174,28 +173,34 @@ Component.prototype.saveMethod = function(method) {
     if (this.interface !== "") {
         method.setInterface(this.interface);
     }
-
     method.setContext(this);
-    for (var i = 0; i < this.methods.length; i++) {
-        if (this.methods[i].equals(method)) {
-            if (this.methods[i].isRewritable()) {
-                this.methods[i] = method;
-                return; 
-            } else {
-                var p = {
-                    component: this.getID(),
-                    name: method.getName()
-                };
-                throw new Error("cpn", 7, p);
+    
+    if (!Toolkit.isNull(this.methods_idx[method.getID()])) {
+        if (this.methods_idx[method.getID()].isRewritable()) {
+            for (var i = 0; i < this.methods.length; i++) {
+                if (this.methods[i].equals(method)) {
+                    this.methods[i] = method;
+                }
             }
+            this.methods_idx[method.getID()] = method;
+        } else {
+            var p = {
+                component: this.getID(),
+                name: method.getName()
+            };
+            throw new Error("cpn", 7, p);
         }
+    } else {
+        this.methods[this.methods.length] = method;
+        this.methods_idx[method.getID()] = method;
     }
-    this.methods[this.methods.length] = method;
 };
 Component.prototype.pushMethod = function(ref, name) {
     var method = new Method(ref, name, false);
     method.setContext(this);
+    
     this.methods[this.methods.length] = method;
+    this.methods_idx[method.getID()] = method;
 };
 Component.prototype.registerMethod = function(ref, name, rw) {
     var m = new Method(ref, name, rw);

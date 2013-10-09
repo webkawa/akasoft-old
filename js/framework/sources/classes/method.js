@@ -25,6 +25,12 @@ Method.prototype.getReference = function() {
 Method.prototype.getName = function() {
     return this.name;
 };
+/* ID */
+Method.prototype.getID = function() {
+    return this.hasInterface() ?
+        this.getName() + '@' + this.getInterface() :
+        this.getName();
+};
 /* Interface */
 Method.prototype.hasInterface = function() {
     return !Toolkit.isNull(this.interface);
