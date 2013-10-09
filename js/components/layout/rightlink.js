@@ -4,12 +4,6 @@
 function RightLinkCPN(ctn, setup) {
     var cpn = new Component(ctn, "js/components/layout/rightlink.xml");
     
-    s = {
-        openState: "Open",
-        closeState: "Close"
-    };
-    cpn.saveInterface(HoverableITF, s);
-    
     cpn.register("image", setup.image);
     cpn.register("title", setup.title);
     cpn.register("color", setup.color);

@@ -34,7 +34,7 @@
         </trajectory>
         <trajectory name="ContentIn">
             <speed>640</speed>
-            <easing>easeOutExpo</easing>
+            <easing>easeOutCubic</easing>
             <move>
                 <property>opacity</property>
                 <from>0</from>
@@ -48,7 +48,7 @@
         </trajectory>
         <trajectory name="ContentOut">
             <speed>640</speed>
-            <easing>easeInExpo</easing>
+            <easing>easeInCubic</easing>
             <move clean="false">
                 <property>margin-top</property>
                 <from>1</from>
@@ -77,9 +77,9 @@
         <style target="head">overflowHidden marginL64px marginR8px paddingT48px borderB1px speBorderDarkBlue</style>
         <style target="breadcrumb">displayBlock</style>
         <style target="title">displayInline nowrap marginR8px speColorDarkBlue size48px </style>
-        <style target="subtitle">displayInline nowrap size32px color444</style>
+        <style target="subtitle">displayInline nowrap size32px speColorBlue</style>
         <style target="body">overflowHidden paddingL64px paddingR64px paddingR4px</style>
-        <style target="wrapper">paddingV8px paddingL8px paddingR32px</style>
+        <style target="wrapper">paddingL8px paddingR32px</style>
         <action call="realWidth">
             <parameter>head body</parameter>
         </action>

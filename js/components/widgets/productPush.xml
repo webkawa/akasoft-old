@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/ressources/models/components.xsd"
+         name="ProductPush" 
+         type="classic" >
+    <selectors>
+        <selector id="link">a</selector>
+        <selector id="layout">a > div</selector>
+        <selector id="off">a > div > img</selector>
+        <selector id="mask">a > div > div</selector>
+        <selector id="on">a > div > div > img</selector>
+        <selector id="legend">a > div > div > p</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>320</speed>
+            <easing>easeOutExpo</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeOut">
+            <speed>320</speed>
+            <easing>easeOutExpo</easing>
+            <move>
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <a>
+                    <div>
+                        <img />
+                        <div>
+                            <img />
+                            <p />
+                        </div>
+                    </div>
+                </a>
+            ]]>
+        </dom>
+        <style target="layout">positionRelative width128px height128px marginHAuto border1px border888</style>
+        <style target="off">positionAbsolute width128px height128px</style>
+        <style target="mask">positionAbsolute width128px height128px opacity00</style>
+        <style target="on">positionAbsolute</style>
+        <style target="legend">positionAbsolute width100per bottom8px paddingH8px paddingV2px size16px border1px border444 radius4px textCenter weightBold colorWhite speBackgroundBlue</style>
+        <action call="centerX">
+            <parameter>legend</parameter>
+        </action>
+        <to>Ready</to>
+    </loader> 
+    <state id="Ready" />
+    <state id="Hover">
+        <in from="Ready">
+            <target>mask</target>
+            <animation base="FadeIn" />
+        </in>
+        <out to="Ready">
+            <target>mask</target>
+            <animation base="FadeOut" />
+        </out>
+    </state>
+</component>

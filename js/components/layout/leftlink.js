@@ -4,12 +4,6 @@
 function LeftLinkCPN(ctn, setup) {
     var cpn = new Component(ctn, "js/components/layout/leftlink.xml");
     
-    s = {
-        openState: "Open",
-        closeState: "Close"
-    };
-    cpn.saveInterface(HoverableITF, s);
-    
     cpn.register("link", setup.link);
     cpn.register("title", setup.title);
     cpn.register("description", setup.description);

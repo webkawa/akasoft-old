@@ -238,17 +238,21 @@ var Toolkit = {
         $(target).css("margin-left", (($(target).parent().width() - $(target).outerWidth(false)) / 2) + "px");
     },
     centerX: function(target) {
-        $(target).css({
-            "margin-right": "",
-            "margin-left": ""
+        $(target).each(function() {
+            $(this).css({
+                "margin-right": "",
+                "margin-left": ""
+            });
+            $(this).css("margin-left", (($(this).parent().width() - $(this).outerWidth(false)) / 2) + "px");
         });
-        $(target).css("margin-left", (($(target).parent().width() - $(target).outerWidth(false)) / 2) + "px");
     },
     centerY: function(target) {
-        $(target).css({
-            "margin-top": "",
-            "margin-bottom": "",
+        $(target).each(function() {
+            $(this).css({
+                "margin-top": "",
+                "margin-bottom": "",
+            });
+            $(this).css("margin-top", (($(this).parent().height() - $(this).outerHeight(false)) / 2) + "px");
         });
-        $(target).css("margin-top", (($(target).parent().height() - $(target).outerHeight(false)) / 2) + "px");
     }
 };

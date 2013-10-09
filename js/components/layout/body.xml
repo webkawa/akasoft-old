@@ -6,28 +6,49 @@
     <selectors>
         <selector id="logo">div.logo</selector>
         <selector id="left">div.left</selector>
-        <selector id="linksLeft">div.left > div.cpnLeftLink</selector>
-        <selector id="linksRight">div.right > div.cpnRightLink</selector>
         <selector id="center">div.center</selector>
         <selector id="centerBackground">div.center > div.background</selector>
         <selector id="centerFrame">div.center > div.frame</selector>
         <selector id="right">div.right</selector>
+        <selector id="cpnLeftLink">div.left > div.cpnLeftLink</selector>
+        <selector id="cpnRightLink">div.right > div.cpnRightLink</selector>
+        <selector id="cpnProductPush" explore="true">div.cpnProductPush[id]</selector>
     </selectors>
     <master bind="mouseenter">
-        <target>linksLeft</target>
-        <action call="enter" on="Hoverable" context="distant" />
+        <target>cpnLeftLink</target>
+        <action call="go" context="distant">
+            <parameter>Open</parameter>
+        </action>
     </master>
     <master bind="mouseleave">
-        <target>linksLeft</target>
-        <action call="leave" on="Hoverable" context="distant" />
+        <target>cpnLeftLink</target>
+        <action call="go" context="distant">
+            <parameter>Close</parameter>
+        </action>
     </master>
     <master bind="mouseenter">
-        <target>linksRight</target>
-        <action call="enter" on="Hoverable" context="distant" />
+        <target>cpnRightLink</target>
+        <action call="go" context="distant">
+            <parameter>Open</parameter>
+        </action>
     </master>
     <master bind="mouseleave">
-        <target>linksRight</target>
-        <action call="leave" on="Hoverable" context="distant" />
+        <target>cpnRightLink</target>
+        <action call="go" context="distant">
+            <parameter>Close</parameter>
+        </action>
+    </master>
+    <master bind="mouseenter">
+        <target refresh="true">cpnProductPush</target>
+        <action call="go" context="distant">
+            <parameter>Hover</parameter>
+        </action>
+    </master>
+    <master bind="mouseleave">
+        <target refresh="true">cpnProductPush</target>
+        <action call="go" context="distant">
+            <parameter>Ready</parameter>
+        </action>
     </master>
     <trajectories>
         <trajectory name="Open">

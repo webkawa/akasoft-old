@@ -17,12 +17,14 @@
         </i>
         <s> 
             <i>st</i>
-            <i>Le studio</i>
+            <i>Le Studio</i>
             <i>Réalisations sur mesure</i>
             <i>
                 <![CDATA[
                     <div class="left">
-                        <img src="data/img/picts/bp_small.png" />
+                        <span />
+                        <div class="dc" />
+                        <div class="ft" />
                     </div>
                     <div class="right">
                         <p>
@@ -89,37 +91,158 @@
             <i>speProduct</i>
         </s>
         <s> 
-            <i>orga</i>
-            <i>Le tremplin</i>
-            <i>Incubateurs d'idées</i>
-            <i>
-                <![CDATA[
-                    <div class="left">
-                        <img src="data/img/picts/bp_small.png" />
-                    </div>
-                    <div class="right"></div>
-                ]]>
-            </i>
-            <i>speProduct</i>
-        </s>
-        <s> 
             <i>dc</i>
-            <i>Le tremplin</i>
+            <i>La Pépinière</i>
             <i>Incubateurs d'idées</i>
             <i>
                 <![CDATA[
                     <div class="left">
-                        <img src="data/img/picts/bp_small.png" />
+                        <span />
+                        <div class="st" />
+                        <div class="ft" />
                     </div>
-                    <div class="right"></div>
+                    <div class="right">
+                        <p>
+                            <span class="weightBold">Laissez s'exprimer votre créativité, nous vous apportons les solutions.</span>
+                            <span>
+                                Les idées les plus prometteuses sont trop souvent abandonnés par manque de moyens techniques ou financiers.
+                                Nos partenariats vous donnent accès au meilleur du développement logiciel, précisemment adapté à votre besoin.
+                            </span>
+                        </p>
+                        <p>
+                            N'attendez plus pour vous lancer : présentez-nous votre idée, décidez avec nous le périmètre de votre projet et <strong>laissez-vous guider !</strong>
+                        </p>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Forfait complet.</span>
+                                <ul>
+                                    <li>Assistance et conseil sur l'ensemble du cycle projet.</li>
+                                    <li>Présence appuyée sur la période de cadrage fonctionnel.</li>
+                                    <li>Accompagnement aux choix de gestion.</li>
+                                    <li>Conditions du partenariat souple dès la prise en charge du dossier.</li>
+                                </ul>
+                                <a href="#warranty">
+                                    <span>En détails ...</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Alliances durables.</span>
+                                <ul>
+                                    <li>Rencontres préalables à la prise en charge du dossier, basées sur un niveau de compréhension commun.</li>
+                                    <li>Evolutions du partenariat basées sur le succès de votre projet.</li>
+                                    <li>Excellente flexibilité pour la prise en charge des évolutions et du suivi de production.</li>
+                                </ul>
+                                <a href="#services@orga" class="special">
+                                    <span>Vos garanties</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Tarif inégalable</span>
+                                <ul>
+                                    <li>Facturation tout inclusive, dès le lancement du projet : cadrage, forfait, maintenance.</li>
+                                    <li>Rapport qualité/prix unique basé sur un paiement étalonné en fonction du résultat de votre projet.</li>
+                                    <li>Prestations offertes similaires à nos offres classiques et express.</li>
+                                </ul>
+                                <a href="#services@eng">
+                                    <span>Exemples</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Prestation adaptée.</span>
+                                <ul>
+                                    <li>Définition d'un périmètre réaliste, basés sur vos besoins et votre budget.</li>
+                                    <li>Large adaptation aux prérequis et facettes spécifiques de votre projet.</li>
+                                    <li>Pleines possibilités de travail collaboratif avec vos partenaires.</li>
+                                </ul>
+                                <a href="#tech">
+                                    <span>Notre philosophie</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 ]]>
             </i>
             <i>speProduct</i>
         </s>
         <s> 
             <i>ft</i>
-            <i>L'express</i>
-            <i>Solutions à court terme</i>
+            <i>L'Express</i>
+            <i>Solutions rapides et efficaces</i>
+            <i>
+                <![CDATA[
+                    <div class="left">
+                        <span />
+                        <div class="st" />
+                        <div class="dc" />
+                    </div>
+                    <div class="right">
+                        <p>
+                            <span class="weightBold">Gardez le tête froide : ne confondez pas vitesse et précipitation.</span>
+                            <span>
+                                L'efficacité passe en premier lieu par le choix d'objectifs réalistes.
+                                Même dans les délais les plus courts, nous ménageons du temps pour établir un périmètre approprié à votre niveau d'urgence.
+                            </span>
+                        </p>
+                        <p><strong>Appelez-nous dès à présent</strong> pour une prise en charge rapide, efficace, et définitive de vos problèmes.</p>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Délais infimes.</span>
+                                <ul>
+                                    <li>Première rencontre et réponse sur la prise en charge du projet sous 24 heures après le premier contact.</li>
+                                    <li>Disponibilités en dehors des horaire conventionnels de travail (soir, week-end).</li>
+                                    <li>Excellente réactivité en cas d'évolution des contraintes projet.</li>
+                                </ul>
+                                <a href="#services@eng">
+                                    <span>Nos engagements</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Solution assurée.</span>
+                                <ul>
+                                    <li>Périmètre des prestations fixé sur la base d'un objectif et d'un calendrier guarantis.</li>
+                                    <li>Maintenance applicative rapide et gratuite durant toute la période de recette.</li>
+                                    <li>Prise en charge de problèmes à toute étape du cycle projet et forte résistance aux perturbations externes.</li>
+                                </ul>
+                                <a href="#warranty">
+                                    <span>Vos garanties</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="columned">
+                            <div>
+                                <span class="weightBold">Résultat optimal.</span>
+                                <ul>
+                                    <li>Niveau de qualité équivalent à l'ensemble de nos prestations.</li>
+                                    <li>Possibilités de prise en charge indépendemment du travail à réaliser.</li>
+                                    <li>Pleines capacités d'évolution ou de refonte après livraison.</li>
+                                </ul>
+                                <a href="#tech" class="special">
+                                    <span>Nos techniques</span>
+                                </a>
+                            </div>
+                            <div>
+                                <span class="weightBold">Flexibilité maximum.</span>
+                                <ul>
+                                    <li>Adaptation à l'état actuel de votre projet et intégration simplifiée.</li>
+                                    <li>Accompagnement sur les choix de gestion et la priorisation des livrables.</li>
+                                    <li>Pleine capacité de fonctionnement avec les acteurs internes ou externes intervenant sur le périmètre.</li>
+                                </ul>
+                                <a href="#tech">
+                                    <span>Notre philosophie</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                ]]>
+            </i>
+            <i>speProduct</i>
+        </s>
+        <s> 
+            <i>orga</i>
+            <i>La Pépinière</i>
+            <i>Incubateurs d'idées</i>
             <i>
                 <![CDATA[
                     <div class="left">

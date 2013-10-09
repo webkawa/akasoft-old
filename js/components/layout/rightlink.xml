@@ -121,7 +121,7 @@
             <parameter>icon</parameter>
         </action>
         <action call="reselect" parent="1">
-            <parameter>linksRight</parameter>
+            <parameter>cpnRightLink</parameter>
         </action>
         <to>Close</to>
     </loader>

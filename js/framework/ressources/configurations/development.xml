@@ -8,7 +8,7 @@
     </group>
     
     <group id="logs">
-        <boolean id="display">true</boolean>
+        <boolean id="display">false</boolean>
     </group>
     
     <group id="errors">

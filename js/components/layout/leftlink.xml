@@ -101,7 +101,7 @@
         <style target="title">width360px marginH8px marginL96px weightBold size32px</style>
         <style target="description">width360px marginH4px marginL96px</style>
         <action call="reselect" parent="1">
-            <parameter>linksLeft</parameter>
+            <parameter>cpnLeftLink</parameter>
         </action>
         <to>Close</to>
     </loader>

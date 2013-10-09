@@ -39,6 +39,9 @@ li {
 .width196px {
     width: 196px;
 }
+.width160px {
+    width: 160px;
+}
 .width128px {
     width: 128px;
 }
@@ -252,6 +255,26 @@ li {
 }
 .margin16px {
     margin: 16px;
+}
+.marginHM16px {
+    margin-left: -16px;
+    margin-right: -16px;
+}
+.marginHM8px {
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.marginHM4px {
+    margin-left: -4px;
+    margin-right: -4px;
+}
+.marginHM2px {
+    margin-left: -2px;
+    margin-right: -2px;
+}
+.marginHAuto {
+    margin-left: auto;
+    margin-right: auto;
 }
 .marginH2px {
     margin-left: 2px;
@@ -862,6 +885,13 @@ li {
 }
 .opacity10 {
     opacity: 1;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+.cursorPointerHover:hover {
+    cursor: pointer;
 }
 
 .zi1 {

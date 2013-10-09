@@ -81,9 +81,35 @@ EditorialCPN.prototype.spe = function() {
     }
 };
 EditorialCPN.prototype.speProduct = function() {
+    new ProductPushCPN(this.qs("wrapper", "div.left > div.st"), {
+        on: "data/img/picts/bp_small.png",
+        off: "data/img/picts/bp_small_bw.png",
+        legend: "Le Studio",
+        link: "#st",
+        special: true
+    }).start();
+    new ProductPushCPN(this.qs("wrapper", "div.left > div.dc"), {
+        on: "data/img/picts/bonsai_small.png",
+        off: "data/img/picts/bonsai_small_bw.png",
+        legend: "La Pépinière",
+        link: "#dc",
+        special: true
+    }).start();
+    new ProductPushCPN(this.qs("wrapper", "div.left > div.ft"), {
+        on: "data/img/picts/red_small.png",
+        off: "data/img/picts/red_small_bw.png",
+        legend: "L'Express",
+        link: "#ft",
+        special: true
+    }).start();
+    
     this.qs("wrapper", "div").addClass("floatLeft");
-    this.qs("wrapper", "div.left > img").addClass("border1px border888").css("border-radius", "0px 0px 0px 8px");
-    this.qs("wrapper", "div.right").addClass("paddingH16px");
+    this.qs("wrapper", "div.left").addClass("width160px borderL1px borderB1px borderR1px border444 backgroundDDD").css({
+        "border-radius": "0px 0px 8px 8px"
+    });
+    this.qs("wrapper", "div.left > span").addClass("paddingV4px marginV16px size16px background444 weightBold colorDDD textCenter").text("Nos autres services");
+    this.qs("wrapper", "div.left > div").addClass("displayBlock marginT8px marginB16px");
+    this.qs("wrapper", "div.right").addClass("paddingH16px paddingV8px");
     this.qs("wrapper", "div.right > p").addClass("paddingH16px");
     this.qs("wrapper").find("span").addClass("displayBlock");
     

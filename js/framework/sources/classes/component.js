@@ -667,9 +667,11 @@ Component.prototype.animate = function(animation, targets, postback) {
             clean[b1] = "";
         }
         
-        Toolkit.isNull(b3) ?
-                to[b1] = $(this).children("to").text() :
-                to[b1] = b3;
+        if (!Toolkit.isNull(b3) || $(this).children("to").length > 0) {
+            Toolkit.isNull(b3) ?
+                    to[b1] = $(this).children("to").text() :
+                    to[b1] = b3;
+        }
     });
 
     // Setup

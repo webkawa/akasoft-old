@@ -12,7 +12,7 @@
     </model>
     <s> 
         <i>classic</i>
-        <i>Le studio</i>
+        <i>Le Studio</i>
         <i>Le forfait liberté. Vous pilotez, nous réalisons.</i>
         <i>
             <![CDATA[
@@ -28,8 +28,8 @@
                     <strong>Pour quoi ?</strong>
                     <span>
                         Tout projet nécessitant une application connectée.
-                        Notre gamme de prestations s'étend de la conception à la livraison, mais peut parfaitement s'adapter à votre besoin :
-                        développement de l'applicatif ou des interfaces, cadrage, maintenance, hébergement ...
+                        Notre gamme de prestations s'étend de la conception à la livraison, déclinable selon vos besoins :
+                        développement de l'applicatif, des interfaces, cadrage, maintenance, hébergement ...
                     </span>
                 </p>
                 <p>
@@ -48,7 +48,7 @@
     </s>
     <s> 
         <i>discount</i>
-        <i>Le tremplin</i>
+        <i>La Pépinière</i>
         <i>L'incubateur des projets à fort potentiel.</i>
         <i>
             <![CDATA[
@@ -73,7 +73,7 @@
                     <strong>Quels avantages ?</strong>
                     <span>
                         Créez votre application ... à petit prix !
-                        Nos contrats de partenariats vous ouvrent la porte à un applicatif de qualité, à un tarif unique :
+                        Nos contrats de partenariats vous ouvrent la porte d'un applicatif de qualité, à un tarif unique :
                         nous appuyons votre projet, à vous d'en exploiter le maximum.
                     </span>
                 </p>
@@ -85,7 +85,7 @@
     </s>
     <s> 
         <i>fasttrack</i>
-        <i>L'express</i>
+        <i>L'Express</i>
         <i>La voie la plus courte vers votre solution.</i>
         <i>
             <![CDATA[
@@ -109,7 +109,7 @@
                     <strong>Quels avantages ?</strong>
                     <span>
                         Rapidité, flexibilité, qualité.
-                        Nos prestations express sont facturées au forfait : vous gardez le contrôle de votre budget, nous garantissons celui de votre planning.
+                        Nos prestations express sont facturées à l'objectif : vous gardez le contrôle de votre budget, nous garantissons celui de votre planning.
                     </span>
                 </p>
             ]]>

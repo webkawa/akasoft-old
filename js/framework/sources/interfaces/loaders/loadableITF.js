@@ -40,7 +40,7 @@ LoadableITF.prototype.load = function(setup) {
             $(this).trigger('load');
         }
     });
-    if (this.load_targets === 0) {
+    if (this.load_length === 0) {
         this.getMethod("execute", "Loadable").call([]);
     }
 };
