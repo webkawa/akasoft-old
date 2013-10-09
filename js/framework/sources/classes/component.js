@@ -21,10 +21,11 @@ function Component(container, descriptor) {
     this.model = null;                                  // XML model
     this.methods = [];                                  // Methods list
     this.methods_idx = {};                              // Methods list index
+    this.selectors = [];                                // Selectors
+    this.selectors_idx = {};                            // Selectors index
     this.interface = "";                                // Interface buffer
     this.parents = [];                                  // Parents list
     this.datas = [];                                    // Interface datas
-    this.selectors = [];                                // Selectors
     this.triggers = [];                                 // Triggers
     this.as;                                            // Active selectors
     this.ltn;                                           // Last triggered node
@@ -84,6 +85,7 @@ function Component(container, descriptor) {
                     buff.setMode(true);
                 }
                 ctx.selectors[ctx.selectors.length] = buff;
+                ctx.selectors_idx[buff.getName()] = buff;
             }
         });
         $(this.model).find("trigger, master").each(function() {
@@ -229,30 +231,25 @@ Component.prototype.saveInterface = function(interface, setup) {
 };
 /* Selectors */
 Component.prototype.isSelector = function(name) {
-    for (var i = 0; i < this.selectors.length; i++) {
-        if (this.selectors[i].getName() === name && this.selectors[i].getStatus()) {
-            return true;
-        }
-    }
-    return false;
+    return !Toolkit.isNull(this.selectors_idx[name]) && this.selectors_idx[name].getStatus();
 };
 Component.prototype.getSelector = function(name, refresh, force) {
-    for (var i = 0; i < this.selectors.length; i++) {
-        if (this.selectors[i].getName() === name) {
-            if (this.selectors[i].getStatus() || this.cfg_ais || force) {
-                if (refresh) {
-                    this.selectors[i].refresh();
-                }
-                return this.selectors[i];
-            } else {
-                var p = {
-                    name: name,
-                    path: this.selectors[i].getPath()
-                };
-                throw new Error("cpn", 5, p);
+    var s = this.selectors_idx[name];
+    if (!Toolkit.isNull(s)) {
+        if (s.getStatus() || this.cfg_ais || force) {
+            if (refresh) {
+                s.refresh();
             }
+            return s;
+        } else {
+            var p = {
+                name: name,
+                path: s.getPath()
+            };
+            throw new Error("cpn", 5, p);
         }
     }
+    
     var p = {
         name: name
     };
