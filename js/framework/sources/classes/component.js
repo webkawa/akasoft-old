@@ -27,6 +27,7 @@ function Component(container, descriptor) {
     this.parents = [];                                  // Parents list
     this.datas = [];                                    // Interface datas
     this.triggers = [];                                 // Triggers
+    this.masters = [];                                  // Masters
     this.as;                                            // Active selectors
     this.ltn;                                           // Last triggered node
     this.sources = [];                                  // Data sources
@@ -125,7 +126,12 @@ function Component(container, descriptor) {
             }
         });
         $(t).each(function() {
-            ctx.triggers[ctx.triggers.length] = new Trigger(ctx, $(this));
+            var tb = new Trigger(ctx, $(this));
+            
+            ctx.triggers[ctx.triggers.length] = tb;
+            if (tb.isMaster()) {
+                ctx.masters[ctx.masters.length] = tb;
+            }
         });
             
         this.dfr_start.resolve();
@@ -482,17 +488,10 @@ Component.prototype.retrigger = function(distant) {
     }
     this.retriggerParents();
     if (distant) {
-        var master;
-        var state;
-        for (var i = 0; i < this.triggers.length; i++) {
-            master = this.triggers[i].isMaster();
-            state = this.triggers[i].getState();
-            
-            if (master) {
-                this.triggers[i].off();
-                if (state === "@None" || state === this.state) {
-                    this.triggers[i].on();
-                }
+        for (var i = 0; i < this.masters.length; i++) {
+            this.masters[i].off();
+            if (this.masters[i].getState() === "@None" || this.masters[i].getState() === this.state) {
+                this.masters[i].on();
             }
         }
     } else {

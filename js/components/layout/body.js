@@ -22,71 +22,76 @@ function BodyCPN(ctn) {
     cpn.registerMethod(this.loadNavigation, "loadNavigation", false);
     cpn.registerMethod(this.buildNavigation, "buildNavigation", false);
     cpn.registerMethod(this.addNavigation, "addNavigation", false);
+    cpn.registerMethod(this.startNavigation, "startNavigation", false);
     cpn.registerMethod(this.navigate, "navigate", false);
     cpn.registerMethod(this.follow, "follow", false);
     
     return cpn;
 }
-/* Initialization. */
 BodyCPN.prototype.init = function() {
     var cpn = new LogoCPN(this.qs("logo"));
     cpn.start();
-    this.register("logo", cpn, false);
+    
+    this.register("logo", cpn);
+    this.register("navigation", []);
 };
-/* Navigation load. */
 BodyCPN.prototype.loadNavigation = function() {
     this.getSource("navmap").get();
 };
-/* Navigation build. */
 BodyCPN.prototype.buildNavigation = function() {
-    this.getMethod("addNavigation").call([0]);
+    this.getMethod("addNavigation").call([]);
+    this.getMethod("startNavigation").call([0]);
 };
-/* Navigation add. */
-BodyCPN.prototype.addNavigation = function(index) {
-    if (Toolkit.isNull(index)) {
-        index = 0;
-    }
-    var i = this.getSourceData("navmap", "s:eq(" + index + ")");
-    
-    var pbuff = i.children("i.position").text();
-    if (pbuff === "left") {
-        var s = {
-            link: i.children("i.link").text(),
-            title: i.children("i.title").text(),
-            description: i.children("i.description").text(),
-            image: i.children("i.image").text(),
-            color: i.children("i.color").text(),
-            altcolor: i.children("i.altcolor").text()
-        };
+BodyCPN.prototype.addNavigation = function() {
+    var ctx = this;
+    var buff;
+    this.getSourceData("navmap", "s").each(function() {
+        var position = $(this).children("i.position").text();
         
-        this.qs("left").append('<div />');
-        new LeftLinkCPN(this.qs("left", "div:last()"), s).start();
-    } else if (pbuff === "right") {
-        var t = 0;
-        this.qs("right", "div").each(function() {
-            t += $(this).outerHeight(true);
-        });
-        var s = {
-            title: i.children("i.title").text(),
-            image: i.children("i.image").text(),
-            color: i.children("i.color").text(),
-            altcolor: i.children("i.altcolor").text()
-        };
-        
-        this.qs("right").append('<div />');
-        this.qs("right", "div:last()").css("bottom", t + "px");
-        
-        new RightLinkCPN(this.qs("right", "div:last()"), s).start();
-    }
-    
-    if (this.getSourceData("navmap", "s").length !== index - 1) {
-        var ctx = this;
-        setTimeout(function() {
-            ctx.getMethod("addNavigation").call([parseInt(index) + 1]);
-        }, 250);
-    }
+        if (position === "left") {
+            var s = {
+                link: $(this).children("i.link").text(),
+                title: $(this).children("i.title").text(),
+                description: $(this).children("i.description").text(),
+                image: $(this).children("i.image").text(),
+                color: $(this).children("i.color").text(),
+                altcolor: $(this).children("i.altcolor").text()
+            };
+            ctx.qs("left").append('<div />');
+            
+            buff = new LeftLinkCPN(ctx.qs("left", "div:last()"), s);
+        } else if (position === "right") {
+            var s = {
+                title: $(this).children("i.title").text(),
+                image: $(this).children("i.image").text(),
+                color: $(this).children("i.color").text(),
+                altcolor: $(this).children("i.altcolor").text()
+            };
+            ctx.qs("right").append('<div />');
+            
+            buff = new RightLinkCPN(ctx.qs("right", "div:last()"), s);
+        }
+        ctx.navigation[ctx.navigation.length] = buff;
+    });
 };
-/* Page change. */
+BodyCPN.prototype.startNavigation = function(index) {
+    var ctx = this;
+    setTimeout(function() {
+        if (ctx.navigation[index].getModelName() === "RightLink") {
+            var t = 0;
+            ctx.qs("right", "div").each(function() {
+                t += $(this).outerHeight(true);
+            });
+            ctx.navigation[index].getContainer().css("bottom", t + "px");
+        }
+        
+        ctx.navigation[index].start();
+        
+        if (index < ctx.navigation.length - 1) {
+            ctx.getMethod("startNavigation").call([parseInt(index) + 1]);
+        }
+    }, 250);
+};
 BodyCPN.prototype.navigate = function(to) {
     // Selecting
     var cpn;
@@ -129,7 +134,6 @@ BodyCPN.prototype.navigate = function(to) {
     // Registering
     this.register("body", cpn, true);
 };
-/* Page switch (link click). */
 BodyCPN.prototype.follow = function() {
     var tr = this.qs("$TRIGGERED");
     

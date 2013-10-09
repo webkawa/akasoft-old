@@ -49,18 +49,18 @@ ProductsCPN.prototype.start = function() {
     var center = this.getSource("data").getDataByKey('category', 'id', 'discount');
     var right = this.getSource("data").getDataByKey('category', 'id', 'fasttrack');
     
-    this.qs("previewLeft", "div.head > h2").append($(left).children('i.title').text());
-    this.qs("previewCenter", "div.head > h2").append($(center).children('i.title').text());
-    this.qs("previewRight", "div.head > h2").append($(right).children('i.title').text());
-    this.qs("previewLeft", "div.head > h3").append($(left).children('i.subtitle').text());
-    this.qs("previewCenter", "div.head > h3").append($(center).children('i.subtitle').text());
-    this.qs("previewRight", "div.head > h3").append($(right).children('i.subtitle').text());
+    this.qs("previewLeft", "div.head > h2").html($(left).children('i.title').text());
+    this.qs("previewCenter", "div.head > h2").html($(center).children('i.title').text());
+    this.qs("previewRight", "div.head > h2").html($(right).children('i.title').text());
+    this.qs("previewLeft", "div.head > h3").html($(left).children('i.subtitle').text());
+    this.qs("previewCenter", "div.head > h3").html($(center).children('i.subtitle').text());
+    this.qs("previewRight", "div.head > h3").html($(right).children('i.subtitle').text());
     this.qs("previewLeft", "div.body").prepend($(left).children('i.text').text());
     this.qs("previewCenter", "div.body").prepend($(center).children('i.text').text());
     this.qs("previewRight", "div.body").prepend($(right).children('i.text').text());
-    this.qs("previewLeft", "p > a").append($(left).children('i.linklabel').text()).attr("href", "#" + $(left).children('i.linkreference').text());
-    this.qs("previewCenter", "p > a").append($(center).children('i.linklabel').text()).attr("href", "#" + $(center).children('i.linkreference').text());
-    this.qs("previewRight", "p > a").append($(right).children('i.linklabel').text()).attr("href", "#" + $(right).children('i.linkreference').text());
+    this.qs("previewLeft", "p > a").html($(left).children('i.linklabel').text()).attr("href", "#" + $(left).children('i.linkreference').text());
+    this.qs("previewCenter", "p > a").html($(center).children('i.linklabel').text()).attr("href", "#" + $(center).children('i.linkreference').text());
+    this.qs("previewRight", "p > a").html($(right).children('i.linklabel').text()).attr("href", "#" + $(right).children('i.linkreference').text());
    
     this.qs("previewBodies", "p").addClass("marginV16px line18px size16px"); 
     this.qs("previewBodies", "p > img").addClass("floatLeft marginR8px marginB4px speBackgroundDarkBlue opacity08 radius4px");

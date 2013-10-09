@@ -22,8 +22,17 @@
     <s>
         <i>products</i>
         <i>left</i>
-        <i>Services</i>
-        <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ligula vel ante tincidunt bibendum. Morbi ut felis ut mauris aliquet tempor. Proin id posuere lacus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus ut dictum mauris.</i>
+        <i>Nos services</i>
+        <i>
+            <![CDATA[
+                <span>Découvrez notre gamme de services et choisissez la solution adaptée à votre besoin.</span>
+                <span>
+                    <a href=#services@st"><span>Le Studio</span></a>
+                    <a href=#services@dc"><span>La Pépinière</span></a>
+                    <a href=#services@fr"><span>L'Express</span></a>
+                </span>
+            ]]>
+        </i>
         <i>visuals/products.png</i>
         <i>#3a73ad</i>
         <i>#285786</i>

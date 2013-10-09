@@ -129,7 +129,7 @@
                     <to>1</to>
                 </move>
             </animation>
-            <post call="go" on="Navigable">
+            <post call="go" on="Navigable" delay="360">
                 <parameter variable="true">goto</parameter>
             </post>
         </in>

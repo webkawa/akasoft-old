@@ -33,9 +33,6 @@ function HomeCPN(ctn) {
 }
 HomeCPN.prototype.build = function(slide) {
     this.qs("slide").remove();
-    this.qs("footLeft").empty();
-    this.qs("footCenter").empty();
-    this.qs("footRight").empty();
     
     var buff =  '<div class="in width100per height100per">';
         buff += '<div class="positionAbsolute width100per height100per backgroundWhite opacity04" />';
@@ -44,11 +41,11 @@ HomeCPN.prototype.build = function(slide) {
         buff += '</div>';
         buff += '</div>';
     
-    this.qs("slider").append(buff);
+    this.qs("slider").html(buff);
     
-    this.qs("footLeft").append($(slide).children('i.footleft').text());
-    this.qs("footCenter").append($(slide).children('i.footcenter').text());
-    this.qs("footRight").append($(slide).children('i.footright').text());
+    this.qs("footLeft").html($(slide).children('i.footleft').text());
+    this.qs("footCenter").html($(slide).children('i.footcenter').text());
+    this.qs("footRight").html($(slide).children('i.footright').text());
     
     this.getSelector("slideIn").refresh();
     this.getSelector("footChilds").refresh();

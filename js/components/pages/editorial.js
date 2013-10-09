@@ -53,14 +53,12 @@ EditorialCPN.prototype.build = function() {
             this.getParent().getMethod("go", "Navigable").call(["404"]);
         }
         
-        this.qs("breadcrumb").empty();
-        this.qs("breadcrumb").append(this.getSourceData("data", "s.area > i.breadcrumb").text());
+        this.qs("breadcrumb").html(this.getSourceData("data", "s.area > i.breadcrumb").text());
         
         this.qs("title").text($(page).children("i.title").text());
         this.qs("subtitle").text($(page).children("i.subtitle").text());
         
-        this.qs("wrapper").empty();
-        this.qs("wrapper").append($(page).children("i.content").text());
+        this.qs("wrapper").html($(page).children("i.content").text());
         
         this.qs("head").find("a").addClass("speColorHoverBlue");
         this.qs("breadcrumb").find("a").addClass("size12px");
